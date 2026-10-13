@@ -54,6 +54,23 @@
             color: #E60012;
             font-weight: 700;
         }
+        @media print {
+            body * {
+                visibility: hidden !important;
+            }
+            #printable-invoice, #printable-invoice * {
+                visibility: visible !important;
+            }
+            #printable-invoice {
+                position: absolute !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100% !important;
+                background-color: #ffffff !important;
+                color: #000000 !important;
+                padding: 20px !important;
+            }
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
@@ -71,9 +88,15 @@
                 </div>
             </div>
             
-            <a href="https://wa.me/50688888888" target="_blank" id="btn-wa-header" class="mamba-red-gradient hover:bg-red-700 text-white font-bold py-2 px-5 rounded-full text-sm flex items-center gap-2 transition shadow-md">
-                <i class="fab fa-whatsapp text-lg"></i> Contactar por WhatsApp
-            </a>
+            <div class="flex items-center gap-3">
+                <a href="https://wa.me/50688818720" target="_blank" class="mamba-red-gradient hover:bg-red-700 text-white font-bold py-2 px-5 rounded-full text-sm flex items-center gap-2 transition shadow-md">
+                    <i class="fab fa-whatsapp text-lg"></i> WhatsApp
+                </a>
+                <!-- Botón oculto para alternar modo administración de clientes -->
+                <button onclick="toggleAdminClientes()" id="btn-admin-toggle" class="bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs py-2 px-3 rounded-lg border border-mamba-border">
+                    <i class="fas fa:lock fa-lock"></i> Admin
+                </button>
+            </div>
         </div>
     </header>
 
@@ -86,8 +109,12 @@
             <button onclick="switchTab('mensajeria')" id="tab-mensajeria" class="tab-btn py-4 px-2 transition">
                 <i class="fas fa-motorcycle text-mamba-red mr-2"></i>Mensajería Express
             </button>
-            <button onclick="switchTab('clientes')" id="tab-clientes" class="tab-btn py-4 px-2 transition">
-                <i class="fas fa-users text-mamba-red mr-2"></i>Clientes
+            <button onclick="switchTab('cotizador')" id="tab-cotizador" class="tab-btn py-4 px-2 transition">
+                <i class="fas fa-file-invoice-dollar text-mamba-red mr-2"></i>Cotización / Factura
+            </button>
+            <!-- Pestaña de clientes oculta por defecto para que el público no la vea -->
+            <button onclick="switchTab('clientes')" id="tab-clientes" class="tab-btn py-4 px-2 transition hidden">
+                <i class="fas fa-users text-mamba-red mr-2"></i>Gestión de Clientes
             </button>
         </div>
     </div>
@@ -100,30 +127,27 @@
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-mamba-border pb-4">
                 <div>
                     <h2 class="text-2xl font-tech font-bold text-white">Catálogo de Servicios</h2>
-                    <p class="text-xs text-gray-400">Administra, agrega o edita los precios y servicios de lavado.</p>
+                    <p class="text-xs text-gray-400">Selecciona el tratamiento ideal para tu vehículo.</p>
                 </div>
-                <button onclick="abrirModalServicio()" class="mamba-red-gradient text-white text-xs font-bold py-2.5 px-4 rounded-lg flex items-center gap-2">
-                    <i class="fas fa-plus"></i> Agregar Nuevo Servicio
-                </button>
             </div>
 
             <div id="lista-servicios" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Se genera dinámicamente con JS -->
+                <!-- Se llena con JS -->
             </div>
         </section>
 
-        <!-- 2. MENSAJERÍA EXPRESS AUTOMÁTICA -->
+        <!-- 2. MENSAJERÍA EXPRESS (CON OPCIÓN MANUAL SI FALLA EL MAPA) -->
         <section id="sec-mensajeria" class="hidden space-y-6">
             <div class="text-center max-w-xl mx-auto">
                 <h2 class="text-2xl font-tech font-bold text-white mb-1">Calculadora de Mensajería</h2>
-                <p class="text-xs text-gray-400">Cálculo automático de distancia y tarifa a ₡450 / km.</p>
+                <p class="text-xs text-gray-400">Cálculo automático a ₡450 / km o ingreso manual de distancia.</p>
             </div>
 
             <div class="max-w-xl mx-auto mamba-card rounded-2xl p-6 space-y-5">
                 <form onsubmit="calcularRutaAutomatica(event)" class="space-y-4">
                     <div>
                         <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Punto de Origen</label>
-                        <input type="text" id="origen-input" placeholder="Ej: Heredia, Costa Rica" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-3 text-sm text-white focus:outline-none focus:border-mamba-red">
+                        <input type="text" id="origen-input" value="Heredia, Costa Rica" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-3 text-sm text-white focus:outline-none focus:border-mamba-red">
                     </div>
 
                     <div>
@@ -131,19 +155,27 @@
                         <input type="text" id="destino-input" placeholder="Ej: San Rafael, Heredia" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-3 text-sm text-white focus:outline-none focus:border-mamba-red">
                     </div>
 
-                    <button type="submit" id="btn-calcular" class="w-full mamba-red-gradient hover:bg-red-700 text-white font-bold py-3 rounded-lg text-xs uppercase tracking-wider transition">
-                        <i class="fas fa-route mr-2"></i> Calcular Distancia y Precio
-                    </button>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 uppercase mb-1">¿Kilómetros manuales? (Opcional)</label>
+                            <input type="number" id="km-manual" step="0.5" placeholder="Ej: 8" class="w-full bg-black/60 border border-mamba-border rounded-lg p-3 text-sm text-white focus:outline-none focus:border-mamba-red">
+                        </div>
+                        <div class="flex items-end">
+                            <button type="submit" class="w-full mamba-red-gradient hover:bg-red-700 text-white font-bold py-3 rounded-lg text-xs uppercase tracking-wider transition">
+                                <i class="fas fa-calculator mr-1"></i> Calcular
+                            </button>
+                        </div>
+                    </div>
                 </form>
 
                 <div id="estado-calculo" class="hidden text-center text-xs text-yellow-400 py-2">
-                    <i class="fas fa-spinner fa-spin mr-1"></i> Buscando ruta y calculando kilómetros...
+                    <i class="fas fa-spinner fa-spin mr-1"></i> Calculando ruta en el mapa...
                 </div>
 
                 <div id="resultado-mensajeria" class="hidden p-4 rounded-xl bg-black/80 border border-mamba-border text-center space-y-3">
                     <div class="grid grid-cols-2 gap-2 text-xs border-b border-mamba-border pb-3">
                         <div>
-                            <span class="text-gray-400 block">Distancia estimada:</span>
+                            <span class="text-gray-400 block">Distancia:</span>
                             <span id="res-distancia" class="font-bold text-white text-sm">0 km</span>
                         </div>
                         <div>
@@ -163,12 +195,85 @@
             </div>
         </section>
 
-        <!-- 3. CLIENTES -->
+        <!-- 3. COTIZADOR / FACTURA -->
+        <section id="sec-cotizador" class="hidden space-y-6">
+            <div class="text-center max-w-xl mx-auto">
+                <h2 class="text-2xl font-tech font-bold text-white mb-1">Generador de Cotización</h2>
+                <p class="text-xs text-gray-400">Arma un presupuesto rápido para tus clientes y descárgalo o imprímelo.</p>
+            </div>
+
+            <div class="max-w-2xl mx-auto mamba-card rounded-2xl p-6 space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Nombre del Cliente</label>
+                        <input type="text" id="cot-cliente" placeholder="Ej: Carlos Gómez" class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Vehículo / Placa</label>
+                        <input type="text" id="cot-vehiculo" placeholder="Ej: Hyundai Tucson (ABC-123)" class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Descripción del Servicio / Trabajos a realizar</label>
+                    <textarea id="cot-detalle" rows="3" placeholder="Ej: Lavado completo + Detailing interior + Corrección de pintura..." class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white"></textarea>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Monto Total (₡)</label>
+                        <input type="number" id="cot-monto" placeholder="Ej: 15000" class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
+                    </div>
+                    <div class="flex items-end">
+                        <button onclick="generarCotizacionVistaPrevia()" class="w-full mamba-red-gradient text-white font-bold py-2.5 rounded-lg text-xs">
+                            <i class="fas fa-eye mr-1"></i> Ver Factura / Imprimir
+                        </button>
+                    </div>
+                </div>
+
+                <!-- VISTA PREVIA IMPRIMIBLE -->
+                <div id="printable-invoice" class="hidden mt-6 p-6 rounded-xl bg-white text-black border border-gray-300 space-y-4">
+                    <div class="flex justify-between border-b pb-4">
+                        <div>
+                            <h3 class="font-black text-xl text-red-600">LAS MAMBAS</h3>
+                            <p class="text-xs text-gray-600">Auto Lavado, Detailing & Mensajería</p>
+                        </div>
+                        <div class="text-right text-xs">
+                            <p class="font-bold">COMPROBANTE / COTIZACIÓN</p>
+                            <p id="inv-fecha" class="text-gray-500"></p>
+                        </div>
+                    </div>
+                    <div class="text-xs space-y-1">
+                        <p><strong>Cliente:</strong> <span id="inv-cliente">-</span></p>
+                        <p><strong>Vehículo:</strong> <span id="inv-vehiculo">-</span></p>
+                    </div>
+                    <div class="border-t border-b py-3 text-xs">
+                        <p class="font-bold mb-1">Detalle del servicio:</p>
+                        <p id="inv-detalle" class="text-gray-700">-</p>
+                    </div>
+                    <div class="flex justify-between items-center pt-2">
+                        <span class="text-xs font-bold">TOTAL A PAGAR:</span>
+                        <span id="inv-total" class="text-lg font-black text-red-600">₡0</span>
+                    </div>
+                    <div class="text-center pt-4 border-t text-[10px] text-gray-500">
+                        ¡Gracias por confiar en Las Mambas Auto Lavado! • San Isidro, Heredia
+                    </div>
+                </div>
+
+                <div id="btn-imprimir-box" class="hidden">
+                    <button onclick="window.print()" class="w-full bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 rounded-lg text-xs flex items-center justify-center gap-2">
+                        <i class="fas fa-print"></i> Imprimir o Guardar como PDF
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. GESTIÓN PRIVADA DE CLIENTES (CON MÚLTIPLES VEHÍCULOS) -->
         <section id="sec-clientes" class="hidden space-y-6">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-mamba-border pb-4">
                 <div>
-                    <h2 class="text-2xl font-tech font-bold text-white">Directorio de Clientes</h2>
-                    <p class="text-xs text-gray-400">Registra y administra la información de tus clientes.</p>
+                    <h2 class="text-2xl font-tech font-bold text-white">Directorio Privado de Clientes</h2>
+                    <p class="text-xs text-gray-400">Administra clientes con múltiples vehículos registrados.</p>
                 </div>
                 <button onclick="abrirModalCliente()" class="mamba-red-gradient text-white text-xs font-bold py-2.5 px-4 rounded-lg flex items-center gap-2">
                     <i class="fas fa-user-plus"></i> Agregar Cliente
@@ -181,8 +286,7 @@
                         <tr>
                             <th class="p-4">Nombre</th>
                             <th class="p-4">Teléfono</th>
-                            <th class="p-4">Vehículo</th>
-                            <th class="p-4">Placa</th>
+                            <th class="p-4">Vehículos y Placas</th>
                             <th class="p-4 text-center">Acciones</th>
                         </tr>
                     </thead>
@@ -195,55 +299,34 @@
 
     </main>
 
-    <!-- MODAL SERVICIO (AGREGAR/EDITAR) -->
-    <div id="modal-servicio" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="mamba-card w-full max-w-md rounded-2xl p-6 space-y-4">
-            <h3 id="modal-servicio-titulo" class="text-lg font-tech font-bold text-white">Servicio</h3>
-            <form onsubmit="guardarServicio(event)" class="space-y-3">
-                <input type="hidden" id="srv-id">
-                <div>
-                    <label class="block text-xs text-gray-400 mb-1">Nombre del Servicio</label>
-                    <input type="text" id="srv-nombre" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-mamba-red">
-                </div>
-                <div>
-                    <label class="block text-xs text-gray-400 mb-1">Descripción / Detalles</label>
-                    <textarea id="srv-desc" rows="2" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-mamba-red"></textarea>
-                </div>
-                <div>
-                    <label class="block text-xs text-gray-400 mb-1">Precio (₡)</label>
-                    <input type="number" id="srv-precio" required min="0" class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-mamba-red">
-                </div>
-                <div class="flex justify-end gap-2 pt-2">
-                    <button type="button" onclick="cerrarModalServicio()" class="px-4 py-2 bg-gray-800 text-gray-300 text-xs rounded-lg">Cancelar</button>
-                    <button type="submit" class="px-4 py-2 mamba-red-gradient text-white text-xs font-bold rounded-lg">Guardar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- MODAL CLIENTE (AGREGAR/EDITAR) -->
+    <!-- MODAL CLIENTE (CON MÚLTIPLES VEHÍCULOS) -->
     <div id="modal-cliente" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-        <div class="mamba-card w-full max-w-md rounded-2xl p-6 space-y-4">
-            <h3 id="modal-cliente-titulo" class="text-lg font-tech font-bold text-white">Cliente</h3>
+        <div class="mamba-card w-full max-w-md rounded-2xl p-6 space-y-4 max-h-[90vh] overflow-y-auto">
+            <h3 id="modal-cliente-titulo" class="text-lg font-tech font-bold text-white">Registrar Cliente</h3>
             <form onsubmit="guardarCliente(event)" class="space-y-3">
                 <input type="hidden" id="cli-id">
                 <div>
                     <label class="block text-xs text-gray-400 mb-1">Nombre Completo</label>
-                    <input type="text" id="cli-nombre" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-mamba-red">
+                    <input type="text" id="cli-nombre" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
                 </div>
                 <div>
                     <label class="block text-xs text-gray-400 mb-1">Teléfono</label>
-                    <input type="text" id="cli-telefono" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-mamba-red">
+                    <input type="text" id="cli-telefono" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
                 </div>
-                <div>
-                    <label class="block text-xs text-gray-400 mb-1">Vehículo / Modelo</label>
-                    <input type="text" id="cli-vehiculo" placeholder="Ej: Nissan Sentra" class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-mamba-red">
+
+                <div class="border-t border-mamba-border pt-3">
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="text-xs font-bold text-gray-300 uppercase">Vehículos del Cliente</label>
+                        <button type="button" onclick="agregarCampoVehiculoModal()" class="text-xs text-mamba-red font-bold hover:underline">
+                            <i class="fas fa-plus mr-1"></i> Añadir otro vehículo
+                        </button>
+                    </div>
+                    <div id="vehiculos-container" class="space-y-2">
+                        <!-- Campos dinámicos de vehículos -->
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-xs text-gray-400 mb-1">Placa</label>
-                    <input type="text" id="cli-placa" placeholder="Ej: ABC-123" class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-mamba-red">
-                </div>
-                <div class="flex justify-end gap-2 pt-2">
+
+                <div class="flex justify-end gap-2 pt-3 border-t border-mamba-border">
                     <button type="button" onclick="cerrarModalCliente()" class="px-4 py-2 bg-gray-800 text-gray-300 text-xs rounded-lg">Cancelar</button>
                     <button type="submit" class="px-4 py-2 mamba-red-gradient text-white text-xs font-bold rounded-lg">Guardar</button>
                 </div>
@@ -252,49 +335,68 @@
     </div>
 
     <footer class="border-t border-mamba-border bg-black py-6 text-center text-xs text-gray-500">
-        <p>&copy; 2026 Las Mambas Auto Lavado, Detailing & Mensajería.</p>
+        <p>&copy; 2026 Las Mambas Auto Lavado & Detailing.</p>
     </footer>
 
     <!-- LÓGICA DE LA APLICACIÓN -->
     <script>
-        // DATOS INICIALES (SERVICIOS Y CLIENTES)
+        // DATOS INICIALES
         let servicios = [
             { id: 1, nombre: "Automóvil Sedán", desc: "Lavado exterior, aspirado profundo de interiores, aros y abrillantado.", precio: 6000 },
             { id: 2, nombre: "Hatchback / Compacto", desc: "Lavado completo exterior e interior con limpieza de cristales.", precio: 5000 },
             { id: 3, nombre: "Pick-up / SUV 4x4", desc: "Lavado de chasis, carrocería, desinfección y aspirado profundo.", precio: 8000 }
         ];
 
-        let clientes = [
-            { id: 1, nombre: "Juan Pérez", telefono: "8888-8888", vehiculo: "Toyota Corolla", placa: "ABC-123" }
+        let clientes = JSON.parse(localStorage.getItem('mambas_clientes')) || [
+            { id: 1, nombre: "Juan Pérez", telefono: "8888-8888", vehiculos: [{ modelo: "Toyota Corolla", placa: "ABC-123" }] }
         ];
 
         let resultadoUltimoEnvio = null;
 
         // PESTAÑAS
         function switchTab(tab) {
-            ['lavado', 'mensajeria', 'clientes'].forEach(t => {
-                document.getElementById(`sec-${t}`).classList.add('hidden');
-                document.getElementById(`tab-${t}`).classList.remove('active');
+            ['lavado', 'mensajeria', 'cotizador', 'clientes'].forEach(t => {
+                const el = document.getElementById(`sec-${t}`);
+                if (el) el.classList.add('hidden');
+                const btn = document.getElementById(`tab-${t}`);
+                if (btn) btn.classList.remove('active');
             });
-            document.getElementById(`sec-${tab}`).classList.remove('hidden');
-            document.getElementById(`tab-${tab}`).classList.add('active');
+            const secActive = document.getElementById(`sec-${tab}`);
+            if (secActive) secActive.classList.remove('hidden');
+            const btnActive = document.getElementById(`tab-${tab}`);
+            if (btnActive) btnActive.classList.add('active');
+        }
+
+        // MODO ADMIN OCULTO (Para que en redes sociales no vean clientes)
+        function toggleAdminClientes() {
+            const tabClientes = document.getElementById('tab-clientes');
+            if (tabClientes.classList.contains('hidden')) {
+                const pin = prompt("Ingresa la contraseña de administrador:");
+                if (pin === "1234" || pin === "admin" || pin === "mambas") {
+                    tabClientes.classList.remove('hidden');
+                    switchTab('clientes');
+                    renderClientes();
+                    alert("Modo administrador activado.");
+                } else {
+                    alert("Contraseña incorrecta.");
+                }
+            } else {
+                tabClientes.classList.add('hidden');
+                switchTab('lavado');
+                alert("Modo administrador oculto.");
+            }
         }
 
         // RENDER SERVICIOS
         function renderServicios() {
             const cont = document.getElementById('lista-servicios');
+            if (!cont) return;
             cont.innerHTML = '';
             servicios.forEach(s => {
                 cont.innerHTML += `
                     <div class="mamba-card rounded-2xl p-5 flex flex-col justify-between">
                         <div>
-                            <div class="flex justify-between items-start mb-2">
-                                <h3 class="font-tech font-bold text-white text-base">${s.nombre}</h3>
-                                <div class="flex gap-2">
-                                    <button onclick="editarServicio(${s.id})" class="text-xs text-gray-400 hover:text-white"><i class="fas fa-edit"></i></button>
-                                    <button onclick="eliminarServicio(${s.id})" class="text-xs text-red-500 hover:text-red-400"><i class="fas fa-trash"></i></button>
-                                </div>
-                            </div>
+                            <h3 class="font-tech font-bold text-white text-base mb-2">${s.nombre}</h3>
                             <p class="text-xs text-gray-400 mb-4">${s.desc}</p>
                         </div>
                         <div class="border-t border-mamba-border pt-3 flex justify-between items-center">
@@ -308,169 +410,50 @@
             });
         }
 
-        // MODAL SERVICIOS
-        function abrirModalServicio() {
-            document.getElementById('srv-id').value = '';
-            document.getElementById('srv-nombre').value = '';
-            document.getElementById('srv-desc').value = '';
-            document.getElementById('srv-precio').value = '';
-            document.getElementById('modal-servicio-titulo').textContent = 'Agregar Servicio';
-            document.getElementById('modal-servicio').classList.remove('hidden');
-        }
-
-        function cerrarModalServicio() {
-            document.getElementById('modal-servicio').classList.add('hidden');
-        }
-
-        function guardarServicio(e) {
-            e.preventDefault();
-            const id = document.getElementById('srv-id').value;
-            const nombre = document.getElementById('srv-nombre').value;
-            const desc = document.getElementById('srv-desc').value;
-            const precio = parseFloat(document.getElementById('srv-precio').value);
-
-            if (id) {
-                const s = servicios.find(x => x.id == id);
-                if (s) { s.nombre = nombre; s.desc = desc; s.precio = precio; }
-            } else {
-                servicios.push({ id: Date.now(), nombre, desc, precio });
-            }
-            cerrarModalServicio();
-            renderServicios();
-        }
-
-        function editarServicio(id) {
-            const s = servicios.find(x => x.id == id);
-            if (!s) return;
-            document.getElementById('srv-id').value = s.id;
-            document.getElementById('srv-nombre').value = s.nombre;
-            document.getElementById('srv-desc').value = s.desc;
-            document.getElementById('srv-precio').value = s.precio;
-            document.getElementById('modal-servicio-titulo').textContent = 'Editar Servicio';
-            document.getElementById('modal-servicio').classList.remove('hidden');
-        }
-
-        function eliminarServicio(id) {
-            if (confirm('¿Deseas borrar este servicio?')) {
-                servicios = servicios.filter(x => x.id != id);
-                renderServicios();
-            }
-        }
-
-        // RENDER CLIENTES
-        function renderClientes() {
-            const body = document.getElementById('tabla-clientes-body');
-            body.innerHTML = '';
-            if (clientes.length === 0) {
-                body.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-gray-500">No hay clientes registrados.</td></tr>`;
-                return;
-            }
-            clientes.forEach(c => {
-                body.innerHTML += `
-                    <tr>
-                        <td class="p-4 font-semibold text-white">${c.nombre}</td>
-                        <td class="p-4">${c.telefono}</td>
-                        <td class="p-4">${c.vehiculo || '-'}</td>
-                        <td class="p-4">${c.placa || '-'}</td>
-                        <td class="p-4 text-center space-x-2">
-                            <button onclick="editarCliente(${c.id})" class="text-xs text-gray-400 hover:text-white"><i class="fas fa-edit"></i></button>
-                            <button onclick="eliminarCliente(${c.id})" class="text-xs text-red-500 hover:text-red-400"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
-                `;
-            });
-        }
-
-        // MODAL CLIENTES
-        function abrirModalCliente() {
-            document.getElementById('cli-id').value = '';
-            document.getElementById('cli-nombre').value = '';
-            document.getElementById('cli-telefono').value = '';
-            document.getElementById('cli-vehiculo').value = '';
-            document.getElementById('cli-placa').value = '';
-            document.getElementById('modal-cliente-titulo').textContent = 'Agregar Cliente';
-            document.getElementById('modal-cliente').classList.remove('hidden');
-        }
-
-        function cerrarModalCliente() {
-            document.getElementById('modal-cliente').classList.add('hidden');
-        }
-
-        function guardarCliente(e) {
-            e.preventDefault();
-            const id = document.getElementById('cli-id').value;
-            const nombre = document.getElementById('cli-nombre').value;
-            const telefono = document.getElementById('cli-telefono').value;
-            const vehiculo = document.getElementById('cli-vehiculo').value;
-            const placa = document.getElementById('cli-placa').value;
-
-            if (id) {
-                const c = clientes.find(x => x.id == id);
-                if (c) { c.nombre = nombre; c.telefono = telefono; c.vehiculo = vehiculo; c.placa = placa; }
-            } else {
-                clientes.push({ id: Date.now(), nombre, telefono, vehiculo, placa });
-            }
-            cerrarModalCliente();
-            renderClientes();
-        }
-
-        function editarCliente(id) {
-            const c = clientes.find(x => x.id == id);
-            if (!c) return;
-            document.getElementById('cli-id').value = c.id;
-            document.getElementById('cli-nombre').value = c.nombre;
-            document.getElementById('cli-telefono').value = c.telefono;
-            document.getElementById('cli-vehiculo').value = c.vehiculo;
-            document.getElementById('cli-placa').value = c.placa;
-            document.getElementById('modal-cliente-titulo').textContent = 'Editar Cliente';
-            document.getElementById('modal-cliente').classList.remove('hidden');
-        }
-
-        function eliminarCliente(id) {
-            if (confirm('¿Deseas eliminar este cliente?')) {
-                clientes = clientes.filter(x => x.id != id);
-                renderClientes();
-            }
-        }
-
-        // CALCULADORA AUTOMÁTICA DE RUTA (NOMINATIM + OSRM)
+        // CALCULADORA AUTOMÁTICA O MANUAL
         async function calcularRutaAutomatica(e) {
             e.preventDefault();
             const origenTxt = document.getElementById('origen-input').value.trim();
             const destinoTxt = document.getElementById('destino-input').value.trim();
+            const kmManual = document.getElementById('km-manual').value;
             const estado = document.getElementById('estado-calculo');
             const resBox = document.getElementById('resultado-mensajeria');
+
+            // Si pusieron kilómetros manuales, úsalos de inmediato sin fallar
+            if (kmManual && parseFloat(kmManual) > 0) {
+                const km = parseFloat(kmManual);
+                const total = Math.round(km * 450);
+                resultadoUltimoEnvio = { origen: origenTxt, destino: destinoTxt, km, total };
+                document.getElementById('res-distancia').textContent = `${km} km (Manual)`;
+                document.getElementById('res-total').textContent = `₡${total.toLocaleString('es-CR')}`;
+                resBox.classList.remove('hidden');
+                return;
+            }
 
             estado.classList.remove('hidden');
             resBox.classList.add('hidden');
 
             try {
-                // 1. Geocodificar Origen
-                const resOrig = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(origenTxt + ', Costa Rica')}`);
+                const resOrig = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(origenTxt)}`);
                 const dataOrig = await resOrig.json();
 
-                // 2. Geocodificar Destino
                 const resDest = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(destinoTxt + ', Costa Rica')}`);
                 const dataDest = await resDest.json();
 
                 if (!dataOrig.length || !dataDest.length) {
-                    alert('No se pudo encontrar una de las ubicaciones exactas en el mapa. Intenta agregar ", Costa Rica" o especificar el cantón.');
-                    estado.classList.add('hidden');
-                    return;
+                    throw new Error('No ubicado');
                 }
 
                 const lon1 = dataOrig[0].lon, lat1 = dataOrig[0].lat;
                 const lon2 = dataDest[0].lon, lat2 = dataDest[0].lat;
 
-                // 3. Consultar Ruta OSRM
                 const resRuta = await fetch(`https://router.project-osrm.org/route/v1/driving/${lon1},${lat1};${lon2},${lat2}?overview=false`);
                 const dataRuta = await resRuta.json();
 
                 if (dataRuta.routes && dataRuta.routes.length > 0) {
                     const metros = dataRuta.routes[0].distance;
                     const km = parseFloat((metros / 1000).toFixed(1));
-                    const tarifaPorKm = 450;
-                    const total = Math.round(km * tarifaPorKm);
+                    const total = Math.round(km * 450);
 
                     resultadoUltimoEnvio = { origen: origenTxt, destino: destinoTxt, km, total };
 
@@ -484,25 +467,138 @@
                 }
             } catch (err) {
                 estado.classList.add('hidden');
-                alert('Ocurrió un error al calcular la ruta automática. Verifica la conexión a internet e intenta de nuevo.');
+                alert('No se pudo calcular automáticamente. Por favor escribe los kilómetros manualmente en la casilla de abajo.');
             }
         }
 
-        // WHATSAPP HELPER
+        // COTIZACIÓN / FACTURA
+        function generarCotizacionVistaPrevia() {
+            const cliente = document.getElementById('cot-cliente').value || 'Cliente General';
+            const vehiculo = document.getElementById('cot-vehiculo').value || 'Vehículo estándar';
+            const detalle = document.getElementById('cot-detalle').value || 'Servicios de lavado y detailing';
+            const monto = parseFloat(document.getElementById('cot-monto').value) || 0;
+
+            document.getElementById('inv-fecha').textContent = new Date().toLocaleDateString('es-CR');
+            document.getElementById('inv-cliente').textContent = cliente;
+            document.getElementById('inv-vehiculo').textContent = vehiculo;
+            document.getElementById('inv-detalle').textContent = detalle;
+            document.getElementById('inv-total').textContent = '₡' + monto.toLocaleString('es-CR');
+
+            document.getElementById('printable-invoice').classList.remove('hidden');
+            document.getElementById('btn-imprimir-box').classList.remove('hidden');
+        }
+
+        // GESTIÓN DE CLIENTES CON MÚLTIPLES VEHÍCULOS
+        function renderClientes() {
+            const body = document.getElementById('tabla-clientes-body');
+            if (!body) return;
+            body.innerHTML = '';
+            if (clientes.length === 0) {
+                body.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-gray-500">No hay clientes registrados.</td></tr>`;
+                return;
+            }
+            clientes.forEach(c => {
+                let vehsHtml = c.vehiculos.map(v => `<span class="inline-block bg-black/50 border border-mamba-border px-2 py-0.5 rounded text-[11px] mr-1 mb-1">${v.modelo} (${v.placa})</span>`).join('');
+                body.innerHTML += `
+                    <tr>
+                        <td class="p-4 font-semibold text-white">${c.nombre}</td>
+                        <td class="p-4">${c.telefono}</td>
+                        <td class="p-4">${vehsHtml}</td>
+                        <td class="p-4 text-center space-x-2">
+                            <button onclick="editarCliente(${c.id})" class="text-xs text-gray-400 hover:text-white"><i class="fas fa-edit"></i></button>
+                            <button onclick="eliminarCliente(${c.id})" class="text-xs text-red-500 hover:text-red-400"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function abrirModalCliente() {
+            document.getElementById('cli-id').value = '';
+            document.getElementById('cli-nombre').value = '';
+            document.getElementById('cli-telefono').value = '';
+            document.getElementById('vehiculos-container').innerHTML = '';
+            agregarCampoVehiculoModal();
+            document.getElementById('modal-cliente-titulo').textContent = 'Registrar Cliente';
+            document.getElementById('modal-cliente').classList.remove('hidden');
+        }
+
+        function agregarCampoVehiculoModal(modelo = '', placa = '') {
+            const cont = document.getElementById('vehiculos-container');
+            const div = document.createElement('div');
+            div.className = 'flex gap-2 items-center vehiculo-row';
+            div.innerHTML = `
+                <input type="text" placeholder="Modelo (Ej: Toyota)" value="${modelo}" class="veh-modelo w-1/2 bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white">
+                <input type="text" placeholder="Placa (Ej: ABC-123)" value="${placa}" class="veh-placa w-1/2 bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white">
+                <button type="button" onclick="this.parentElement.remove()" class="text-red-500 hover:text-red-400 px-2"><i class="fas fa-times"></i></button>
+            `;
+            cont.appendChild(div);
+        }
+
+        function cerrarModalCliente() {
+            document.getElementById('modal-cliente').classList.add('hidden');
+        }
+
+        function guardarCliente(e) {
+            e.preventDefault();
+            const id = document.getElementById('cli-id').value;
+            const nombre = document.getElementById('cli-nombre').value;
+            const telefono = document.getElementById('cli-telefono').value;
+
+            const vehiculos = [];
+            document.querySelectorAll('.vehiculo-row').forEach(row => {
+                const modelo = row.querySelector('.veh-modelo').value.trim();
+                const placa = row.querySelector('.veh-placa').value.trim();
+                if (modelo || placa) {
+                    vehiculos.push({ modelo: modelo || 'Vehículo', placa: placa || 'Sin placa' });
+                }
+            });
+
+            if (id) {
+                const c = clientes.find(x => x.id == id);
+                if (c) { c.nombre = nombre; c.telefono = telefono; c.vehiculos = vehiculos; }
+            } else {
+                clientes.push({ id: Date.now(), nombre, telefono, vehiculos });
+            }
+
+            localStorage.setItem('mambas_clientes', JSON.stringify(clientes));
+            cerrarModalCliente();
+            renderClientes();
+        }
+
+        function editarCliente(id) {
+            const c = clientes.find(x => x.id == id);
+            if (!c) return;
+            document.getElementById('cli-id').value = c.id;
+            document.getElementById('cli-nombre').value = c.nombre;
+            document.getElementById('cli-telefono').value = c.telefono;
+            document.getElementById('vehiculos-container').innerHTML = '';
+            c.vehiculos.forEach(v => agregarCampoVehiculoModal(v.modelo, v.placa));
+            document.getElementById('modal-cliente-titulo').textContent = 'Editar Cliente';
+            document.getElementById('modal-cliente').classList.remove('hidden');
+        }
+
+        function eliminarCliente(id) {
+            if (confirm('¿Deseas eliminar este cliente?')) {
+                clientes = clientes.filter(x => x.id != id);
+                localStorage.setItem('mambas_clientes', JSON.stringify(clientes));
+                renderClientes();
+            }
+        }
+
+        // WHATSAPP
         function solicitarServicioWA(nombre, precio) {
-            const txt = `Hola Las Mambas, deseo solicitar el servicio de *${nombre}* (Monto: ₡${precio.toLocaleString('es-CR')}).`;
-            window.open(`https://wa.me/50688888888?text=${encodeURIComponent(txt)}`, '_blank');
+            const txt = `Hola Las Mambas, deseo solicitar el servicio de *${nombre}* (₡${precio.toLocaleString('es-CR')}).`;
+            window.open(`https://wa.me/50688818720?text=${encodeURIComponent(txt)}`, '_blank');
         }
 
         function enviarMensajeriaWhatsApp() {
             if (!resultadoUltimoEnvio) return;
-            const txt = `Hola Las Mambas, solicito mensajería express:%0A- *Origen:* ${resultadoUltimoEnvio.origen}%0A- *Destino:* ${resultadoUltimoEnvio.destino}%0A- *Distancia:* ${resultadoUltimoEnvio.km} km%0A- *Monto:* ₡${resultadoUltimoEnvio.total.toLocaleString('es-CR')}`;
-            window.open(`https://wa.me/50688888888?text=${txt}`, '_blank');
+            const txt = `Hola Las Mambas, solicito mensajería express:%0A- Origen: ${resultadoUltimoEnvio.origen}%0A- Destino: ${resultadoUltimoEnvio.destino}%0A- Distancia: ${resultadoUltimoEnvio.km} km%0A- Total: ₡${resultadoUltimoEnvio.total.toLocaleString('es-CR')}`;
+            window.open(`https://wa.me/50688818720?text=${txt}`, '_blank');
         }
 
-        // INICIALIZAR
         renderServicios();
-        renderClientes();
     </script>
 </body>
 </html>
