@@ -58,23 +58,6 @@
             color: #E60012;
             font-weight: 700;
         }
-        @media print {
-            body * {
-                visibility: hidden !important;
-            }
-            #printable-invoice, #printable-invoice * {
-                visibility: visible !important;
-            }
-            #printable-invoice {
-                position: absolute !important;
-                left: 0 !important;
-                top: 0 !important;
-                width: 100% !important;
-                background-color: #ffffff !important;
-                color: #000000 !important;
-                padding: 20px !important;
-            }
-        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
@@ -83,8 +66,8 @@
     <header class="bg-black/90 border-b border-mamba-border sticky top-0 z-50 backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full mamba-red-gradient flex items-center justify-center font-tech font-black text-white text-xl shadow-lg shadow-red-900/50">
-                    M
+                <div class="w-10 h-10 rounded-full mamba-red-gradient flex items-center justify-center text-white text-lg shadow-lg shadow-red-900/50">
+                    <i class="fas fa-staff-snake"></i>
                 </div>
                 <div>
                     <h1 class="font-tech text-xl sm:text-2xl font-black tracking-wider text-white">LAS MAMBAS</h1>
@@ -122,7 +105,7 @@
                 <i class="fas fa-list text-mamba-red mr-1"></i> Servicios
             </button>
             <button onclick="switchSubTabLavado('cotizacion')" id="subtab-lav-cotizacion" class="sub-tab-btn py-3 px-2 transition">
-                <i class="fas fa-file-invoice-dollar text-mamba-red mr-1"></i> Cotización / Factura
+                <i class="fas fa-calculator text-mamba-red mr-1"></i> Cotizador & Pedidos
             </button>
             <button onclick="switchSubTabLavado('citas')" id="subtab-lav-citas" class="sub-tab-btn py-3 px-2 transition">
                 <i class="fas fa-calendar-alt text-mamba-red mr-1"></i> Citas
@@ -140,7 +123,7 @@
                 <i class="fas fa-calculator text-mamba-red mr-1"></i> Calculadora de Ruta
             </button>
             <button onclick="switchSubTabMensajeria('cotizacion')" id="subtab-msg-cotizacion" class="sub-tab-btn py-3 px-2 transition">
-                <i class="fas fa-file-invoice-dollar text-mamba-red mr-1"></i> Cotización / Factura Envíos
+                <i class="fas fa-file-invoice-dollar text-mamba-red mr-1"></i> Cotización Envíos
             </button>
         </div>
     </div>
@@ -165,15 +148,15 @@
                 <div id="lista-servicios" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
             </div>
 
-            <!-- 1.2 COTIZACIÓN / FACTURA -->
+            <!-- 1.2 COTIZADOR Y PEDIDOS (ENVIAR A WHATSAPP) -->
             <div id="sec-lav-cotizacion" class="hidden space-y-6">
                 <div class="text-center max-w-xl mx-auto">
-                    <h2 class="text-2xl font-tech font-bold text-white mb-1">Cotización / Factura Auto Lavado</h2>
-                    <p class="text-xs text-gray-400">Selecciona servicios, asigna cantidades y suma el total automáticamente.</p>
+                    <h2 class="text-2xl font-tech font-bold text-white mb-1">Cotizador y Pedido Express</h2>
+                    <p class="text-xs text-gray-400">Arma tu paquete de servicios, añade tus vehículos y envíalo directo a nuestro WhatsApp.</p>
                 </div>
                 <div class="max-w-2xl mx-auto mamba-card rounded-2xl p-6 space-y-5">
                     <div>
-                        <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Nombre del Cliente</label>
+                        <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Tu Nombre</label>
                         <input type="text" id="cot-lav-cliente" placeholder="Ej: Carlos Gómez" class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
                     </div>
 
@@ -200,17 +183,17 @@
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Notas / Detalles adicionales</label>
-                        <textarea id="cot-lav-notas" rows="2" placeholder="Ej: Promoción aplicada, entrega a las 3:00 PM..." class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white"></textarea>
+                        <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Notas / Instrucciones especiales</label>
+                        <textarea id="cot-lav-notas" rows="2" placeholder="Ej: Necesito el servicio para hoy a las 2:00 PM..." class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white"></textarea>
                     </div>
 
-                    <div class="border-t border-mamba-border pt-3 flex justify-between items-center">
+                    <div class="border-t border-mamba-border pt-4 flex flex-col sm:flex-row justify-between items-center gap-4">
                         <div>
-                            <span class="text-xs text-gray-400 block uppercase">Total Calculado:</span>
+                            <span class="text-xs text-gray-400 block uppercase">Total Estimado:</span>
                             <span id="cot-lav-total-visual" class="font-tech text-2xl font-black text-mamba-red">₡0</span>
                         </div>
-                        <button onclick="generarCotizacionVistaPrevia('lavado')" class="mamba-red-gradient text-white font-bold py-3 px-6 rounded-lg text-xs uppercase tracking-wider">
-                            <i class="fas fa-eye mr-1"></i> Ver / Imprimir Factura
+                        <button onclick="enviarCotizacionLavadoWhatsApp()" class="w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg">
+                            <i class="fab fa-whatsapp text-base"></i> Enviar Cotización a Las Mambas
                         </button>
                     </div>
                 </div>
@@ -336,8 +319,8 @@
             <!-- 2.2 COTIZACIÓN ENVIOS -->
             <div id="sec-msg-cotizacion" class="hidden space-y-6">
                 <div class="text-center max-w-xl mx-auto">
-                    <h2 class="text-2xl font-tech font-bold text-white mb-1">Cotización / Factura Envíos</h2>
-                    <p class="text-xs text-gray-400">Genera un comprobante formal de envío o mensajería.</p>
+                    <h2 class="text-2xl font-tech font-bold text-white mb-1">Cotización Rápida Envíos</h2>
+                    <p class="text-xs text-gray-400">Calcula y envía los detalles de un envío directamente al chat.</p>
                 </div>
                 <div class="max-w-2xl mx-auto mamba-card rounded-2xl p-6 space-y-4">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -356,53 +339,18 @@
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs text-gray-400 mb-1">Total (₡)</label>
+                            <label class="block text-xs text-gray-400 mb-1">Monto Total (₡)</label>
                             <input type="number" id="cot-msg-monto" placeholder="Ej: 4500" class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
                         </div>
                         <div class="flex items-end">
-                            <button onclick="generarCotizacionVistaPrevia('mensajeria')" class="w-full mamba-red-gradient text-white font-bold py-2.5 rounded-lg text-xs">
-                                <i class="fas fa-eye mr-1"></i> Ver / Imprimir Factura
+                            <button onclick="enviarCotizacionEnviosWhatsApp()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-lg text-xs flex items-center justify-center gap-2">
+                                <i class="fab fa-whatsapp"></i> Enviar Envío por WhatsApp
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
 
-        </div>
-
-        <!-- COMPROBANTE DE FACTURA IMPRIMIBLE -->
-        <div id="printable-invoice" class="hidden mt-8 p-6 rounded-xl bg-white text-black border border-gray-300 space-y-4">
-            <div class="flex justify-between border-b pb-4">
-                <div>
-                    <h3 class="font-black text-xl text-red-600">LAS MAMBAS</h3>
-                    <p class="text-xs text-gray-600">Auto Lavado, Detailing & Mensajería</p>
-                </div>
-                <div class="text-right text-xs">
-                    <p class="font-bold">COMPROBANTE / COTIZACIÓN</p>
-                    <p id="inv-fecha" class="text-gray-500"></p>
-                </div>
-            </div>
-            <div class="text-xs space-y-1">
-                <p><strong>Cliente:</strong> <span id="inv-cliente">-</span></p>
-                <p><strong>Vehículos / Ruta:</strong> <span id="inv-vehiculo">-</span></p>
-            </div>
-            <div class="border-t border-b py-3 text-xs">
-                <p class="font-bold mb-1">Servicios / Detalles:</p>
-                <div id="inv-detalle" class="text-gray-700 space-y-1">-</div>
-            </div>
-            <div class="flex justify-between items-center pt-2">
-                <span class="text-xs font-bold">TOTAL A PAGAR:</span>
-                <span id="inv-total" class="text-lg font-black text-red-600">₡0</span>
-            </div>
-            <div class="text-center pt-4 border-t text-[10px] text-gray-500">
-                ¡Gracias por confiar en Las Mambas! • San Isidro, Heredia
-            </div>
-        </div>
-
-        <div id="btn-imprimir-box" class="hidden mt-4 max-w-2xl mx-auto">
-            <button onclick="window.print()" class="w-full bg-gray-200 hover:bg-gray-300 text-black font-bold py-2.5 rounded-lg text-xs flex items-center justify-center gap-2">
-                <i class="fas fa-print"></i> Imprimir o Guardar como PDF
-            </button>
         </div>
 
     </main>
@@ -617,6 +565,48 @@
             document.getElementById('cot-lav-total-visual').textContent = '₡' + total.toLocaleString('es-CR');
         }
 
+        function enviarCotizacionLavadoWhatsApp() {
+            const cliente = document.getElementById('cot-lav-cliente').value.trim() || 'Cliente General';
+            
+            let vehs = [];
+            document.querySelectorAll('.cot-veh-row').forEach(row => {
+                const mod = row.querySelector('.cot-veh-modelo').value.trim();
+                const pla = row.querySelector('.cot-veh-placa').value.trim();
+                if (mod || pla) vehs.push(`${mod} (${pla})`);
+            });
+            const vehiculosStr = vehs.length > 0 ? vehs.join(' • ') : 'Vehículo estándar';
+
+            let detallesArr = [];
+            let montoTotal = 0;
+            document.querySelectorAll('.cot-srv-row').forEach(row => {
+                const select = row.querySelector('.cot-select-srv');
+                const srvName = select.options[select.selectedIndex]?.text.split(' (')[0] || 'Servicio';
+                const cant = parseFloat(row.querySelector('.cot-srv-cant').value) || 1;
+                const precioUnitario = parseFloat(row.querySelector('.cot-srv-precio').value) || 0;
+                const subtotal = precioUnitario * cant;
+
+                if (subtotal > 0) {
+                    montoTotal += subtotal;
+                    detallesArr.push(`- (${cant}x) ${srvName}: ₡${subtotal.toLocaleString('es-CR')}`);
+                }
+            });
+
+            if (detallesArr.length === 0) {
+                alert('Por favor selecciona al menos un servicio para cotizar.');
+                return;
+            }
+
+            const notas = document.getElementById('cot-lav-notas').value.trim();
+
+            let txt = `Hola Las Mambas, solicito la siguiente cotización / servicio:%0A%0A*Cliente:* ${cliente}%0A*Vehículos:* ${vehiculosStr}%0A%0A*Detalle de Servicios:*%0A${detallesArr.join('%0A')}`;
+            if (notas) {
+                txt += `%0A%0A*Notas:* ${notas}`;
+            }
+            txt += `%0A%0A*Total Estimado:* ₡${montoTotal.toLocaleString('es-CR')}`;
+
+            window.open(`https://wa.me/50688818720?text=${encodeURIComponent(txt)}`, '_blank');
+        }
+
         function renderServicios() {
             const cont = document.getElementById('lista-servicios');
             if (!cont) return;
@@ -762,53 +752,14 @@
             }
         }
 
-        function generarCotizacionVistaPrevia(tipo) {
-            let cliente = '', vehiculosStr = '', detalleHtml = '', montoTotal = 0;
+        function enviarCotizacionEnviosWhatsApp() {
+            const cliente = document.getElementById('cot-msg-cliente').value.trim() || 'Cliente';
+            const ruta = document.getElementById('cot-msg-ruta').value.trim() || 'Ruta de envío';
+            const detalle = document.getElementById('cot-msg-detalle').value.trim() || 'Sin detalle';
+            const monto = parseFloat(document.getElementById('cot-msg-monto').value) || 0;
 
-            if (tipo === 'lavado') {
-                cliente = document.getElementById('cot-lav-cliente').value || 'Cliente General';
-                
-                let vehs = [];
-                document.querySelectorAll('.cot-veh-row').forEach(row => {
-                    const mod = row.querySelector('.cot-veh-modelo').value.trim();
-                    const pla = row.querySelector('.cot-veh-placa').value.trim();
-                    if (mod || pla) vehs.push(`${mod} (${pla})`);
-                });
-                vehiculosStr = vehs.length > 0 ? vehs.join(' • ') : 'Vehículo estándar';
-
-                let detallesArr = [];
-                document.querySelectorAll('.cot-srv-row').forEach(row => {
-                    const select = row.querySelector('.cot-select-srv');
-                    const srvName = select.options[select.selectedIndex]?.text.split(' (')[0] || 'Servicio';
-                    const cant = parseFloat(row.querySelector('.cot-srv-cant').value) || 1;
-                    const precioUnitario = parseFloat(row.querySelector('.cot-srv-precio').value) || 0;
-                    const subtotal = precioUnitario * cant;
-
-                    if (subtotal > 0) {
-                        montoTotal += subtotal;
-                        detallesArr.push(`• (${cant}x) ${srvName}: ₡${subtotal.toLocaleString('es-CR')}`);
-                    }
-                });
-
-                const notas = document.getElementById('cot-lav-notas').value.trim();
-                if (notas) detallesArr.push(`<br><em>Nota: ${notas}</em>`);
-                detalleHtml = detallesArr.join('<br>') || 'Servicios de auto lavado & detailing';
-
-            } else {
-                cliente = document.getElementById('cot-msg-cliente').value || 'Cliente General';
-                vehiculosStr = document.getElementById('cot-msg-ruta').value || 'Trayecto de mensajería';
-                montoTotal = parseFloat(document.getElementById('cot-msg-monto').value) || 0;
-                detalleHtml = document.getElementById('cot-msg-detalle').value || 'Servicio de mensajería express';
-            }
-
-            document.getElementById('inv-fecha').textContent = new Date().toLocaleDateString('es-CR');
-            document.getElementById('inv-cliente').textContent = cliente;
-            document.getElementById('inv-vehiculo').textContent = vehiculosStr;
-            document.getElementById('inv-detalle').innerHTML = detalleHtml;
-            document.getElementById('inv-total').textContent = '₡' + montoTotal.toLocaleString('es-CR');
-
-            document.getElementById('printable-invoice').classList.remove('hidden');
-            document.getElementById('btn-imprimir-box').classList.remove('hidden');
+            const txt = `Hola Las Mambas, solicito el siguiente envío:%0A- *Cliente:* ${cliente}%0A- *Ruta:* ${ruta}%0A- *Detalle:* ${detalle}%0A- *Monto:* ₡${monto.toLocaleString('es-CR')}`;
+            window.open(`https://wa.me/50688818720?text=${encodeURIComponent(txt)}`, '_blank');
         }
 
         function reservarCitaWA(e) {
@@ -819,7 +770,7 @@
             const srv = document.getElementById('cita-servicio').value;
 
             const txt = `Hola Las Mambas, deseo agendar una cita:%0A- *Cliente:* ${nom}%0A- *Fecha:* ${fec}%0A- *Hora:* ${hor}%0A- *Servicio:* ${srv}`;
-            window.open(`https://wa.me/50688818720?text=${txt}`, '_blank');
+            window.open(`https://wa.me/50688818720?text=${encodeURIComponent(txt)}`, '_blank');
         }
 
         function renderClientes() {
