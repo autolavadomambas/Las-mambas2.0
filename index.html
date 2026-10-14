@@ -156,16 +156,16 @@
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-mamba-border pb-4">
                     <div>
                         <h2 class="text-2xl font-tech font-bold text-white">Catálogo de Lavado & Detailing</h2>
-                        <p class="text-xs text-gray-400">Administra o solicita los servicios de cuidado automotriz.</p>
+                        <p class="text-xs text-gray-400">Consulta los servicios de cuidado automotriz disponibles.</p>
                     </div>
-                    <button onclick="abrirModalServicio()" class="mamba-red-gradient text-white text-xs font-bold py-2.5 px-4 rounded-lg flex items-center gap-2 shadow-md">
+                    <button id="btn-agregar-servicio-admin" onclick="abrirModalServicio()" class="hidden mamba-red-gradient text-white text-xs font-bold py-2.5 px-4 rounded-lg items-center gap-2 shadow-md">
                         <i class="fas fa-plus"></i> Agregar Nuevo Servicio
                     </button>
                 </div>
                 <div id="lista-servicios" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
             </div>
 
-            <!-- 1.2 COTIZACIÓN / FACTURA CON CANTIDAD, MULTIVEHÍCULO Y CANTIDADES -->
+            <!-- 1.2 COTIZACIÓN / FACTURA -->
             <div id="sec-lav-cotizacion" class="hidden space-y-6">
                 <div class="text-center max-w-xl mx-auto">
                     <h2 class="text-2xl font-tech font-bold text-white mb-1">Cotización / Factura Auto Lavado</h2>
@@ -188,7 +188,7 @@
                         <div id="cot-vehiculos-container" class="space-y-2"></div>
                     </div>
 
-                    <!-- SELECCIÓN DE SERVICIOS CON CANTIDAD Y PRECIO -->
+                    <!-- SELECCIÓN DE SERVICIOS -->
                     <div class="border-t border-mamba-border pt-3 space-y-3">
                         <div class="flex justify-between items-center">
                             <label class="text-xs font-bold text-gray-300 uppercase">Servicios a Incluir</label>
@@ -481,6 +481,7 @@
         ];
 
         let resultadoUltimoEnvio = null;
+        let esAdminActivo = false;
 
         window.addEventListener('DOMContentLoaded', () => {
             agregarVehiculoCotizacion();
@@ -537,25 +538,34 @@
 
         function toggleAdminClientes() {
             const subtabClientes = document.getElementById('subtab-lav-clientes');
+            const btnAgregarSrv = document.getElementById('btn-agregar-servicio-admin');
+
             if (subtabClientes.classList.contains('hidden')) {
                 const pin = prompt("Ingresa la clave de administrador:");
                 if (pin && pin.toLowerCase() === "justin248".toLowerCase()) {
+                    esAdminActivo = true;
                     subtabClientes.classList.remove('hidden');
+                    btnAgregarSrv.classList.remove('hidden');
+                    btnAgregarSrv.classList.add('flex');
                     seleccionarModuloPrincipal('lavado');
                     switchSubTabLavado('clientes');
                     renderClientes();
+                    renderServicios();
                     alert("Modo administrador activado.");
                 } else {
                     alert("Clave incorrecta.");
                 }
             } else {
+                esAdminActivo = false;
                 subtabClientes.classList.add('hidden');
+                btnAgregarSrv.classList.add('hidden');
+                btnAgregarSrv.classList.remove('flex');
                 switchSubTabLavado('servicios');
+                renderServicios();
                 alert("Modo administrador oculto.");
             }
         }
 
-        // FUNCIONES DE COTIZACIÓN (CON SELECCIÓN DE CANTIDAD)
         function agregarVehiculoCotizacion(modelo = '', placa = '') {
             const cont = document.getElementById('cot-vehiculos-container');
             const div = document.createElement('div');
@@ -612,15 +622,22 @@
             if (!cont) return;
             cont.innerHTML = '';
             servicios.forEach(s => {
+                let adminAccionesHtml = '';
+                if (esAdminActivo) {
+                    adminAccionesHtml = `
+                        <div class="flex gap-2">
+                            <button onclick="editarServicio(${s.id})" class="text-xs text-gray-400 hover:text-white" title="Editar"><i class="fas fa-edit"></i></button>
+                            <button onclick="eliminarServicio(${s.id})" class="text-xs text-red-500 hover:text-red-400" title="Eliminar"><i class="fas fa-trash"></i></button>
+                        </div>
+                    `;
+                }
+
                 cont.innerHTML += `
                     <div class="mamba-card rounded-2xl p-5 flex flex-col justify-between">
                         <div>
                             <div class="flex justify-between items-start mb-2">
                                 <h3 class="font-tech font-bold text-white text-base">${s.nombre}</h3>
-                                <div class="flex gap-2">
-                                    <button onclick="editarServicio(${s.id})" class="text-xs text-gray-400 hover:text-white"><i class="fas fa-edit"></i></button>
-                                    <button onclick="eliminarServicio(${s.id})" class="text-xs text-red-500 hover:text-red-400"><i class="fas fa-trash"></i></button>
-                                </div>
+                                ${adminAccionesHtml}
                             </div>
                             <p class="text-xs text-gray-400 mb-4">${s.desc}</p>
                         </div>
@@ -636,6 +653,7 @@
         }
 
         function abrirModalServicio() {
+            if (!esAdminActivo) return;
             document.getElementById('srv-id').value = '';
             document.getElementById('srv-nombre').value = '';
             document.getElementById('srv-desc').value = '';
@@ -650,6 +668,7 @@
 
         function guardarServicio(e) {
             e.preventDefault();
+            if (!esAdminActivo) return;
             const id = document.getElementById('srv-id').value;
             const nombre = document.getElementById('srv-nombre').value;
             const desc = document.getElementById('srv-desc').value;
@@ -667,6 +686,7 @@
         }
 
         function editarServicio(id) {
+            if (!esAdminActivo) return;
             const s = servicios.find(x => x.id == id);
             if (!s) return;
             document.getElementById('srv-id').value = s.id;
@@ -678,6 +698,7 @@
         }
 
         function eliminarServicio(id) {
+            if (!esAdminActivo) return;
             if (confirm('¿Borrar este servicio de la lista?')) {
                 servicios = servicios.filter(x => x.id != id);
                 localStorage.setItem('mambas_servicios', JSON.stringify(servicios));
@@ -741,7 +762,6 @@
             }
         }
 
-        // GENERACIÓN DE FACTURA CON CANTIDADES
         function generarCotizacionVistaPrevia(tipo) {
             let cliente = '', vehiculosStr = '', detalleHtml = '', montoTotal = 0;
 
@@ -827,6 +847,7 @@
         }
 
         function abrirModalCliente() {
+            if (!esAdminActivo) return;
             document.getElementById('cli-id').value = '';
             document.getElementById('cli-nombre').value = '';
             document.getElementById('cli-telefono').value = '';
@@ -854,6 +875,7 @@
 
         function guardarCliente(e) {
             e.preventDefault();
+            if (!esAdminActivo) return;
             const id = document.getElementById('cli-id').value;
             const nombre = document.getElementById('cli-nombre').value;
             const telefono = document.getElementById('cli-telefono').value;
@@ -880,6 +902,7 @@
         }
 
         function editarCliente(id) {
+            if (!esAdminActivo) return;
             const c = clientes.find(x => x.id == id);
             if (!c) return;
             document.getElementById('cli-id').value = c.id;
@@ -892,6 +915,7 @@
         }
 
         function eliminarCliente(id) {
+            if (!esAdminActivo) return;
             if (confirm('¿Eliminar este cliente?')) {
                 clientes = clientes.filter(x => x.id != id);
                 localStorage.setItem('mambas_clientes', JSON.stringify(clientes));
