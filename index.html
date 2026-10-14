@@ -103,7 +103,7 @@
         </div>
     </header>
 
-    <!-- NAVEGACIÓN PRINCIPAL: DOS MÓDULOS INDEPENDIENTES -->
+    <!-- NAVEGACIÓN PRINCIPAL -->
     <div class="bg-black border-b border-mamba-border py-3">
         <div class="max-w-7xl mx-auto px-4 flex justify-center gap-4">
             <button onclick="seleccionarModuloPrincipal('lavado')" id="btn-modulo-lavado" class="main-nav-btn active px-6 py-2.5 rounded-xl font-tech text-xs sm:text-sm font-bold tracking-wider transition border border-mamba-border flex items-center gap-2">
@@ -115,7 +115,7 @@
         </div>
     </div>
 
-    <!-- SUB-NAVEGACIÓN PARA AUTO LAVADO -->
+    <!-- SUB-NAVEGACIÓN AUTO LAVADO -->
     <div id="subnav-lavado" class="border-b border-mamba-border bg-black/40">
         <div class="max-w-7xl mx-auto px-4 flex flex-wrap justify-center sm:justify-start gap-4 sm:gap-8 text-xs sm:text-sm font-semibold text-gray-400">
             <button onclick="switchSubTabLavado('servicios')" id="subtab-lav-servicios" class="sub-tab-btn active py-3 px-2 transition">
@@ -133,7 +133,7 @@
         </div>
     </div>
 
-    <!-- SUB-NAVEGACIÓN PARA MENSAJERÍA -->
+    <!-- SUB-NAVEGACIÓN MENSAJERÍA -->
     <div id="subnav-mensajeria" class="border-b border-mamba-border bg-black/40 hidden">
         <div class="max-w-7xl mx-auto px-4 flex flex-wrap justify-center sm:justify-start gap-4 sm:gap-8 text-xs sm:text-sm font-semibold text-gray-400">
             <button onclick="switchSubTabMensajeria('calculadora')" id="subtab-msg-calculadora" class="sub-tab-btn active py-3 px-2 transition">
@@ -165,37 +165,53 @@
                 <div id="lista-servicios" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
             </div>
 
-            <!-- 1.2 COTIZACIÓN / FACTURA -->
+            <!-- 1.2 COTIZACIÓN / FACTURA CON CANTIDAD, MULTIVEHÍCULO Y CANTIDADES -->
             <div id="sec-lav-cotizacion" class="hidden space-y-6">
                 <div class="text-center max-w-xl mx-auto">
                     <h2 class="text-2xl font-tech font-bold text-white mb-1">Cotización / Factura Auto Lavado</h2>
-                    <p class="text-xs text-gray-400">Genera comprobantes de lavado para tus clientes.</p>
+                    <p class="text-xs text-gray-400">Selecciona servicios, asigna cantidades y suma el total automáticamente.</p>
                 </div>
-                <div class="max-w-2xl mx-auto mamba-card rounded-2xl p-6 space-y-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs text-gray-400 mb-1">Cliente</label>
-                            <input type="text" id="cot-lav-cliente" placeholder="Ej: Carlos Gómez" class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
-                        </div>
-                        <div>
-                            <label class="block text-xs text-gray-400 mb-1">Vehículo / Placa</label>
-                            <input type="text" id="cot-lav-vehiculo" placeholder="Ej: Hyundai Tucson (ABC-123)" class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
-                        </div>
-                    </div>
+                <div class="max-w-2xl mx-auto mamba-card rounded-2xl p-6 space-y-5">
                     <div>
-                        <label class="block text-xs text-gray-400 mb-1">Servicio / Detalle</label>
-                        <textarea id="cot-lav-detalle" rows="3" placeholder="Ej: Lavado completo + Detailing interior..." class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white"></textarea>
+                        <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Nombre del Cliente</label>
+                        <input type="text" id="cot-lav-cliente" placeholder="Ej: Carlos Gómez" class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs text-gray-400 mb-1">Total (₡)</label>
-                            <input type="number" id="cot-lav-monto" placeholder="Ej: 15000" class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
-                        </div>
-                        <div class="flex items-end">
-                            <button onclick="generarCotizacionVistaPrevia('lavado')" class="w-full mamba-red-gradient text-white font-bold py-2.5 rounded-lg text-xs">
-                                <i class="fas fa-eye mr-1"></i> Ver / Imprimir Factura
+
+                    <!-- MÚLTIPLES VEHÍCULOS -->
+                    <div class="border-t border-mamba-border pt-3">
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-xs font-bold text-gray-300 uppercase">Vehículos y Placas</label>
+                            <button type="button" onclick="agregarVehiculoCotizacion()" class="text-xs text-mamba-red font-bold hover:underline">
+                                <i class="fas fa-plus mr-1"></i> Añadir otro vehículo
                             </button>
                         </div>
+                        <div id="cot-vehiculos-container" class="space-y-2"></div>
+                    </div>
+
+                    <!-- SELECCIÓN DE SERVICIOS CON CANTIDAD Y PRECIO -->
+                    <div class="border-t border-mamba-border pt-3 space-y-3">
+                        <div class="flex justify-between items-center">
+                            <label class="text-xs font-bold text-gray-300 uppercase">Servicios a Incluir</label>
+                            <button type="button" onclick="agregarFilaServicioCotizacion()" class="text-xs text-mamba-red font-bold hover:underline">
+                                <i class="fas fa-plus mr-1"></i> Añadir servicio
+                            </button>
+                        </div>
+                        <div id="cot-servicios-container" class="space-y-2"></div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Notas / Detalles adicionales</label>
+                        <textarea id="cot-lav-notas" rows="2" placeholder="Ej: Promoción aplicada, entrega a las 3:00 PM..." class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white"></textarea>
+                    </div>
+
+                    <div class="border-t border-mamba-border pt-3 flex justify-between items-center">
+                        <div>
+                            <span class="text-xs text-gray-400 block uppercase">Total Calculado:</span>
+                            <span id="cot-lav-total-visual" class="font-tech text-2xl font-black text-mamba-red">₡0</span>
+                        </div>
+                        <button onclick="generarCotizacionVistaPrevia('lavado')" class="mamba-red-gradient text-white font-bold py-3 px-6 rounded-lg text-xs uppercase tracking-wider">
+                            <i class="fas fa-eye mr-1"></i> Ver / Imprimir Factura
+                        </button>
                     </div>
                 </div>
             </div>
@@ -354,7 +370,7 @@
 
         </div>
 
-        <!-- COMPROBANTE DE FACTURA COMÚN PARA IMPRIMIR -->
+        <!-- COMPROBANTE DE FACTURA IMPRIMIBLE -->
         <div id="printable-invoice" class="hidden mt-8 p-6 rounded-xl bg-white text-black border border-gray-300 space-y-4">
             <div class="flex justify-between border-b pb-4">
                 <div>
@@ -368,11 +384,11 @@
             </div>
             <div class="text-xs space-y-1">
                 <p><strong>Cliente:</strong> <span id="inv-cliente">-</span></p>
-                <p><strong>Detalle / Vehículo / Ruta:</strong> <span id="inv-vehiculo">-</span></p>
+                <p><strong>Vehículos / Ruta:</strong> <span id="inv-vehiculo">-</span></p>
             </div>
             <div class="border-t border-b py-3 text-xs">
-                <p class="font-bold mb-1">Descripción del trabajo / envío:</p>
-                <p id="inv-detalle" class="text-gray-700">-</p>
+                <p class="font-bold mb-1">Servicios / Detalles:</p>
+                <div id="inv-detalle" class="text-gray-700 space-y-1">-</div>
             </div>
             <div class="flex justify-between items-center pt-2">
                 <span class="text-xs font-bold">TOTAL A PAGAR:</span>
@@ -391,7 +407,7 @@
 
     </main>
 
-    <!-- MODAL AGREGAR/EDITAR SERVICIO DE LAVADO -->
+    <!-- MODAL SERVICIO DE LAVADO -->
     <div id="modal-servicio" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="mamba-card w-full max-w-md rounded-2xl p-6 space-y-4">
             <h3 id="modal-servicio-titulo" class="text-lg font-tech font-bold text-white">Servicio de Lavado</h3>
@@ -417,7 +433,7 @@
         </div>
     </div>
 
-    <!-- MODAL REGISTRAR/EDITAR CLIENTE -->
+    <!-- MODAL CLIENTE -->
     <div id="modal-cliente" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="mamba-card w-full max-w-md rounded-2xl p-6 space-y-4 max-h-[90vh] overflow-y-auto">
             <h3 id="modal-cliente-titulo" class="text-lg font-tech font-bold text-white">Registrar Cliente</h3>
@@ -452,9 +468,8 @@
         <p>&copy; 2026 Las Mambas Auto Lavado & Detailing.</p>
     </footer>
 
-    <!-- LÓGICA DE NAVEGACIÓN Y FUNCIONES -->
+    <!-- LÓGICA DE LA APLICACIÓN -->
     <script>
-        // DATOS EN LOCALSTORAGE
         let servicios = JSON.parse(localStorage.getItem('mambas_servicios')) || [
             { id: 1, nombre: "Automóvil Sedán", desc: "Lavado exterior, aspirado profundo de interiores, aros y abrillantado.", precio: 6000 },
             { id: 2, nombre: "Hatchback / Compacto", desc: "Lavado completo exterior e interior con limpieza de cristales.", precio: 5000 },
@@ -467,7 +482,12 @@
 
         let resultadoUltimoEnvio = null;
 
-        // SELECCIÓN DE MÓDULO PRINCIPAL
+        window.addEventListener('DOMContentLoaded', () => {
+            agregarVehiculoCotizacion();
+            agregarFilaServicioCotizacion();
+            renderServicios();
+        });
+
         function seleccionarModuloPrincipal(mod) {
             const btnLav = document.getElementById('btn-modulo-lavado');
             const btnMsg = document.getElementById('btn-modulo-mensajeria');
@@ -493,7 +513,6 @@
             }
         }
 
-        // SUB-PESTAÑAS DE AUTO LAVADO
         function switchSubTabLavado(tab) {
             ['servicios', 'cotizacion', 'citas', 'clientes'].forEach(t => {
                 const el = document.getElementById(`sec-lav-${t}`);
@@ -505,7 +524,6 @@
             document.getElementById(`subtab-lav-${tab}`).classList.add('active');
         }
 
-        // SUB-PESTAÑAS DE MENSAJERÍA
         function switchSubTabMensajeria(tab) {
             ['calculadora', 'cotizacion'].forEach(t => {
                 const el = document.getElementById(`sec-msg-${t}`);
@@ -517,7 +535,6 @@
             document.getElementById(`subtab-msg-${tab}`).classList.add('active');
         }
 
-        // ACTIVAR/OCULTAR MODO ADMIN CLIENTES
         function toggleAdminClientes() {
             const subtabClientes = document.getElementById('subtab-lav-clientes');
             if (subtabClientes.classList.contains('hidden')) {
@@ -538,7 +555,58 @@
             }
         }
 
-        // RENDER DE SERVICIOS
+        // FUNCIONES DE COTIZACIÓN (CON SELECCIÓN DE CANTIDAD)
+        function agregarVehiculoCotizacion(modelo = '', placa = '') {
+            const cont = document.getElementById('cot-vehiculos-container');
+            const div = document.createElement('div');
+            div.className = 'flex gap-2 items-center cot-veh-row';
+            div.innerHTML = `
+                <input type="text" placeholder="Modelo (Ej: Sedán / BYD)" value="${modelo}" class="cot-veh-modelo w-1/2 bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white">
+                <input type="text" placeholder="Placa (Ej: ABC-123)" value="${placa}" class="cot-veh-placa w-1/2 bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white">
+                <button type="button" onclick="this.parentElement.remove()" class="text-red-500 hover:text-red-400 px-2"><i class="fas fa-times"></i></button>
+            `;
+            cont.appendChild(div);
+        }
+
+        function agregarFilaServicioCotizacion() {
+            const cont = document.getElementById('cot-servicios-container');
+            const div = document.createElement('div');
+            div.className = 'flex gap-2 items-center cot-srv-row bg-black/40 p-2 rounded-lg border border-mamba-border';
+            
+            let opcionesSrv = servicios.map(s => `<option value="${s.id}" data-precio="${s.precio}">${s.nombre} (₡${s.precio.toLocaleString('es-CR')})</option>`).join('');
+
+            div.innerHTML = `
+                <select class="cot-select-srv w-1/2 bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white">
+                    <option value="">Selecciona servicio...</option>
+                    ${opcionesSrv}
+                </select>
+                <div class="w-1/4 flex items-center gap-1">
+                    <span class="text-[10px] text-gray-400">Cant:</span>
+                    <input type="number" min="1" value="1" class="cot-srv-cant w-full bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white" oninput="calcularTotalCotizacionLavado()">
+                </div>
+                <input type="number" placeholder="Precio ₡" class="cot-srv-precio w-1/4 bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white" oninput="calcularTotalCotizacionLavado()">
+                <button type="button" onclick="this.parentElement.remove(); calcularTotalCotizacionLavado();" class="text-red-500 hover:text-red-400 px-2"><i class="fas fa-trash"></i></button>
+            `;
+            cont.appendChild(div);
+
+            div.querySelector('.cot-select-srv').addEventListener('change', function() {
+                const opt = this.options[this.selectedIndex];
+                const precioUnitario = parseFloat(opt.getAttribute('data-precio')) || 0;
+                div.querySelector('.cot-srv-precio').value = precioUnitario;
+                calcularTotalCotizacionLavado();
+            });
+        }
+
+        function calcularTotalCotizacionLavado() {
+            let total = 0;
+            document.querySelectorAll('.cot-srv-row').forEach(row => {
+                const cant = parseFloat(row.querySelector('.cot-srv-cant').value) || 1;
+                const precio = parseFloat(row.querySelector('.cot-srv-precio').value) || 0;
+                total += (precio * cant);
+            });
+            document.getElementById('cot-lav-total-visual').textContent = '₡' + total.toLocaleString('es-CR');
+        }
+
         function renderServicios() {
             const cont = document.getElementById('lista-servicios');
             if (!cont) return;
@@ -617,7 +685,6 @@
             }
         }
 
-        // CALCULADORA RUTAS
         async function calcularRutaAutomatica(e) {
             e.preventDefault();
             const origenTxt = document.getElementById('origen-input').value.trim();
@@ -670,37 +737,60 @@
                 }
             } catch (err) {
                 estado.classList.add('hidden');
-                alert('No se pudo calcular automáticamente. Escribe la distancia manualmente en la casilla de kilómetros.');
+                alert('No se pudo calcular automáticamente. Escribe la distancia manualmente.');
             }
         }
 
-        // COTIZACIÓN VISTA PREVIA
+        // GENERACIÓN DE FACTURA CON CANTIDADES
         function generarCotizacionVistaPrevia(tipo) {
-            let cliente = '', vehiculoRuta = '', detalle = '', monto = 0;
+            let cliente = '', vehiculosStr = '', detalleHtml = '', montoTotal = 0;
 
             if (tipo === 'lavado') {
                 cliente = document.getElementById('cot-lav-cliente').value || 'Cliente General';
-                vehiculoRuta = document.getElementById('cot-lav-vehiculo').value || 'Vehículo estándar';
-                detalle = document.getElementById('cot-lav-detalle').value || 'Servicios de auto lavado & detailing';
-                monto = parseFloat(document.getElementById('cot-lav-monto').value) || 0;
+                
+                let vehs = [];
+                document.querySelectorAll('.cot-veh-row').forEach(row => {
+                    const mod = row.querySelector('.cot-veh-modelo').value.trim();
+                    const pla = row.querySelector('.cot-veh-placa').value.trim();
+                    if (mod || pla) vehs.push(`${mod} (${pla})`);
+                });
+                vehiculosStr = vehs.length > 0 ? vehs.join(' • ') : 'Vehículo estándar';
+
+                let detallesArr = [];
+                document.querySelectorAll('.cot-srv-row').forEach(row => {
+                    const select = row.querySelector('.cot-select-srv');
+                    const srvName = select.options[select.selectedIndex]?.text.split(' (')[0] || 'Servicio';
+                    const cant = parseFloat(row.querySelector('.cot-srv-cant').value) || 1;
+                    const precioUnitario = parseFloat(row.querySelector('.cot-srv-precio').value) || 0;
+                    const subtotal = precioUnitario * cant;
+
+                    if (subtotal > 0) {
+                        montoTotal += subtotal;
+                        detallesArr.push(`• (${cant}x) ${srvName}: ₡${subtotal.toLocaleString('es-CR')}`);
+                    }
+                });
+
+                const notas = document.getElementById('cot-lav-notas').value.trim();
+                if (notas) detallesArr.push(`<br><em>Nota: ${notas}</em>`);
+                detalleHtml = detallesArr.join('<br>') || 'Servicios de auto lavado & detailing';
+
             } else {
                 cliente = document.getElementById('cot-msg-cliente').value || 'Cliente General';
-                vehiculoRuta = document.getElementById('cot-msg-ruta').value || 'Trayecto de mensajería';
-                detalle = document.getElementById('cot-msg-detalle').value || 'Servicio de mensajería express';
-                monto = parseFloat(document.getElementById('cot-msg-monto').value) || 0;
+                vehiculosStr = document.getElementById('cot-msg-ruta').value || 'Trayecto de mensajería';
+                montoTotal = parseFloat(document.getElementById('cot-msg-monto').value) || 0;
+                detalleHtml = document.getElementById('cot-msg-detalle').value || 'Servicio de mensajería express';
             }
 
             document.getElementById('inv-fecha').textContent = new Date().toLocaleDateString('es-CR');
             document.getElementById('inv-cliente').textContent = cliente;
-            document.getElementById('inv-vehiculo').textContent = vehiculoRuta;
-            document.getElementById('inv-detalle').textContent = detalle;
-            document.getElementById('inv-total').textContent = '₡' + monto.toLocaleString('es-CR');
+            document.getElementById('inv-vehiculo').textContent = vehiculosStr;
+            document.getElementById('inv-detalle').innerHTML = detalleHtml;
+            document.getElementById('inv-total').textContent = '₡' + montoTotal.toLocaleString('es-CR');
 
             document.getElementById('printable-invoice').classList.remove('hidden');
             document.getElementById('btn-imprimir-box').classList.remove('hidden');
         }
 
-        // RESERVAR CITA
         function reservarCitaWA(e) {
             e.preventDefault();
             const nom = document.getElementById('cita-nombre').value;
@@ -708,11 +798,10 @@
             const hor = document.getElementById('cita-hora').value;
             const srv = document.getElementById('cita-servicio').value;
 
-            const txt = `Hola Las Mambas, deseo agendar una cita de lavado:%0A- *Cliente:* ${nom}%0A- *Fecha:* ${fec}%0A- *Hora:* ${hor}%0A- *Servicio:* ${srv}`;
+            const txt = `Hola Las Mambas, deseo agendar una cita:%0A- *Cliente:* ${nom}%0A- *Fecha:* ${fec}%0A- *Hora:* ${hor}%0A- *Servicio:* ${srv}`;
             window.open(`https://wa.me/50688818720?text=${txt}`, '_blank');
         }
 
-        // CLIENTES
         function renderClientes() {
             const body = document.getElementById('tabla-clientes-body');
             if (!body) return;
@@ -810,7 +899,6 @@
             }
         }
 
-        // WHATSAPP HELPER
         function solicitarServicioWA(nombre, precio) {
             const txt = `Hola Las Mambas, deseo solicitar el servicio de *${nombre}* (₡${precio.toLocaleString('es-CR')}).`;
             window.open(`https://wa.me/50688818720?text=${encodeURIComponent(txt)}`, '_blank');
@@ -821,9 +909,6 @@
             const txt = `Hola Las Mambas, solicito mensajería express:%0A- Origen: ${resultadoUltimoEnvio.origen}%0A- Destino: ${resultadoUltimoEnvio.destino}%0A- Distancia: ${resultadoUltimoEnvio.km} km%0A- Total: ₡${resultadoUltimoEnvio.total.toLocaleString('es-CR')}`;
             window.open(`https://wa.me/50688818720?text=${txt}`, '_blank');
         }
-
-        // INICIALIZACIÓN
-        renderServicios();
     </script>
 </body>
 </html>
