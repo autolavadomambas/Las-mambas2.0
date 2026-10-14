@@ -598,11 +598,11 @@
 
             const notas = document.getElementById('cot-lav-notas').value.trim();
 
-            let txt = `Hola Las Mambas, solicito la siguiente cotización / servicio:%0A%0A*Cliente:* ${cliente}%0A*Vehículos:* ${vehiculosStr}%0A%0A*Detalle de Servicios:*%0A${detallesArr.join('%0A')}`;
+            let txt = `Hola Las Mambas, solicito la siguiente cotización:\n\n*Cliente:* ${cliente}\n*Vehículos:* ${vehiculosStr}\n\n*Detalle de Servicios:*\n${detallesArr.join('\n')}`;
             if (notas) {
-                txt += `%0A%0A*Notas:* ${notas}`;
+                txt += `\n\n*Notas:* ${notas}`;
             }
-            txt += `%0A%0A*Total Estimado:* ₡${montoTotal.toLocaleString('es-CR')}`;
+            txt += `\n\n*Total Estimado:* ₡${montoTotal.toLocaleString('es-CR')}`;
 
             window.open(`https://wa.me/50688818720?text=${encodeURIComponent(txt)}`, '_blank');
         }
@@ -758,7 +758,7 @@
             const detalle = document.getElementById('cot-msg-detalle').value.trim() || 'Sin detalle';
             const monto = parseFloat(document.getElementById('cot-msg-monto').value) || 0;
 
-            const txt = `Hola Las Mambas, solicito el siguiente envío:%0A- *Cliente:* ${cliente}%0A- *Ruta:* ${ruta}%0A- *Detalle:* ${detalle}%0A- *Monto:* ₡${monto.toLocaleString('es-CR')}`;
+            const txt = `Hola Las Mambas, solicito el siguiente envío:\n- *Cliente:* ${cliente}\n- *Ruta:* ${ruta}\n- *Detalle:* ${detalle}\n- *Monto:* ₡${monto.toLocaleString('es-CR')}`;
             window.open(`https://wa.me/50688818720?text=${encodeURIComponent(txt)}`, '_blank');
         }
 
@@ -769,7 +769,7 @@
             const hor = document.getElementById('cita-hora').value;
             const srv = document.getElementById('cita-servicio').value;
 
-            const txt = `Hola Las Mambas, deseo agendar una cita:%0A- *Cliente:* ${nom}%0A- *Fecha:* ${fec}%0A- *Hora:* ${hor}%0A- *Servicio:* ${srv}`;
+            const txt = `Hola Las Mambas, deseo agendar una cita:\n- *Cliente:* ${nom}\n- *Fecha:* ${fec}\n- *Hora:* ${hor}\n- *Servicio:* ${srv}`;
             window.open(`https://wa.me/50688818720?text=${encodeURIComponent(txt)}`, '_blank');
         }
 
@@ -881,7 +881,7 @@
 
         function enviarMensajeriaWhatsApp() {
             if (!resultadoUltimoEnvio) return;
-            const txt = `Hola Las Mambas, solicito mensajería express:%0A- Origen: ${resultadoUltimoEnvio.origen}%0A- Destino: ${resultadoUltimoEnvio.destino}%0A- Distancia: ${resultadoUltimoEnvio.km} km%0A- Total: ₡${resultadoUltimoEnvio.total.toLocaleString('es-CR')}`;
+            const txt = `Hola Las Mambas, solicito mensajería express:\n- Origen: ${resultadoUltimoEnvio.origen}\n- Destino: ${resultadoUltimoEnvio.destino}\n- Distancia: ${resultadoUltimoEnvio.km} km\n- Total: ₡${resultadoUltimoEnvio.total.toLocaleString('es-CR')}`;
             window.open(`https://wa.me/50688818720?text=${txt}`, '_blank');
         }
     </script>
