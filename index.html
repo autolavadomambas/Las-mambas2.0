@@ -223,7 +223,9 @@
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Servicio Deseado</label>
-                            <input type="text" id="cita-servicio" placeholder="Ej: Lavado Sedán / Detailing" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
+                            <select id="cita-servicio-select" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
+                                <option value="">Selecciona el servicio que deseas...</option>
+                            </select>
                         </div>
                         <button type="submit" class="w-full mamba-red-gradient text-white font-bold py-3 rounded-lg text-xs flex items-center justify-center gap-2">
                             <i class="fab fa-whatsapp text-sm"></i> Agendar Cita por WhatsApp
@@ -306,12 +308,17 @@
                             </div>
                         </div>
                         <div>
-                            <span class="text-xs text-gray-400 uppercase tracking-widest block">Total a Cobrar</span>
+                            <span class="text-xs text-gray-400 uppercase tracking-widest block">TOTAL A PAGAR</span>
                             <span id="res-total" class="font-tech text-3xl font-black text-mamba-red">₡0</span>
                         </div>
-                        <button onclick="enviarMensajeriaWhatsApp()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-lg text-xs flex items-center justify-center gap-2">
-                            <i class="fab fa-whatsapp text-sm"></i> Solicitar Mensajero por WhatsApp
-                        </button>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
+                            <button onclick="enviarMensajeriaWhatsApp()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-lg text-xs flex items-center justify-center gap-2">
+                                <i class="fab fa-whatsapp text-sm"></i> Solicitar por WhatsApp
+                            </button>
+                            <button onclick="pasarACotizacionEnvios()" class="w-full bg-gray-800 hover:bg-gray-700 text-gray-200 border border-mamba-border font-bold py-2.5 rounded-lg text-xs flex items-center justify-center gap-2">
+                                <i class="fas fa-file-invoice-dollar text-mamba-red"></i> Cotizar este Envío
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -340,7 +347,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs text-gray-400 mb-1">Monto Total (₡)</label>
-                            <input type="number" id="cot-msg-monto" placeholder="Ej: 4500" class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
+                            <input type="number" id="cot-msg-monto" readonly placeholder="Calculado automáticamente" class="w-full bg-black/80 border border-mamba-border rounded-lg p-2.5 text-xs text-mamba-red font-bold cursor-not-allowed">
                         </div>
                         <div class="flex items-end">
                             <button onclick="enviarCotizacionEnviosWhatsApp()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-lg text-xs flex items-center justify-center gap-2">
@@ -419,9 +426,13 @@
     <!-- LÓGICA DE LA APLICACIÓN -->
     <script>
         let servicios = JSON.parse(localStorage.getItem('mambas_servicios')) || [
-            { id: 1, nombre: "Automóvil Sedán", desc: "Lavado exterior, aspirado profundo de interiores, aros y abrillantado.", precio: 6000 },
-            { id: 2, nombre: "Hatchback / Compacto", desc: "Lavado completo exterior e interior con limpieza de cristales.", precio: 5000 },
-            { id: 3, nombre: "Pick-up / SUV 4x4", desc: "Lavado de chasis, carrocería, desinfección y aspirado profundo.", precio: 8000 }
+            { id: 1, nombre: "Servicio Únicamente Aspirado", desc: "Limpieza profunda del interior, alfombras y asientos.", precio: 4000 },
+            { id: 2, nombre: "Servicio Premium (Sedán / Hatchback)", desc: "Lavado completo, aspirado profundo, cera Meguiar's, partes negras y detalles.", precio: 7000 },
+            { id: 3, nombre: "Servicio Premium (SUV)", desc: "Lavado completo, aspirado profundo, cera Meguiar's, partes negras y detalles.", precio: 9000 },
+            { id: 4, nombre: "Servicio Premium (Pick-up)", desc: "Lavado completo, aspirado profundo, cera Meguiar's, partes negras y detalles.", precio: 10000 },
+            { id: 5, nombre: "Servicio Premium (Pick-up Full Size)", desc: "Lavado completo, aspirado profundo, cera Meguiar's, partes negras y detalles.", precio: 12000 },
+            { id: 6, nombre: "Restauración y Mantenimiento de Focos", desc: "Tratamiento con Meguiar's PlastX para devolver transparencia a las micas.", precio: 8000 },
+            { id: 7, nombre: "Remoción de Rayones Superficiales (Exterior)", desc: "Tratamiento focalizado con Meguiar's ScratchX para marcas leves en la pintura.", precio: 5000 }
         ];
 
         let clientes = JSON.parse(localStorage.getItem('mambas_clientes')) || [
@@ -435,6 +446,7 @@
             agregarVehiculoCotizacion();
             agregarFilaServicioCotizacion();
             renderServicios();
+            poblarSelectCitas();
         });
 
         function seleccionarModuloPrincipal(mod) {
@@ -519,7 +531,7 @@
             const div = document.createElement('div');
             div.className = 'flex gap-2 items-center cot-veh-row';
             div.innerHTML = `
-                <input type="text" placeholder="Modelo (Ej: Sedán / BYD)" value="${modelo}" class="cot-veh-modelo w-1/2 bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white">
+                <input type="text" placeholder="Modelo (Ej: Sedán / Pick-up)" value="${modelo}" class="cot-veh-modelo w-1/2 bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white">
                 <input type="text" placeholder="Placa (Ej: ABC-123)" value="${placa}" class="cot-veh-placa w-1/2 bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white">
                 <button type="button" onclick="this.parentElement.remove()" class="text-red-500 hover:text-red-400 px-2"><i class="fas fa-times"></i></button>
             `;
@@ -552,6 +564,15 @@
                 const precioUnitario = parseFloat(opt.getAttribute('data-precio')) || 0;
                 div.querySelector('.cot-srv-precio').value = precioUnitario;
                 calcularTotalCotizacionLavado();
+            });
+        }
+
+        function poblarSelectCitas() {
+            const select = document.getElementById('cita-servicio-select');
+            if (!select) return;
+            select.innerHTML = '<option value="">Selecciona el servicio que deseas...</option>';
+            servicios.forEach(s => {
+                select.innerHTML += `<option value="${s.nombre}">${s.nombre} (₡${s.precio.toLocaleString('es-CR')})</option>`;
             });
         }
 
@@ -640,6 +661,7 @@
                     </div>
                 `;
             });
+            poblarSelectCitas();
         }
 
         function abrirModalServicio() {
@@ -752,6 +774,13 @@
             }
         }
 
+        function pasarACotizacionEnvios() {
+            if (!resultadoUltimoEnvio) return;
+            switchSubTabMensajeria('cotizacion');
+            document.getElementById('cot-msg-ruta').value = `${resultadoUltimoEnvio.origen} ➔ ${resultadoUltimoEnvio.destino}`;
+            document.getElementById('cot-msg-monto').value = resultadoUltimoEnvio.total;
+        }
+
         function enviarCotizacionEnviosWhatsApp() {
             const cliente = document.getElementById('cot-msg-cliente').value.trim() || 'Cliente';
             const ruta = document.getElementById('cot-msg-ruta').value.trim() || 'Ruta de envío';
@@ -767,7 +796,7 @@
             const nom = document.getElementById('cita-nombre').value;
             const fec = document.getElementById('cita-fecha').value;
             const hor = document.getElementById('cita-hora').value;
-            const srv = document.getElementById('cita-servicio').value;
+            const srv = document.getElementById('cita-servicio-select').value || 'Servicio General';
 
             const txt = `Hola Las Mambas, deseo agendar una cita:\n- *Cliente:* ${nom}\n- *Fecha:* ${fec}\n- *Hora:* ${hor}\n- *Servicio:* ${srv}`;
             window.open(`https://wa.me/50688818720?text=${encodeURIComponent(txt)}`, '_blank');
