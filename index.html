@@ -58,8 +58,6 @@
             color: #E60012;
             font-weight: 700;
         }
-
-        /* ESTILOS PARA LAS CATEGORÍAS DESPLEGABLES DINÁMICAS */
         .category-accordion {
             background: #141417;
             border: 1px solid #282830;
@@ -136,7 +134,6 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between">
 
-    <!-- HEADER -->
     <header class="bg-black/90 border-b border-mamba-border sticky top-0 z-50 backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-3">
@@ -160,7 +157,6 @@
         </div>
     </header>
 
-    <!-- NAVEGACIÓN PRINCIPAL -->
     <div class="bg-black border-b border-mamba-border py-3">
         <div class="max-w-7xl mx-auto px-4 flex justify-center gap-4">
             <button onclick="seleccionarModuloPrincipal('lavado')" id="btn-modulo-lavado" class="main-nav-btn active px-6 py-2.5 rounded-xl font-tech text-xs sm:text-sm font-bold tracking-wider transition border border-mamba-border flex items-center gap-2">
@@ -172,7 +168,6 @@
         </div>
     </div>
 
-    <!-- SUB-NAVEGACIÓN AUTO LAVADO -->
     <div id="subnav-lavado" class="border-b border-mamba-border bg-black/40">
         <div class="max-w-7xl mx-auto px-4 flex flex-wrap justify-center sm:justify-start gap-4 sm:gap-8 text-xs sm:text-sm font-semibold text-gray-400">
             <button onclick="switchSubTabLavado('servicios')" id="subtab-lav-servicios" class="sub-tab-btn active py-3 px-2 transition">
@@ -190,7 +185,6 @@
         </div>
     </div>
 
-    <!-- SUB-NAVEGACIÓN MENSAJERÍA -->
     <div id="subnav-mensajeria" class="border-b border-mamba-border bg-black/40 hidden">
         <div class="max-w-7xl mx-auto px-4 flex flex-wrap justify-center sm:justify-start gap-4 sm:gap-8 text-xs sm:text-sm font-semibold text-gray-400">
             <button onclick="switchSubTabMensajeria('calculadora')" id="subtab-msg-calculadora" class="sub-tab-btn active py-3 px-2 transition">
@@ -202,13 +196,8 @@
         </div>
     </div>
 
-    <!-- CONTENIDO PRINCIPAL -->
     <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full">
-
-        <!-- ================= MÓDULO AUTO LAVADO ================= -->
         <div id="seccion-modulo-lavado" class="space-y-6">
-
-            <!-- 1.1 SERVICIOS -->
             <div id="sec-lav-servicios" class="block space-y-6">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-mamba-border pb-4">
                     <div>
@@ -224,12 +213,9 @@
                         </button>
                     </div>
                 </div>
-
-                <!-- CONTENEDOR DINÁMICO DE CATEGORÍAS -->
                 <div id="contenedor-categorias" class="space-y-4"></div>
             </div>
 
-            <!-- 1.2 COTIZADOR Y PEDIDOS (ENVIAR A WHATSAPP) -->
             <div id="sec-lav-cotizacion" class="hidden space-y-6">
                 <div class="text-center max-w-xl mx-auto">
                     <h2 class="text-2xl font-tech font-bold text-white mb-1">Cotizador y Pedido Express</h2>
@@ -240,8 +226,6 @@
                         <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Tu Nombre</label>
                         <input type="text" id="cot-lav-cliente" placeholder="Ej: Carlos Gómez" class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
                     </div>
-
-                    <!-- MÚLTIPLES VEHÍCULOS -->
                     <div class="border-t border-mamba-border pt-3">
                         <div class="flex justify-between items-center mb-2">
                             <label class="text-xs font-bold text-gray-300 uppercase">Vehículos y Placas</label>
@@ -251,8 +235,6 @@
                         </div>
                         <div id="cot-vehiculos-container" class="space-y-2"></div>
                     </div>
-
-                    <!-- SELECCIÓN DE SERVICIOS -->
                     <div class="border-t border-mamba-border pt-3 space-y-3">
                         <div class="flex justify-between items-center">
                             <label class="text-xs font-bold text-gray-300 uppercase">Servicios a Incluir</label>
@@ -262,15 +244,1687 @@
                         </div>
                         <div id="cot-servicios-container" class="space-y-2"></div>
                     </div>
-
                     <div>
                         <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Notas / Instrucciones especiales</label>
                         <textarea id="cot-lav-notas" rows="2" placeholder="Ej: Necesito el servicio para hoy a las 2:00 PM..." class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white"></textarea>
                     </div>
-
                     <div class="border-t border-mamba-border pt-4 flex flex-col sm:flex-row justify-between items-center gap-4">
                         <div>
                             <span class="text-xs text-gray-400 block uppercase">Total Estimado:</span>
                             <span id="cot-lav-total-visual" class="font-tech text-2xl font-black text-mamba-red">₡0</span>
                         </div>
-                        <button onclick="enviarCotizacionLavadoWhatsApp()" class="w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg text-xs uppercase tracking-wider flex items-center justify-center gap-2
+                        <button onclick="enviarCotizacionLavadoWhatsApp()" class="w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg">
+                            <i class="fab fa-whatsapp text-base"></i> Enviar Cotización a Las Mambas
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="sec-lav-citas" class="hidden space-y-6">
+                <div class="text-center max-w-xl mx-auto">
+                    <h2 class="text-2xl font-tech font-bold text-white mb-1">Agendamiento de Citas</h2>
+                    <p class="text-xs text-gray-400">Reserva tu espacio para lavado o detailing en el taller.</p>
+                </div>
+                <div class="max-w-xl mx-auto mamba-card rounded-2xl p-6 space-y-4">
+                    <form onsubmit="reservarCitaWA(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Nombre Completo</label>
+                            <input type="text" id="cita-nombre" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Fecha</label>
+                                <input type="date" id="cita-fecha" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Hora</label>
+                                <input type="time" id="cita-hora" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Servicio Deseado</label>
+                            <select id="cita-servicio-select" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
+                                <option value="">Selecciona el servicio que deseas...</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="w-full mamba-red-gradient text-white font-bold py-3 rounded-lg text-xs flex items-center justify-center gap-2">
+                            <i class="fab fa-whatsapp text-sm"></i> Agendar Cita por WhatsApp
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="sec-lav-clientes" class="hidden space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-mamba-border pb-4">
+                    <div>
+                        <h2 class="text-2xl font-tech font-bold text-white">Directorio Privado de Clientes</h2>
+                        <p class="text-xs text-gray-400">Administra clientes y sus múltiples vehículos registrados.</p>
+                    </div>
+                    <button onclick="abrirModalCliente()" class="mamba-red-gradient text-white text-xs font-bold py-2.5 px-4 rounded-lg flex items-center gap-2 shadow-md">
+                        <i class="fas fa-user-plus"></i> Agregar Cliente
+                    </button>
+                </div>
+                <div class="mamba-card rounded-2xl overflow-x-auto">
+                    <table class="w-full text-left text-xs text-gray-300">
+                        <thead class="bg-black/80 uppercase font-tech text-gray-400 border-b border-mamba-border">
+                            <tr>
+                                <th class="p-4">Nombre</th>
+                                <th class="p-4">Teléfono</th>
+                                <th class="p-4">Vehículos / Placas</th>
+                                <th class="p-4 text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-clientes-body" class="divide-y divide-mamba-border"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="seccion-modulo-mensajeria" class="hidden space-y-6">
+            <div id="sec-msg-calculadora" class="block space-y-6">
+                <div class="text-center max-w-xl mx-auto">
+                    <h2 class="text-2xl font-tech font-bold text-white mb-1">Calculadora de Mensajería Express</h2>
+                    <p class="text-xs text-gray-400">Calcula la tarifa automática a ₡450 / km o ingresa la distancia manual.</p>
+                </div>
+                <div class="max-w-xl mx-auto mamba-card rounded-2xl p-6 space-y-5">
+                    <form onsubmit="calcularRutaAutomatica(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Punto de Origen</label>
+                            <input type="text" id="origen-input" value="Heredia, Costa Rica" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-3 text-sm text-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Punto de Destino</label>
+                            <input type="text" id="destino-input" placeholder="Ej: San Rafael, Heredia" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-3 text-sm text-white">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-300 uppercase mb-1">¿Kilómetros manuales?</label>
+                                <input type="number" id="km-manual" step="0.5" placeholder="Ej: 8" class="w-full bg-black/60 border border-mamba-border rounded-lg p-3 text-sm text-white">
+                            </div>
+                            <div class="flex items-end">
+                                <button type="submit" class="w-full mamba-red-gradient text-white font-bold py-3 rounded-lg text-xs uppercase tracking-wider">
+                                    <i class="fas fa-calculator mr-1"></i> Calcular
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="estado-calculo" class="hidden text-center text-xs text-yellow-400 py-2">
+                        <i class="fas fa-spinner fa-spin mr-1"></i> Calculando ruta en el mapa...
+                    </div>
+                    <div id="resultado-mensajeria" class="hidden p-4 rounded-xl bg-black/80 border border-mamba-border text-center space-y-3">
+                        <div class="grid grid-cols-2 gap-2 text-xs border-b border-mamba-border pb-3">
+                            <div>
+                                <span class="text-gray-400 block">Distancia:</span>
+                                <span id="res-distancia" class="font-bold text-white text-sm">0 km</span>
+                            </div>
+                            <div>
+                                <span class="text-gray-400 block">Tarifa por km:</span>
+                                <span class="font-bold text-white text-sm">₡450</span>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="text-xs text-gray-400 uppercase tracking-widest block">TOTAL A PAGAR</span>
+                            <span id="res-total" class="font-tech text-3xl font-black text-mamba-red">₡0</span>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
+                            <button onclick="enviarMensajeriaWhatsApp()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-lg text-xs flex items-center justify-center gap-2">
+                                <i class="fab fa-whatsapp text-sm"></i> Solicitar por WhatsApp
+                            </button>
+                            <button onclick="pasarACotizacionEnvios()" class="w-full bg-gray-800 hover:bg-gray-700 text-gray-200 border border-mamba-border font-bold py-2.5 rounded-lg text-xs flex items-center justify-center gap-2">
+                                <i class="fas fa-file-invoice-dollar text-mamba-red"></i> Cotizar este Envío
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="sec-msg-cotizacion" class="hidden space-y-6">
+                <div class="text-center max-w-xl mx-auto">
+                    <h2 class="text-2xl font-tech font-bold text-white mb-1">Cotización Rápida Envíos</h2>
+                    <p class="text-xs text-gray-400">Calcula y envía los detalles de un envío directamente al chat.</p>
+                </div>
+                <div class="max-w-2xl mx-auto mamba-card rounded-2xl p-6 space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs text-gray-400 mb-1">Cliente / Destinatario</label>
+                            <input type="text" id="cot-msg-cliente" placeholder="Ej: María Rojas" class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-gray-400 mb-1">Ruta / Trayecto</label>
+                            <input type="text" id="cot-msg-ruta" placeholder="Ej: Heredia -> San José" class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Detalle del Envío / Paquete</label>
+                        <textarea id="cot-msg-detalle" rows="3" placeholder="Ej: Entrega urgente de repuestos..." class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white"></textarea>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs text-gray-400 mb-1">Monto Total (₡)</label>
+                            <input type="number" id="cot-msg-monto" readonly placeholder="Calculado automáticamente" class="w-full bg-black/80 border border-mamba-border rounded-lg p-2.5 text-xs text-mamba-red font-bold cursor-not-allowed">
+                        </div>
+                        <div class="flex items-end">
+                            <button onclick="enviarCotizacionEnviosWhatsApp()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-lg text-xs flex items-center justify-center gap-2">
+                                <i class="fab fa-whatsapp"></i> Enviar Envío por WhatsApp
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="modal-servicio" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="mamba-card w-full max-w-md rounded-2xl p-6 space-y-4">
+            <h3 id="modal-servicio-titulo" class="text-lg font-tech font-bold text-white">Servicio de Lavado</h3>
+            <form onsubmit="guardarServicio(event)" class="space-y-3">
+                <input type="hidden" id="srv-id">
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Categoría</label>
+                    <select id="srv-categoria-select" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white"></select>
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Nombre del Servicio</label>
+                    <input type="text" id="srv-nombre" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Descripción / Detalles</label>
+                    <textarea id="srv-desc" rows="2" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white"></textarea>
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Precio (₡)</label>
+                    <input type="number" id="srv-precio" required min="0" class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Etiqueta (Opcional)</label>
+                    <input type="text" id="srv-badge" placeholder="Ej: Oferta de Lanzamiento, Complemento" class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
+                </div>
+                <div class="flex justify-end gap-2 pt-2 border-t border-mamba-border">
+                    <button type="button" onclick="cerrarModalServicio()" class="px-4 py-2 bg-gray-800 text-gray-300 text-xs rounded-lg">Cancelar</button>
+                    <button type="submit" class="px-4 py-2 mamba-red-gradient text-white text-xs font-bold rounded-lg">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-cliente" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="mamba-card w-full max-w-md rounded-2xl p-6 space-y-4 max-h-[90vh] overflow-y-auto">
+            <h3 id="modal-cliente-titulo" class="text-lg font-tech font-bold text-white">Registrar Cliente</h3>
+            <form onsubmit="guardarCliente(event)" class="space-y-3">
+                <input type="hidden" id="cli-id">
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Nombre Completo</label>
+                    <input type="text" id="cli-nombre" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Teléfono</label>
+                    <input type="text" id="cli-telefono" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
+                </div>
+                <div class="border-t border-mamba-border pt-3">
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="text-xs font-bold text-gray-300 uppercase">Vehículos del Cliente</label>
+                        <button type="button" onclick="agregarCampoVehiculoModal()" class="text-xs text-mamba-red font-bold hover:underline">
+                            <i class="fas fa-plus mr-1"></i> Añadir otro vehículo
+                        </button>
+                    </div>
+                    <div id="vehiculos-container" class="space-y-2"></div>
+                </div>
+                <div class="flex justify-end gap-2 pt-3 border-t border-mamba-border">
+                    <button type="button" onclick="cerrarModalCliente()" class="px-4 py-2 bg-gray-800 text-gray-300 text-xs rounded-lg">Cancelar</button>
+                    <button type="submit" class="px-4 py-2 mamba-red-gradient text-white text-xs font-bold rounded-lg">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="border-t border-mamba-border bg-black py-6 text-center text-xs text-gray-500">
+        <p>&copy; 2026 Las Mambas Auto Lavado & Detailing.</p>
+    </footer>
+
+    <!-- LÓGICA DE LA APLICACIÓN -->
+    <script>
+        let categorias = JSON.parse(localStorage.getItem('mambas_categorias')) || [
+            { id: "cat-1", icono: "🚿", titulo: "LAVADO EXTERIOR", subtext: "Incluye únicamente el lavado exterior, limpieza de aros y llantas, enjuague y secado. No incluye aspirado, encerado ni limpieza interior." },
+            { id: "cat-2", icono: "🧹", titulo: "ASPIRADO Y LIMPIEZA INTERIOR", subtext: "Limpieza interior rápida y profunda de alfombras y asientos." },
+            { id: "cat-3", icono: "🔥", titulo: "LAVADO COMPLETO", subtext: "Incluye lavado exterior, aspirado profundo, encerado y acondicionamiento de partes negras y llantas." },
+            { id: "cat-4", icono: "⭐", titulo: "PAQUETES PREMIUM", subtext: "Incluye Lavado exterior completo + Aspirado profundo + Encerado Meguiar's + Acondicionamiento de plásticos y llantas + Sellado Express con efecto hidrofóbico + Tratamiento de rayones superficiales + Tratamiento de focos opacos.<br><strong class='text-yellow-500'>⚠️ Advertencia:</strong> Los resultados dependen del estado de la pintura y los focos. No incluye eliminación de rayones profundos." },
+            { id: "cat-5", icono: "✨", titulo: "DETAILING Y TRATAMIENTOS", subtext: "Servicios especializados. Dependiendo del estado de la superficie, se valora el trabajo o se requiere cotización previa." },
+            { id: "cat-6", icono: "🏍️", titulo: "LAVADO DE MOTOS", subtext: "Lavado especializado para motocicletas." },
+            { id: "cat-7", icono: "🏠", titulo: "SERVICIO A DOMICILIO", subtext: "Recargo de domicilio según zona. Funciona como un adicional al servicio seleccionado." }
+        ];
+
+        let servicios = JSON.parse(localStorage.getItem('mambas_servicios_cat')) || [
+            { id: 1, catId: "cat-1", nombre: "Solo lavado Sedán / Hatchback", desc: "Lavado exterior, aros, llantas, enjuague y secado.", precio: 4000, badge: "" },
+            { id: 2, catId: "cat-1", nombre: "Solo lavado SUV", desc: "Lavado exterior, aros, llantas, enjuague y secado.", precio: 5000, badge: "" },
+            { id: 3, catId: "cat-1", nombre: "Solo lavado Pick-up", desc: "Lavado exterior, aros, llantas, enjuague y secado.", precio: 6000, badge: "" },
+            { id: 4, catId: "cat-1", nombre: "Solo lavado Pick-up Full Size", desc: "Lavado exterior, aros, llantas, enjuague y secado.", precio: 7000, badge: "" },
+            { id: 5, catId: "cat-2", nombre: "Aspirado Sedán / Hatchback", desc: "Limpieza interior rápida y profunda de alfombras y asientos.", precio: 4000, badge: "" },
+            { id: 6, catId: "cat-2", nombre: "Aspirado SUV / Pick-up", desc: "Limpieza interior rápida y profunda de alfombras y asientos.", precio: 5000, badge: "" },
+            { id: 7, catId: "cat-2", nombre: "Aspirado Pick-up Full Size", desc: "Limpieza interior rápida y profunda de alfombras y asientos.", precio: 6000, badge: "" },
+            { id: 8, catId: "cat-3", nombre: "Servicio Completo Sedán / Hatchback", desc: "Lavado completo + Aspirado profundo + Encerado + Acondicionador de partes negras + llantas.", precio: 7000, badge: "Oferta de Lanzamiento" },
+            { id: 9, catId: "cat-3", nombre: "Servicio Completo SUV", desc: "Lavado completo + Aspirado profundo + Encerado + Acondicionador de partes negras + llantas.", precio: 9000, badge: "Oferta de Lanzamiento" },
+            { id: 10, catId: "cat-3", nombre: "Servicio Completo Pick-up", desc: "Lavado completo + Aspirado profundo + Encerado + Acondicionador de partes negras + llantas.", precio: 10000, badge: "Oferta de Lanzamiento" },
+            { id: 11, catId: "cat-4", nombre: "Servicio Premium Sedán / Hatchback", desc: "Lavado completo + Aspirado profundo + Corrección ligera de rayones + Restauración de focos + Acondicionamiento de cuero/dash + Partes negras & Llantas + Sellado Express Hidrofóbico.", precio: 12000, badge: "" },
+            { id: 12, catId: "cat-4", nombre: "Servicio Premium SUV", desc: "Lavado completo + Aspirado profundo + Corrección ligera de rayones + Restauración de focos + Acondicionamiento de cuero/dash + Partes negras & Llantas + Sellado Express Hidrofóbico.", precio: 15000, badge: "" },
+            { id: 13, catId: "cat-4", nombre: "Servicio Premium Pick-up", desc: "Lavado completo + Aspirado profundo + Corrección ligera de rayones + Restauración de focos + Acondicionamiento de cuero/dash + Partes negras & Llantas + Sellado Express Hidrofóbico.", precio: 16000, badge: "" },
+            { id: 14, catId: "cat-4", nombre: "Servicio Premium Pick-up Full Size", desc: "Lavado completo + Aspirado profundo + Corrección ligera de rayones + Restauración de focos + Acondicionamiento de cuero/dash + Partes negras & Llantas + Sellado Express Hidrofóbico.", precio: 18000, badge: "" },
+            { id: 15, catId: "cat-5", nombre: "Restauración y Mantenimiento de Focos", desc: "Tratamiento para eliminar opacidad y devolver claridad.", precio: 5000, badge: "Complemento" },
+            { id: 16, catId: "cat-5", nombre: "Remoción de Rayones Superficiales", desc: "Tratamiento focalizado por zona pequeña para marcas leves en la pintura.", precio: 3000, badge: "Complemento" },
+            { id: 17, catId: "cat-5", nombre: "Sellado Express de Brillo Hidrofóbico", desc: "Aplicación de sellador sintético Meguiar's. Aporta brillo espejo y una capa hidrofóbica que repele agua y suciedad.", precio: 4000, badge: "Complemento" },
+            { id: 18, catId: "cat-6", nombre: "Lavado Premium Moto", desc: "Lavado completo, desengrasado de cadena/aros, aspirado de compartimientos y acondicionador de plásticos y llantas.", precio: 4000, badge: "" },
+            { id: 19, catId: "cat-7", nombre: "Servicio a Domicilio", desc: "Recargo de domicilio desde ₡3.000, según zona. (GRATIS en 3 km para paquetes Premium).", precio: 3000, badge: "" }
+        ];
+
+        let clientes = JSON.parse(localStorage.getItem('mambas_clientes')) || [
+            { id: 1, nombre: "Juan Pérez", telefono: "8888-8888", vehiculos: [{ modelo: "Toyota Corolla", placa: "ABC-123" }] }
+        ];
+
+        let resultadoUltimoEnvio = null;
+        let esAdminActivo = false;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            agregarVehiculoCotizacion();
+            agregarFilaServicioCotizacion();
+            renderCategoriasYServicios();
+            poblarSelectCitas();
+        });
+
+        function renderCategoriasYServicios() {
+            const cont = document.getElementById('contenedor-categorias');
+            if (!cont) return;
+            cont.innerHTML = '';
+
+            categorias.forEach(cat => {
+                const serviciosDeCat = servicios.filter(s => s.catId === cat.id);
+                let htmlServicios = '';
+
+                serviciosDeCat.forEach(s => {
+                    let badgeHtml = s.badge ? `<span class="launch-badge">${s.badge}</span>` : '';
+                    let adminSrvBtn = esAdminActivo ? `
+                        <div class="flex gap-2">
+                            <button onclick="editarServicio(${s.id})" class="text-xs text-gray-400 hover:text-white" title="Editar"><i class="fas fa-edit"></i></button>
+                            <button onclick="eliminarServicio(${s.id})" class="text-xs text-red-500 hover:text-red-400" title="Eliminar"><i class="fas fa-trash"></i></button>
+                        </div>
+                    ` : '';
+
+                    htmlServicios += `
+                        <div class="mamba-card rounded-2xl p-5 flex flex-col justify-between">
+                            <div>
+                                ${badgeHtml}
+                                <div class="flex justify-between items-start mb-2">
+                                    <h4 class="font-tech font-bold text-white text-base">${s.nombre}</h4>
+                                    ${adminSrvBtn}
+                                </div>
+                                <p class="text-xs text-gray-400 mb-4">${s.desc}</p>
+                            </div>
+                            <div class="border-t border-mamba-border pt-3 flex justify-between items-center">
+                                <span class="font-tech text-lg font-black text-mamba-red">₡${s.precio.toLocaleString('es-CR')}</span>
+                                <button onclick="solicitarServicioWA('${s.nombre}', ${s.precio})" class="bg-green-600 hover:bg-green-700 text-white text-xs font-bold py-1.5 px-3 rounded-lg flex items-center gap-1">
+                                    <i class="fab fa-whatsapp"></i> Pedir
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                let adminCatBtn = esAdminActivo ? `
+                    <button onclick="event.stopPropagation(); eliminarCategoriaAdmin('${cat.id}')" class="text-xs text-red-500 hover:text-red-400 mr-2" title="Eliminar Categoría"><i class="fas fa-trash"></i></button>
+                ` : '';
+
+                cont.innerHTML += `
+                    <div class="category-accordion" id="${cat.id}">
+                        <div class="category-header" onclick="toggleCategory('${cat.id}')">
+                            <h3 class="category-title"><span class="icon">${cat.icono}</span> ${cat.titulo}</h3>
+                            <div class="flex items-center gap-2">
+                                ${adminCatBtn}
+                                <span class="category-arrow"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                        </div>
+                        <div class="category-content">
+                            ${cat.subtext ? `<p class="service-subtext">${cat.subtext}</p>` : ''}
+                            <div class="category-services-grid">
+                                ${htmlServicios || '<p class="text-xs text-gray-500">No hay servicios en esta categoría.</p>'}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            poblarSelectCategoriasModal();
+            poblarSelectCitas();
+        }
+
+        function toggleCategory(categoryId) {
+            const clickedAccordion = document.getElementById(categoryId);
+            if (!clickedAccordion) return;
+            const isActive = clickedAccordion.classList.contains('active');
+            
+            document.querySelectorAll('.category-accordion').forEach(acc => {
+                acc.classList.remove('active');
+            });
+            
+            if (!isActive) {
+                clickedAccordion.classList.add('active');
+            }
+        }
+
+        function crearNuevaCategoriaAdmin() {
+            if (!esAdminActivo) return;
+            const titulo = prompt("Nombre de la nueva categoría:");
+            if (!titulo) return;
+            const icono = prompt("Ícono emoji para la categoría (Ej: 🧼, 🚗, 🛡️):") || "🚗";
+            const subtext = prompt("Descripción breve de la categoría (Opcional):") || "";
+
+            const newCat = {
+                id: "cat-" + Date.now(),
+                icono: icono,
+                titulo: titulo.toUpperCase(),
+                subtext: subtext
+            };
+
+            categorias.push(newCat);
+            localStorage.setItem('mambas_categorias', JSON.stringify(categorias));
+            renderCategoriasYServicios();
+            alert("Categoría agregada exitosamente.");
+        }
+
+        function eliminarCategoriaAdmin(catId) {
+            if (!esAdminActivo) return;
+            if (confirm("¿Estás seguro de borrar esta categoría y todos sus servicios asociados?")) {
+                categorias = categorias.filter(c => c.id !== catId);
+                servicios = servicios.filter(s => s.catId !== catId);
+                localStorage.setItem('mambas_categorias', JSON.stringify(categorias));
+                localStorage.setItem('mambas_servicios_cat', JSON.stringify(servicios));
+                renderCategoriasYServicios();
+            }
+        }
+
+        function poblarSelectCategoriasModal() {
+            const sel = document.getElementById('srv-categoria-select');
+            if (!sel) return;
+            sel.innerHTML = '';
+            categorias.forEach(c => {
+                sel.innerHTML += `<option value="${c.id}">${c.titulo}</option>`;
+            });
+        }
+
+        function abrirModalServicio() {
+            if (!esAdminActivo) return;
+            document.getElementById('srv-id').value = '';
+            document.getElementById('srv-nombre').value = '';
+            document.getElementById('srv-desc').value = '';
+            document.getElementById('srv-precio').value = '';
+            document.getElementById('srv-badge').value = '';
+            document.getElementById('modal-servicio-titulo').textContent = 'Agregar Servicio';
+            document.getElementById('modal-servicio').classList.remove('hidden');
+        }
+
+        function cerrarModalServicio() {
+            document.getElementById('modal-servicio').classList.add('hidden');
+        }
+
+        function guardarServicio(e) {
+            e.preventDefault();
+            if (!esAdminActivo) return;
+            const id = document.getElementById('srv-id').value;
+            const catId = document.getElementById('srv-categoria-select').value;
+            const nombre = document.getElementById('srv-nombre').value;
+            const desc = document.getElementById('srv-desc').value;
+            const precio = parseFloat(document.getElementById('srv-precio').value);
+            const badge = document.getElementById('srv-badge').value;
+
+            if (id) {
+                const s = servicios.find(x => x.id == id);
+                if (s) { 
+                    s.catId = catId; 
+                    s.nombre = nombre; 
+                    s.desc = desc; 
+                    s.precio = precio; 
+                    s.badge = badge; 
+                }
+            } else {
+                servicios.push({ id: Date.now(), catId, nombre, desc, precio, badge });
+            }
+
+            localStorage.setItem('mambas_servicios_cat', JSON.stringify(servicios));
+            cerrarModalServicio();
+            renderCategoriasYServicios();
+        }
+
+        function editarServicio(id) {
+            if (!esAdminActivo) return;
+            const s = servicios.find(x => x.id == id);
+            if (!s) return;
+            document.getElementById('srv-id').value = s.id;
+            document.getElementById('srv-categoria-select').value = s.catId;
+            document.getElementById('srv-nombre').value = s.nombre;
+            document.getElementById('srv-desc').value = s.desc;
+            document.getElementById('srv-precio').value = s.precio;
+            document.getElementById('srv-badge').value = s.badge || '';
+            document.getElementById('modal-servicio-titulo').textContent = 'Editar Servicio';
+            document.getElementById('modal-servicio').classList.remove('hidden');
+        }
+
+        function eliminarServicio(id) {
+            if (!esAdminActivo) return;
+            if (confirm('¿Borrar este servicio?')) {
+                servicios = servicios.filter(x => x.id != id);
+                localStorage.setItem('mambas_servicios_cat', JSON.stringify(servicios));
+                renderCategoriasYServicios();
+            }
+        }
+
+        function seleccionarModuloPrincipal(mod) {
+            const btnLav = document.getElementById('btn-modulo-lavado');
+            const btnMsg = document.getElementById('btn-modulo-mensajeria');
+            const subLav = document.getElementById('subnav-lavado');
+            const subMsg = document.getElementById('subnav-mensajeria');
+            const secLav = document.getElementById('seccion-modulo-lavado');
+            const secMsg = document.getElementById('seccion-modulo-mensajeria');
+
+            if (mod === 'lavado') {
+                btnLav.className = "main-nav-btn active px-6 py-2.5 rounded-xl font-tech text-xs sm:text-sm font-bold tracking-wider transition border border-mamba-border flex items-center gap-2";
+                btnMsg.className = "main-nav-btn px-6 py-2.5 rounded-xl font-tech text-xs sm:text-sm font-bold tracking-wider transition border border-mamba-border flex items-center gap-2 bg-gray-900 text-gray-400 hover:text-white";
+                subLav.classList.remove('hidden');
+                subMsg.classList.add('hidden');
+                secLav.classList.remove('hidden');
+                secMsg.classList.add('hidden');
+            } else {
+                btnMsg.className = "main-nav-btn active px-6 py-2.5 rounded-xl font-tech text-xs sm:text-sm font-bold tracking-wider transition border border-mamba-border flex items-center gap-2";
+                btnLav.className = "main-nav-btn px-6 py-2.5 rounded-xl font-tech text-xs sm:text-sm font-bold tracking-wider transition border border-mamba-border flex items-center gap-2 bg-gray-900 text-gray-400 hover:text-white";
+                subMsg.classList.remove('hidden');
+                subLav.classList.add('hidden');
+                secMsg.classList.remove('hidden');
+                secLav.classList.add('hidden');
+            }
+        }
+
+        function switchSubTabLavado(tab) {
+            ['servicios', 'cotizacion', 'citas', 'clientes'].forEach(t => {
+                const el = document.getElementById(`sec-lav-${t}`);
+                if (el) el.classList.add('hidden');
+                const btn = document.getElementById(`subtab-lav-${t}`);
+                if (btn) btn.classList.remove('active');
+            });
+            document.getElementById(`sec-lav-${tab}`).classList.remove('hidden');
+            document.getElementById(`subtab-lav-${tab}`).classList.add('active');
+        }
+
+        function switchSubTabMensajeria(tab) {
+            ['calculadora', 'cotizacion'].forEach(t => {
+                const el = document.getElementById(`sec-msg-${t}`);
+                if (el) el.classList.add('hidden');
+                const btn = document.getElementById(`subtab-msg-${t}`);
+                if (btn) btn.classList.remove('active');
+            });
+            document.getElementById(`sec-msg-${tab}`).classList.remove('hidden');
+            document.getElementById(`subtab-msg-${tab}`).classList.add('active');
+        }
+
+        function toggleAdminClientes() {
+            const subtabClientes = document.getElementById('subtab-lav-clientes');
+            const btnAgregarSrv = document.getElementById('btn-agregar-servicio-admin');
+            const btnAgregarCat = document.getElementById('btn-agregar-categoria-admin');
+
+            if (subtabClientes.classList.contains('hidden')) {
+                const pin = prompt("Ingresa la clave de administrador:");
+                if (pin && pin.toLowerCase() === "justin248".toLowerCase()) {
+                    esAdminActivo = true;
+                    subtabClientes.classList.remove('hidden');
+                    btnAgregarSrv.classList.remove('hidden');
+                    btnAgregarSrv.classList.add('flex');
+                    btnAgregarCat.classList.remove('hidden');
+                    btnAgregarCat.classList.add('flex');
+                    seleccionarModuloPrincipal('lavado');
+                    switchSubTabLavado('servicios');
+                    renderCategoriasYServicios();
+                    alert("Modo administrador activado.");
+                } else {
+                    alert("Clave incorrecta.");
+                }
+            } else {
+                esAdminActivo = false;
+                subtabClientes.classList.add('hidden');
+                btnAgregarSrv.classList.add('hidden');
+                btnAgregarSrv.classList.remove('flex');
+                btnAgregarCat.classList.add('hidden');
+                btnAgregarCat.classList.remove('flex');
+                switchSubTabLavado('servicios');
+                renderCategoriasYServicios();
+                alert("Modo administrador oculto.");
+            }
+        }
+
+        function agregarVehiculoCotizacion(modelo = '', placa = '') {
+            const cont = document.getElementById('cot-vehiculos-container');
+            const div = document.createElement('div');
+            div.className = 'flex gap-2 items-center cot-veh-row';
+            div.innerHTML = `
+                <input type="text" placeholder="Modelo (Ej: Sedán / Pick-up)" value="${modelo}" class="cot-veh-modelo w-1/2 bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white">
+                <input type="text" placeholder="Placa (Ej: ABC-123)" value="${placa}" class="cot-veh-placa w-1/2 bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white">
+                <button type="button" onclick="this.parentElement.remove()" class="text-red-500 hover:text-red-400 px-2"><i class="fas fa-times"></i></button>
+            `;
+            cont.appendChild(div);
+        }
+
+        function agregarFilaServicioCotizacion() {
+            const cont = document.getElementById('cot-servicios-container');
+            const div = document.createElement('div');
+            div.className = 'flex gap-2 items-center cot-srv-row bg-black/40 p-2 rounded-lg border border-mamba-border';
+            
+            let opcionesSrv = servicios.map(s => `<option value="${s.id}" data-precio="${s.precio}">${s.nombre} (₡${s.precio.toLocaleString('es-CR')})</option>`).join('');
+
+            div.innerHTML = `
+                <select class="cot-select-srv w-1/2 bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white">
+                    <option value="">Selecciona servicio...</option>
+                    ${opcionesSrv}
+                </select>
+                <div class="w-1/4 flex items-center gap-1">
+                    <span class="text-[10px] text-gray-400">Cant:</span>
+                    <input type="number" min="1" value="1" class="cot-srv-cant w-full bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white" oninput="calcularTotalCotizacionLavado()">
+                </div>
+                <input type="number" placeholder="Precio ₡" class="cot-srv-precio w-1/4 bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white" oninput="calcularTotalCotizacionLavado()">
+                <button type="button" onclick="this.parentElement.remove(); calcularTotalCotizacionLavado();" class="text-red-500 hover:text-red-400 px-2"><i class="fas fa-trash"></i></button>
+            `;
+            cont.appendChild(div);
+
+            div.querySelector('.cot-select-srv').addEventListener('change', function() {
+                const opt = this.options[this.selectedIndex];
+                const precioUnitario = parseFloat(opt.getAttribute('data-precio')) || 0;
+                div.querySelector('.cot-srv-precio').value = precioUnitario;
+                calcularTotalCotizacionLavado();
+            });
+        }
+
+        function poblarSelectCitas() {
+            const select = document.getElementById('cita-servicio-select');
+            if (!select) return;
+            select.innerHTML = '<option value="">Selecciona el servicio que deseas...</option>';
+            servicios.forEach(s => {
+                select.innerHTML += `<option value="${s.nombre}">${s.nombre} (₡${s.precio.toLocaleString('es-CR')})</option>`;
+            });
+        }
+
+        function calcularTotalCotizacionLavado() {
+            let total = 0;
+            document.querySelectorAll('.cot-srv-row').forEach(row => {
+                const cant = parseFloat(row.querySelector('.cot-srv-cant').value) || 1;
+                const precio = parseFloat(row.querySelector('.cot-srv-precio').value) || 0;
+                total += (precio * cant);
+            });
+            document.getElementById('cot-lav-total-visual').textContent = '₡' + total.toLocaleString('es-CR');
+        }
+
+        function enviarCotizacionLavadoWhatsApp() {
+            const cliente = document.getElementById('cot-lav-cliente').value.trim() || 'Cliente General';
+            
+            let vehs = [];
+            document.querySelectorAll('.cot-veh-row').forEach(row => {
+                const mod = row.querySelector('.cot-veh-modelo').value.trim();
+                const pla = row.querySelector('.cot-veh-placa').value.trim();
+                if (mod || pla) vehs.push(`${mod} (${pla})`);
+            });
+            const vehiculosStr = vehs.length > 0 ? vehs.join(' • ') : 'Vehículo estándar';
+
+            let detallesArr = [];
+            let montoTotal = 0;
+            document.querySelectorAll('.cot-srv-row').forEach(row => {
+                const select = row.querySelector('.cot-select-srv');
+                const srvName = select.options[select.selectedIndex]?.text.split(' (')[0] || 'Servicio';
+                const cant = parseFloat(row.querySelector('.cot-srv-cant').value) || 1;
+                const precioUnitario = parseFloat(row.querySelector('.cot-srv-precio').value) || 0;
+                const subtotal = precioUnitario * cant;
+
+                if (subtotal > 0) {
+                    montoTotal += subtotal;
+                    detallesArr.push(`- (${cant}x) ${srvName}: ₡${subtotal.toLocaleString('es-CR')}`);
+                }
+            });
+
+            if (detallesArr.length === 0) {
+                alert('Por favor selecciona al menos un servicio para cotizar.');
+                return;
+            }
+
+            const notas = document.getElementById('cot-lav-notas').value.trim();
+
+            let txt = `Hola Las Mambas, solicito la siguiente cotización:\n\n*Cliente:* ${cliente}\n*Vehículos:* ${vehiculosStr}\n\n*Detalle de Servicios:*\n${detallesArr.join('\n')}`;
+            if (notas) {
+                txt += `\n\n*Notas:* ${notas}`;
+            }
+            txt += `\n\n*Total Estimado:* ₡${montoTotal.toLocaleString('es-CR')}`;
+
+            window.open(`https://wa.me/50688818720?text=${encodeURIComponent(txt)}`, '_blank');
+        }
+
+        async function calcularRutaAutomatica(e) {
+            e.preventDefault();
+            const origenTxt = document.getElementById('origen-input').value.trim();
+            const destinoTxt = document.getElementById('destino-input').value.trim();
+            const kmManual = document.getElementById('km-manual').value;
+            const estado = document.getElementById('estado-calculo');
+            const resBox = document.getElementById('resultado-mensajeria');
+
+            if (kmManual && parseFloat(kmManual) > 0) {
+                const km = parseFloat(kmManual);
+                const total = Math.round(km * 450);
+                resultadoUltimoEnvio = { origen: origenTxt, destino: destinoTxt, km, total };
+                document.getElementById('res-distancia').textContent = `${km} km (Manual)`;
+                document.getElementById('res-total').textContent = `₡${total.toLocaleString('es-CR')}`;
+                resBox.classList.remove('hidden');
+                return;
+            }
+
+            estado.classList.remove('hidden');
+            resBox.classList.add('hidden');
+
+            try {
+                const resOrig = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(origenTxt)}`);
+                const dataOrig = await resOrig.json();
+                const resDest = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(destinoTxt + ', Costa Rica')}`);
+                const dataDest = await resDest.json();
+
+                if (!dataOrig.length || !dataDest.length) throw new Error('No ubicado');
+
+                const lon1 = dataOrig[0].lon, lat1 = dataOrig[0].lat;
+                const lon2 = dataDest[0].lon, lat2 = dataDest[0].lat;
+
+                const resRuta = await fetch(`https://router.project-osrm.org/route/v1/driving/${lon1},${lat1};${lon2},${lat2}?overview=false`);
+                const dataRuta = await resRuta.json();
+
+                if (dataRuta.routes && dataRuta.routes.length > 0) {
+                    const metros = dataRuta.routes[0].distance;
+                    const km = parseFloat((metros / 1000).toFixed(1));
+                    const total = Math.round(km * 450);
+
+                    resultadoUltimoEnvio = { origen: origenTxt, destino: destinoTxt, km, total };
+
+                    document.getElementById('res-distancia').textContent = `${km} km`;
+                    document.getElementById('res-total').textContent = `₡${total.toLocaleString('es-CR')}`;
+
+                    estado.classList.add('hidden');
+                    resBox.classList.remove('hidden');
+                } else {
+                    throw new Error('Sin ruta');
+                }
+            } catch (err) {
+                estado.classList.add('hidden');
+                alert('No se pudo calcular automáticamente. Escribe la distancia manualmente.');
+            }
+        }
+
+        function pasarACotizacionEnvios() {
+            if (!resultadoUltimoEnvio) return;
+            switchSubTabMensajeria('cotizacion');
+            document.getElementById('cot-msg-ruta').value = `${resultadoUltimoEnvio.origen} ➔ ${resultadoUltimoEnvio.destino}`;
+            document.getElementById('cot-msg-monto').value = resultadoUltimoEnvio.total;
+        }
+
+        function enviarCotizacionEnviosWhatsApp() {
+            const cliente = document.getElementById('cot-msg-cliente').value.trim() || 'Cliente';
+            const ruta = document.getElementById('cot-msg-ruta').value.trim() || 'Ruta de envío';
+            const detalle = document.getElementById('cot-msg-detalle').value.trim() || 'Sin detalle';
+            const monto = parseFloat(document.getElementById('cot-msg-monto').value) || 0;
+
+            const txt = `Hola Las Mambas, solicito el siguiente envío:\n- *Cliente:* ${cliente}\n- *Ruta:* ${ruta}\n- *Detalle:* ${detalle}\n- *Monto:* ₡${monto.toLocaleString('es-CR')}`;
+            window.open(`https://wa.me/50688818720?text=${encodeURIComponent(txt)}`, '_blank');
+        }
+
+        function reservarCitaWA(e) {
+            e.preventDefault();
+            const nom = document.getElementById('cita-nombre').value;
+            const fec = document.getElementById('cita-fecha').value;
+            const hor = document.getElementById('cita-hora').value;
+            const srv = document.getElementById('cita-servicio-select').value || 'Servicio General';
+
+            const txt = `Hola Las Mambas, deseo agendar una cita:\n- *Cliente:* ${nom}\n- *Fecha:* ${fec}\n- *Hora:* ${hor}\n- *Servicio:* ${srv}`;
+            window.open(`https://wa.me/50688818720?text=${encodeURIComponent(txt)}`, '_blank');
+        }
+
+        function renderClientes() {
+            const body = document.getElementById('tabla-clientes-body');
+            if (!body) return;
+            body.innerHTML = '';
+            if (clientes.length === 0) {
+                body.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-gray-500">No hay clientes registrados.</td></tr>`;
+                return;
+            }
+            clientes.forEach(c => {
+                let vehsHtml = c.vehiculos.map(v => `<span class="inline-block bg-black/50 border border-mamba-border px-2 py-0.5 rounded text-[11px] mr-1 mb-1">${v.modelo} (${v.placa})</span>`).join('');
+                body.innerHTML += `
+                    <tr>
+                        <td class="p-4 font-semibold text-white">${c.nombre}</td>
+                        <td class="p-4">${c.telefono}</td>
+                        <td class="p-4">${vehsHtml}</td>
+                        <td class="p-4 text-center space-x-2">
+                            <button onclick="editarCliente(${c.id})" class="text-xs text-gray-400 hover:text-white"><i class="fas fa-edit"></i></button>
+                            <button onclick="eliminarCliente(${c.id})" class="text-xs text-red-500 hover:text-red-400"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function abrirModalCliente() {
+            if (!esAdminActivo) return;
+            document.getElementById('cli-id').value = '';
+            document.getElementById('cli-nombre').value = '';
+            document.getElementById('cli-telefono').value = '';
+            document.getElementById('vehiculos-container').innerHTML = '';
+            agregarCampoVehiculoModal();
+            document.getElementById('modal-cliente-titulo').textContent = 'Registrar Cliente';
+            document.getElementById('modal-cliente').classList.remove('hidden');
+        }
+
+        function agregarCampoVehiculoModal(modelo = '', placa = '') {
+            const cont = document.getElementById('vehiculos-container');
+            const div = document.createElement('div');
+            div.className = 'flex gap-2 items-center vehiculo-row';
+            div.innerHTML = `
+                <input type="text" placeholder="Modelo (Ej: Toyota)" value="${modelo}" class="veh-modelo w-1/2 bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white">
+                <input type="text" placeholder="Placa (Ej: ABC-123)" value="${placa}" class="veh-placa w-1/2 bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white">
+                <button type="button" onclick="this.parentElement.remove()" class="text-red-500 hover:text-red-400 px-2"><i class="fas fa-times"></i></button>
+            `;
+            cont.appendChild(div);
+        }
+
+        function cerrarModalCliente() {
+            document.getElementById('modal-cliente').classList.add('hidden');
+        }
+
+        function guardarCliente(e) {
+            e.preventDefault();
+            if (!esAdminActivo) return;
+            const id = document.getElementById('cli-id').value;
+            const nombre = document.getElementById('cli-nombre').value;
+            const telefono = document.getElementById('cli-telefono').value;
+
+            const vehiculos = [];
+            document.querySelectorAll('.vehiculo-row').forEach(row => {
+                const modelo = row.querySelector('.veh-modelo').value.trim();
+                const placa = row.querySelector('.veh-placa').value.trim();
+                if (modelo || placa) {
+                    vehiculos.push({ modelo: modelo || 'Vehículo', placa: placa || 'Sin placa' });
+                }
+            });
+
+            if (id) {
+                const c = clientes.find(x => x.id == id);
+                if (c) { c.nombre = nombre; c.telefono = telefono; c.vehiculos = vehiculos; }
+            } else {
+                clientes.push({ id: Date.now(), nombre, telefono, vehiculos });
+            }
+
+            localStorage.setItem('mambas_clientes', JSON.stringify(clientes));
+            cerrarModalCliente();
+            renderClientes();
+        }
+
+        function editarCliente(id) {
+            if (!esAdminActivo) return;
+            const c = clientes.find(x => x.id == id);
+            if (!c) return;
+            document.getElementById('cli-id').value = c.id;
+            document.getElementById('cli-nombre').value = c.nombre;
+            document.getElementById('cli-telefono').value = c.telefono;
+            document.getElementById('vehiculos-container').innerHTML = '';
+            c.vehiculos.forEach(v => agregarCampoVehiculoModal(v.modelo, v.placa));
+            document.getElementById('modal-cliente-titulo').textContent = 'Editar Cliente';
+            document.getElementById('modal-cliente').classList.remove('hidden');
+        }
+
+        function eliminarCliente(id) {
+            if (!esAdminActivo) return;
+            if (confirm('¿Eliminar este cliente?')) {
+                clientes = clientes.filter(x => x.id != id);
+                localStorage.setItem('mambas_clientes', JSON.stringify(clientes));
+                renderClientes();
+            }
+        }
+
+        function solicitarServicioWA(nombre, precio) {
+            const txt = `Hola Las Mambas, deseo solicitar el servicio de *${nombre}* (₡${precio.toLocaleString('es-CR')}).`;
+            window.open(`https://wa.me/50688818720?text=${encodeURIComponent(txt)}`, '_blank');
+        }
+
+        function enviarMensajeriaWhatsApp() {
+            if (!resultadoUltimoEnvio) return;
+            const txt = `Hola Las Mambas, solicito mensajería express:\n- Origen: ${resultadoUltimoEnvio.origen}\n- Destino: ${resultadoUltimoEnvio.destino}\n- Distancia: ${resultadoUltimoEnvio.km} km\n- Total: ₡${resultadoUltimoEnvio.total.toLocaleString('es-CR')}`;
+            window.open(`https://wa.me/50688818720?text=${txt}`, '_blank');
+        }
+    </script>
+            <div id="sec-lav-citas" class="hidden space-y-6">
+                <div class="text-center max-w-xl mx-auto">
+                    <h2 class="text-2xl font-tech font-bold text-white mb-1">Agendamiento de Citas</h2>
+                    <p class="text-xs text-gray-400">Reserva tu espacio para lavado o detailing en el taller.</p>
+                </div>
+                <div class="max-w-xl mx-auto mamba-card rounded-2xl p-6 space-y-4">
+                    <form onsubmit="reservarCitaWA(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Nombre Completo</label>
+                            <input type="text" id="cita-nombre" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Fecha</label>
+                                <input type="date" id="cita-fecha" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Hora</label>
+                                <input type="time" id="cita-hora" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Servicio Deseado</label>
+                            <select id="cita-servicio-select" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
+                                <option value="">Selecciona el servicio que deseas...</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="w-full mamba-red-gradient text-white font-bold py-3 rounded-lg text-xs flex items-center justify-center gap-2">
+                            <i class="fab fa-whatsapp text-sm"></i> Agendar Cita por WhatsApp
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="sec-lav-clientes" class="hidden space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-mamba-border pb-4">
+                    <div>
+                        <h2 class="text-2xl font-tech font-bold text-white">Directorio Privado de Clientes</h2>
+                        <p class="text-xs text-gray-400">Administra clientes y sus múltiples vehículos registrados.</p>
+                    </div>
+                    <button onclick="abrirModalCliente()" class="mamba-red-gradient text-white text-xs font-bold py-2.5 px-4 rounded-lg flex items-center gap-2 shadow-md">
+                        <i class="fas fa-user-plus"></i> Agregar Cliente
+                    </button>
+                </div>
+                <div class="mamba-card rounded-2xl overflow-x-auto">
+                    <table class="w-full text-left text-xs text-gray-300">
+                        <thead class="bg-black/80 uppercase font-tech text-gray-400 border-b border-mamba-border">
+                            <tr>
+                                <th class="p-4">Nombre</th>
+                                <th class="p-4">Teléfono</th>
+                                <th class="p-4">Vehículos / Placas</th>
+                                <th class="p-4 text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-clientes-body" class="divide-y divide-mamba-border"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="seccion-modulo-mensajeria" class="hidden space-y-6">
+            <div id="sec-msg-calculadora" class="block space-y-6">
+                <div class="text-center max-w-xl mx-auto">
+                    <h2 class="text-2xl font-tech font-bold text-white mb-1">Calculadora de Mensajería Express</h2>
+                    <p class="text-xs text-gray-400">Calcula la tarifa automática a ₡450 / km o ingresa la distancia manual.</p>
+                </div>
+                <div class="max-w-xl mx-auto mamba-card rounded-2xl p-6 space-y-5">
+                    <form onsubmit="calcularRutaAutomatica(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Punto de Origen</label>
+                            <input type="text" id="origen-input" value="Heredia, Costa Rica" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-3 text-sm text-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Punto de Destino</label>
+                            <input type="text" id="destino-input" placeholder="Ej: San Rafael, Heredia" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-3 text-sm text-white">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-300 uppercase mb-1">¿Kilómetros manuales?</label>
+                                <input type="number" id="km-manual" step="0.5" placeholder="Ej: 8" class="w-full bg-black/60 border border-mamba-border rounded-lg p-3 text-sm text-white">
+                            </div>
+                            <div class="flex items-end">
+                                <button type="submit" class="w-full mamba-red-gradient text-white font-bold py-3 rounded-lg text-xs uppercase tracking-wider">
+                                    <i class="fas fa-calculator mr-1"></i> Calcular
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="estado-calculo" class="hidden text-center text-xs text-yellow-400 py-2">
+                        <i class="fas fa-spinner fa-spin mr-1"></i> Calculando ruta en el mapa...
+                    </div>
+                    <div id="resultado-mensajeria" class="hidden p-4 rounded-xl bg-black/80 border border-mamba-border text-center space-y-3">
+                        <div class="grid grid-cols-2 gap-2 text-xs border-b border-mamba-border pb-3">
+                            <div>
+                                <span class="text-gray-400 block">Distancia:</span>
+                                <span id="res-distancia" class="font-bold text-white text-sm">0 km</span>
+                            </div>
+                            <div>
+                                <span class="text-gray-400 block">Tarifa por km:</span>
+                                <span class="font-bold text-white text-sm">₡450</span>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="text-xs text-gray-400 uppercase tracking-widest block">TOTAL A PAGAR</span>
+                            <span id="res-total" class="font-tech text-3xl font-black text-mamba-red">₡0</span>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
+                            <button onclick="enviarMensajeriaWhatsApp()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-lg text-xs flex items-center justify-center gap-2">
+                                <i class="fab fa-whatsapp text-sm"></i> Solicitar por WhatsApp
+                            </button>
+                            <button onclick="pasarACotizacionEnvios()" class="w-full bg-gray-800 hover:bg-gray-700 text-gray-200 border border-mamba-border font-bold py-2.5 rounded-lg text-xs flex items-center justify-center gap-2">
+                                <i class="fas fa-file-invoice-dollar text-mamba-red"></i> Cotizar este Envío
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="sec-msg-cotizacion" class="hidden space-y-6">
+                <div class="text-center max-w-xl mx-auto">
+                    <h2 class="text-2xl font-tech font-bold text-white mb-1">Cotización Rápida Envíos</h2>
+                    <p class="text-xs text-gray-400">Calcula y envía los detalles de un envío directamente al chat.</p>
+                </div>
+                <div class="max-w-2xl mx-auto mamba-card rounded-2xl p-6 space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs text-gray-400 mb-1">Cliente / Destinatario</label>
+                            <input type="text" id="cot-msg-cliente" placeholder="Ej: María Rojas" class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-gray-400 mb-1">Ruta / Trayecto</label>
+                            <input type="text" id="cot-msg-ruta" placeholder="Ej: Heredia -> San José" class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Detalle del Envío / Paquete</label>
+                        <textarea id="cot-msg-detalle" rows="3" placeholder="Ej: Entrega urgente de repuestos..." class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white"></textarea>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs text-gray-400 mb-1">Monto Total (₡)</label>
+                            <input type="number" id="cot-msg-monto" readonly placeholder="Calculado automáticamente" class="w-full bg-black/80 border border-mamba-border rounded-lg p-2.5 text-xs text-mamba-red font-bold cursor-not-allowed">
+                        </div>
+                        <div class="flex items-end">
+                            <button onclick="enviarCotizacionEnviosWhatsApp()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-lg text-xs flex items-center justify-center gap-2">
+                                <i class="fab fa-whatsapp"></i> Enviar Envío por WhatsApp
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="modal-servicio" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="mamba-card w-full max-w-md rounded-2xl p-6 space-y-4">
+            <h3 id="modal-servicio-titulo" class="text-lg font-tech font-bold text-white">Servicio de Lavado</h3>
+            <form onsubmit="guardarServicio(event)" class="space-y-3">
+                <input type="hidden" id="srv-id">
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Categoría</label>
+                    <select id="srv-categoria-select" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white"></select>
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Nombre del Servicio</label>
+                    <input type="text" id="srv-nombre" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Descripción / Detalles</label>
+                    <textarea id="srv-desc" rows="2" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white"></textarea>
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Precio (₡)</label>
+                    <input type="number" id="srv-precio" required min="0" class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Etiqueta (Opcional)</label>
+                    <input type="text" id="srv-badge" placeholder="Ej: Oferta de Lanzamiento, Complemento" class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
+                </div>
+                <div class="flex justify-end gap-2 pt-2 border-t border-mamba-border">
+                    <button type="button" onclick="cerrarModalServicio()" class="px-4 py-2 bg-gray-800 text-gray-300 text-xs rounded-lg">Cancelar</button>
+                    <button type="submit" class="px-4 py-2 mamba-red-gradient text-white text-xs font-bold rounded-lg">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-cliente" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="mamba-card w-full max-w-md rounded-2xl p-6 space-y-4 max-h-[90vh] overflow-y-auto">
+            <h3 id="modal-cliente-titulo" class="text-lg font-tech font-bold text-white">Registrar Cliente</h3>
+            <form onsubmit="guardarCliente(event)" class="space-y-3">
+                <input type="hidden" id="cli-id">
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Nombre Completo</label>
+                    <input type="text" id="cli-nombre" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Teléfono</label>
+                    <input type="text" id="cli-telefono" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
+                </div>
+                <div class="border-t border-mamba-border pt-3">
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="text-xs font-bold text-gray-300 uppercase">Vehículos del Cliente</label>
+                        <button type="button" onclick="agregarCampoVehiculoModal()" class="text-xs text-mamba-red font-bold hover:underline">
+                            <i class="fas fa-plus mr-1"></i> Añadir otro vehículo
+                        </button>
+                    </div>
+                    <div id="vehiculos-container" class="space-y-2"></div>
+                </div>
+                <div class="flex justify-end gap-2 pt-3 border-t border-mamba-border">
+                    <button type="button" onclick="cerrarModalCliente()" class="px-4 py-2 bg-gray-800 text-gray-300 text-xs rounded-lg">Cancelar</button>
+                    <button type="submit" class="px-4 py-2 mamba-red-gradient text-white text-xs font-bold rounded-lg">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="border-t border-mamba-border bg-black py-6 text-center text-xs text-gray-500">
+        <p>&copy; 2026 Las Mambas Auto Lavado & Detailing.</p>
+    </footer>
+
+    <!-- LÓGICA DE LA APLICACIÓN -->
+    <script>
+        let categorias = JSON.parse(localStorage.getItem('mambas_categorias')) || [
+            { id: "cat-1", icono: "🚿", titulo: "LAVADO EXTERIOR", subtext: "Incluye únicamente el lavado exterior, limpieza de aros y llantas, enjuague y secado. No incluye aspirado, encerado ni limpieza interior." },
+            { id: "cat-2", icono: "🧹", titulo: "ASPIRADO Y LIMPIEZA INTERIOR", subtext: "Limpieza interior rápida y profunda de alfombras y asientos." },
+            { id: "cat-3", icono: "🔥", titulo: "LAVADO COMPLETO", subtext: "Incluye lavado exterior, aspirado profundo, encerado y acondicionamiento de partes negras y llantas." },
+            { id: "cat-4", icono: "⭐", titulo: "PAQUETES PREMIUM", subtext: "Incluye Lavado exterior completo + Aspirado profundo + Encerado Meguiar's + Acondicionamiento de plásticos y llantas + Sellado Express con efecto hidrofóbico + Tratamiento de rayones superficiales + Tratamiento de focos opacos.<br><strong class='text-yellow-500'>⚠️ Advertencia:</strong> Los resultados dependen del estado de la pintura y los focos. No incluye eliminación de rayones profundos." },
+            { id: "cat-5", icono: "✨", titulo: "DETAILING Y TRATAMIENTOS", subtext: "Servicios especializados. Dependiendo del estado de la superficie, se valora el trabajo o se requiere cotización previa." },
+            { id: "cat-6", icono: "🏍️", titulo: "LAVADO DE MOTOS", subtext: "Lavado especializado para motocicletas." },
+            { id: "cat-7", icono: "🏠", titulo: "SERVICIO A DOMICILIO", subtext: "Recargo de domicilio según zona. Funciona como un adicional al servicio seleccionado." }
+        ];
+
+        let servicios = JSON.parse(localStorage.getItem('mambas_servicios_cat')) || [
+            { id: 1, catId: "cat-1", nombre: "Solo lavado Sedán / Hatchback", desc: "Lavado exterior, aros, llantas, enjuague y secado.", precio: 4000, badge: "" },
+            { id: 2, catId: "cat-1", nombre: "Solo lavado SUV", desc: "Lavado exterior, aros, llantas, enjuague y secado.", precio: 5000, badge: "" },
+            { id: 3, catId: "cat-1", nombre: "Solo lavado Pick-up", desc: "Lavado exterior, aros, llantas, enjuague y secado.", precio: 6000, badge: "" },
+            { id: 4, catId: "cat-1", nombre: "Solo lavado Pick-up Full Size", desc: "Lavado exterior, aros, llantas, enjuague y secado.", precio: 7000, badge: "" },
+            { id: 5, catId: "cat-2", nombre: "Aspirado Sedán / Hatchback", desc: "Limpieza interior rápida y profunda de alfombras y asientos.", precio: 4000, badge: "" },
+            { id: 6, catId: "cat-2", nombre: "Aspirado SUV / Pick-up", desc: "Limpieza interior rápida y profunda de alfombras y asientos.", precio: 5000, badge: "" },
+            { id: 7, catId: "cat-2", nombre: "Aspirado Pick-up Full Size", desc: "Limpieza interior rápida y profunda de alfombras y asientos.", precio: 6000, badge: "" },
+            { id: 8, catId: "cat-3", nombre: "Servicio Completo Sedán / Hatchback", desc: "Lavado completo + Aspirado profundo + Encerado + Acondicionador de partes negras + llantas.", precio: 7000, badge: "Oferta de Lanzamiento" },
+            { id: 9, catId: "cat-3", nombre: "Servicio Completo SUV", desc: "Lavado completo + Aspirado profundo + Encerado + Acondicionador de partes negras + llantas.", precio: 9000, badge: "Oferta de Lanzamiento" },
+            { id: 10, catId: "cat-3", nombre: "Servicio Completo Pick-up", desc: "Lavado completo + Aspirado profundo + Encerado + Acondicionador de partes negras + llantas.", precio: 10000, badge: "Oferta de Lanzamiento" },
+            { id: 11, catId: "cat-4", nombre: "Servicio Premium Sedán / Hatchback", desc: "Lavado completo + Aspirado profundo + Corrección ligera de rayones + Restauración de focos + Acondicionamiento de cuero/dash + Partes negras & Llantas + Sellado Express Hidrofóbico.", precio: 12000, badge: "" },
+            { id: 12, catId: "cat-4", nombre: "Servicio Premium SUV", desc: "Lavado completo + Aspirado profundo + Corrección ligera de rayones + Restauración de focos + Acondicionamiento de cuero/dash + Partes negras & Llantas + Sellado Express Hidrofóbico.", precio: 15000, badge: "" },
+            { id: 13, catId: "cat-4", nombre: "Servicio Premium Pick-up", desc: "Lavado completo + Aspirado profundo + Corrección ligera de rayones + Restauración de focos + Acondicionamiento de cuero/dash + Partes negras & Llantas + Sellado Express Hidrofóbico.", precio: 16000, badge: "" },
+            { id: 14, catId: "cat-4", nombre: "Servicio Premium Pick-up Full Size", desc: "Lavado completo + Aspirado profundo + Corrección ligera de rayones + Restauración de focos + Acondicionamiento de cuero/dash + Partes negras & Llantas + Sellado Express Hidrofóbico.", precio: 18000, badge: "" },
+            { id: 15, catId: "cat-5", nombre: "Restauración y Mantenimiento de Focos", desc: "Tratamiento para eliminar opacidad y devolver claridad.", precio: 5000, badge: "Complemento" },
+            { id: 16, catId: "cat-5", nombre: "Remoción de Rayones Superficiales", desc: "Tratamiento focalizado por zona pequeña para marcas leves en la pintura.", precio: 3000, badge: "Complemento" },
+            { id: 17, catId: "cat-5", nombre: "Sellado Express de Brillo Hidrofóbico", desc: "Aplicación de sellador sintético Meguiar's. Aporta brillo espejo y una capa hidrofóbica que repele agua y suciedad.", precio: 4000, badge: "Complemento" },
+            { id: 18, catId: "cat-6", nombre: "Lavado Premium Moto", desc: "Lavado completo, desengrasado de cadena/aros, aspirado de compartimientos y acondicionador de plásticos y llantas.", precio: 4000, badge: "" },
+            { id: 19, catId: "cat-7", nombre: "Servicio a Domicilio", desc: "Recargo de domicilio desde ₡3.000, según zona. (GRATIS en 3 km para paquetes Premium).", precio: 3000, badge: "" }
+        ];
+
+        let clientes = JSON.parse(localStorage.getItem('mambas_clientes')) || [
+            { id: 1, nombre: "Juan Pérez", telefono: "8888-8888", vehiculos: [{ modelo: "Toyota Corolla", placa: "ABC-123" }] }
+        ];
+
+        let resultadoUltimoEnvio = null;
+        let esAdminActivo = false;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            agregarVehiculoCotizacion();
+            agregarFilaServicioCotizacion();
+            renderCategoriasYServicios();
+            poblarSelectCitas();
+        });
+
+        function renderCategoriasYServicios() {
+            const cont = document.getElementById('contenedor-categorias');
+            if (!cont) return;
+            cont.innerHTML = '';
+
+            categorias.forEach(cat => {
+                const serviciosDeCat = servicios.filter(s => s.catId === cat.id);
+                let htmlServicios = '';
+
+                serviciosDeCat.forEach(s => {
+                    let badgeHtml = s.badge ? `<span class="launch-badge">${s.badge}</span>` : '';
+                    let adminSrvBtn = esAdminActivo ? `
+                        <div class="flex gap-2">
+                            <button onclick="editarServicio(${s.id})" class="text-xs text-gray-400 hover:text-white" title="Editar"><i class="fas fa-edit"></i></button>
+                            <button onclick="eliminarServicio(${s.id})" class="text-xs text-red-500 hover:text-red-400" title="Eliminar"><i class="fas fa-trash"></i></button>
+                        </div>
+                    ` : '';
+
+                    htmlServicios += `
+                        <div class="mamba-card rounded-2xl p-5 flex flex-col justify-between">
+                            <div>
+                                ${badgeHtml}
+                                <div class="flex justify-between items-start mb-2">
+                                    <h4 class="font-tech font-bold text-white text-base">${s.nombre}</h4>
+                                    ${adminSrvBtn}
+                                </div>
+                                <p class="text-xs text-gray-400 mb-4">${s.desc}</p>
+                            </div>
+                            <div class="border-t border-mamba-border pt-3 flex justify-between items-center">
+                                <span class="font-tech text-lg font-black text-mamba-red">₡${s.precio.toLocaleString('es-CR')}</span>
+                                <button onclick="solicitarServicioWA('${s.nombre}', ${s.precio})" class="bg-green-600 hover:bg-green-700 text-white text-xs font-bold py-1.5 px-3 rounded-lg flex items-center gap-1">
+                                    <i class="fab fa-whatsapp"></i> Pedir
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                let adminCatBtn = esAdminActivo ? `
+                    <button onclick="event.stopPropagation(); eliminarCategoriaAdmin('${cat.id}')" class="text-xs text-red-500 hover:text-red-400 mr-2" title="Eliminar Categoría"><i class="fas fa-trash"></i></button>
+                ` : '';
+
+                cont.innerHTML += `
+                    <div class="category-accordion" id="${cat.id}">
+                        <div class="category-header" onclick="toggleCategory('${cat.id}')">
+                            <h3 class="category-title"><span class="icon">${cat.icono}</span> ${cat.titulo}</h3>
+                            <div class="flex items-center gap-2">
+                                ${adminCatBtn}
+                                <span class="category-arrow"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+                        </div>
+                        <div class="category-content">
+                            ${cat.subtext ? `<p class="service-subtext">${cat.subtext}</p>` : ''}
+                            <div class="category-services-grid">
+                                ${htmlServicios || '<p class="text-xs text-gray-500">No hay servicios en esta categoría.</p>'}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            poblarSelectCategoriasModal();
+            poblarSelectCitas();
+        }
+
+        function toggleCategory(categoryId) {
+            const clickedAccordion = document.getElementById(categoryId);
+            if (!clickedAccordion) return;
+            const isActive = clickedAccordion.classList.contains('active');
+            
+            document.querySelectorAll('.category-accordion').forEach(acc => {
+                acc.classList.remove('active');
+            });
+            
+            if (!isActive) {
+                clickedAccordion.classList.add('active');
+            }
+        }
+
+        function crearNuevaCategoriaAdmin() {
+            if (!esAdminActivo) return;
+            const titulo = prompt("Nombre de la nueva categoría:");
+            if (!titulo) return;
+            const icono = prompt("Ícono emoji para la categoría (Ej: 🧼, 🚗, 🛡️):") || "🚗";
+            const subtext = prompt("Descripción breve de la categoría (Opcional):") || "";
+
+            const newCat = {
+                id: "cat-" + Date.now(),
+                icono: icono,
+                titulo: titulo.toUpperCase(),
+                subtext: subtext
+            };
+
+            categorias.push(newCat);
+            localStorage.setItem('mambas_categorias', JSON.stringify(categorias));
+            renderCategoriasYServicios();
+            alert("Categoría agregada exitosamente.");
+        }
+
+        function eliminarCategoriaAdmin(catId) {
+            if (!esAdminActivo) return;
+            if (confirm("¿Estás seguro de borrar esta categoría y todos sus servicios asociados?")) {
+                categorias = categorias.filter(c => c.id !== catId);
+                servicios = servicios.filter(s => s.catId !== catId);
+                localStorage.setItem('mambas_categorias', JSON.stringify(categorias));
+                localStorage.setItem('mambas_servicios_cat', JSON.stringify(servicios));
+                renderCategoriasYServicios();
+            }
+        }
+
+        function poblarSelectCategoriasModal() {
+            const sel = document.getElementById('srv-categoria-select');
+            if (!sel) return;
+            sel.innerHTML = '';
+            categorias.forEach(c => {
+                sel.innerHTML += `<option value="${c.id}">${c.titulo}</option>`;
+            });
+        }
+
+        function abrirModalServicio() {
+            if (!esAdminActivo) return;
+            document.getElementById('srv-id').value = '';
+            document.getElementById('srv-nombre').value = '';
+            document.getElementById('srv-desc').value = '';
+            document.getElementById('srv-precio').value = '';
+            document.getElementById('srv-badge').value = '';
+            document.getElementById('modal-servicio-titulo').textContent = 'Agregar Servicio';
+            document.getElementById('modal-servicio').classList.remove('hidden');
+        }
+
+        function cerrarModalServicio() {
+            document.getElementById('modal-servicio').classList.add('hidden');
+        }
+
+        function guardarServicio(e) {
+            e.preventDefault();
+            if (!esAdminActivo) return;
+            const id = document.getElementById('srv-id').value;
+            const catId = document.getElementById('srv-categoria-select').value;
+            const nombre = document.getElementById('srv-nombre').value;
+            const desc = document.getElementById('srv-desc').value;
+            const precio = parseFloat(document.getElementById('srv-precio').value);
+            const badge = document.getElementById('srv-badge').value;
+
+            if (id) {
+                const s = servicios.find(x => x.id == id);
+                if (s) { 
+                    s.catId = catId; 
+                    s.nombre = nombre; 
+                    s.desc = desc; 
+                    s.precio = precio; 
+                    s.badge = badge; 
+                }
+            } else {
+                servicios.push({ id: Date.now(), catId, nombre, desc, precio, badge });
+            }
+
+            localStorage.setItem('mambas_servicios_cat', JSON.stringify(servicios));
+            cerrarModalServicio();
+            renderCategoriasYServicios();
+        }
+
+        function editarServicio(id) {
+            if (!esAdminActivo) return;
+            const s = servicios.find(x => x.id == id);
+            if (!s) return;
+            document.getElementById('srv-id').value = s.id;
+            document.getElementById('srv-categoria-select').value = s.catId;
+            document.getElementById('srv-nombre').value = s.nombre;
+            document.getElementById('srv-desc').value = s.desc;
+            document.getElementById('srv-precio').value = s.precio;
+            document.getElementById('srv-badge').value = s.badge || '';
+            document.getElementById('modal-servicio-titulo').textContent = 'Editar Servicio';
+            document.getElementById('modal-servicio').classList.remove('hidden');
+        }
+
+        function eliminarServicio(id) {
+            if (!esAdminActivo) return;
+            if (confirm('¿Borrar este servicio?')) {
+                servicios = servicios.filter(x => x.id != id);
+                localStorage.setItem('mambas_servicios_cat', JSON.stringify(servicios));
+                renderCategoriasYServicios();
+            }
+        }
+
+        function seleccionarModuloPrincipal(mod) {
+            const btnLav = document.getElementById('btn-modulo-lavado');
+            const btnMsg = document.getElementById('btn-modulo-mensajeria');
+            const subLav = document.getElementById('subnav-lavado');
+            const subMsg = document.getElementById('subnav-mensajeria');
+            const secLav = document.getElementById('seccion-modulo-lavado');
+            const secMsg = document.getElementById('seccion-modulo-mensajeria');
+
+            if (mod === 'lavado') {
+                btnLav.className = "main-nav-btn active px-6 py-2.5 rounded-xl font-tech text-xs sm:text-sm font-bold tracking-wider transition border border-mamba-border flex items-center gap-2";
+                btnMsg.className = "main-nav-btn px-6 py-2.5 rounded-xl font-tech text-xs sm:text-sm font-bold tracking-wider transition border border-mamba-border flex items-center gap-2 bg-gray-900 text-gray-400 hover:text-white";
+                subLav.classList.remove('hidden');
+                subMsg.classList.add('hidden');
+                secLav.classList.remove('hidden');
+                secMsg.classList.add('hidden');
+            } else {
+                btnMsg.className = "main-nav-btn active px-6 py-2.5 rounded-xl font-tech text-xs sm:text-sm font-bold tracking-wider transition border border-mamba-border flex items-center gap-2";
+                btnLav.className = "main-nav-btn px-6 py-2.5 rounded-xl font-tech text-xs sm:text-sm font-bold tracking-wider transition border border-mamba-border flex items-center gap-2 bg-gray-900 text-gray-400 hover:text-white";
+                subMsg.classList.remove('hidden');
+                subLav.classList.add('hidden');
+                secMsg.classList.remove('hidden');
+                secLav.classList.add('hidden');
+            }
+        }
+
+        function switchSubTabLavado(tab) {
+            ['servicios', 'cotizacion', 'citas', 'clientes'].forEach(t => {
+                const el = document.getElementById(`sec-lav-${t}`);
+                if (el) el.classList.add('hidden');
+                const btn = document.getElementById(`subtab-lav-${t}`);
+                if (btn) btn.classList.remove('active');
+            });
+            document.getElementById(`sec-lav-${tab}`).classList.remove('hidden');
+            document.getElementById(`subtab-lav-${tab}`).classList.add('active');
+        }
+
+        function switchSubTabMensajeria(tab) {
+            ['calculadora', 'cotizacion'].forEach(t => {
+                const el = document.getElementById(`sec-msg-${t}`);
+                if (el) el.classList.add('hidden');
+                const btn = document.getElementById(`subtab-msg-${t}`);
+                if (btn) btn.classList.remove('active');
+            });
+            document.getElementById(`sec-msg-${tab}`).classList.remove('hidden');
+            document.getElementById(`subtab-msg-${tab}`).classList.add('active');
+        }
+
+        function toggleAdminClientes() {
+            const subtabClientes = document.getElementById('subtab-lav-clientes');
+            const btnAgregarSrv = document.getElementById('btn-agregar-servicio-admin');
+            const btnAgregarCat = document.getElementById('btn-agregar-categoria-admin');
+
+            if (subtabClientes.classList.contains('hidden')) {
+                const pin = prompt("Ingresa la clave de administrador:");
+                if (pin && pin.toLowerCase() === "justin248".toLowerCase()) {
+                    esAdminActivo = true;
+                    subtabClientes.classList.remove('hidden');
+                    btnAgregarSrv.classList.remove('hidden');
+                    btnAgregarSrv.classList.add('flex');
+                    btnAgregarCat.classList.remove('hidden');
+                    btnAgregarCat.classList.add('flex');
+                    seleccionarModuloPrincipal('lavado');
+                    switchSubTabLavado('servicios');
+                    renderCategoriasYServicios();
+                    alert("Modo administrador activado.");
+                } else {
+                    alert("Clave incorrecta.");
+                }
+            } else {
+                esAdminActivo = false;
+                subtabClientes.classList.add('hidden');
+                btnAgregarSrv.classList.add('hidden');
+                btnAgregarSrv.classList.remove('flex');
+                btnAgregarCat.classList.add('hidden');
+                btnAgregarCat.classList.remove('flex');
+                switchSubTabLavado('servicios');
+                renderCategoriasYServicios();
+                alert("Modo administrador oculto.");
+            }
+        }
+
+        function agregarVehiculoCotizacion(modelo = '', placa = '') {
+            const cont = document.getElementById('cot-vehiculos-container');
+            const div = document.createElement('div');
+            div.className = 'flex gap-2 items-center cot-veh-row';
+            div.innerHTML = `
+                <input type="text" placeholder="Modelo (Ej: Sedán / Pick-up)" value="${modelo}" class="cot-veh-modelo w-1/2 bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white">
+                <input type="text" placeholder="Placa (Ej: ABC-123)" value="${placa}" class="cot-veh-placa w-1/2 bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white">
+                <button type="button" onclick="this.parentElement.remove()" class="text-red-500 hover:text-red-400 px-2"><i class="fas fa-times"></i></button>
+            `;
+            cont.appendChild(div);
+        }
+
+        function agregarFilaServicioCotizacion() {
+            const cont = document.getElementById('cot-servicios-container');
+            const div = document.createElement('div');
+            div.className = 'flex gap-2 items-center cot-srv-row bg-black/40 p-2 rounded-lg border border-mamba-border';
+            
+            let opcionesSrv = servicios.map(s => `<option value="${s.id}" data-precio="${s.precio}">${s.nombre} (₡${s.precio.toLocaleString('es-CR')})</option>`).join('');
+
+            div.innerHTML = `
+                <select class="cot-select-srv w-1/2 bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white">
+                    <option value="">Selecciona servicio...</option>
+                    ${opcionesSrv}
+                </select>
+                <div class="w-1/4 flex items-center gap-1">
+                    <span class="text-[10px] text-gray-400">Cant:</span>
+                    <input type="number" min="1" value="1" class="cot-srv-cant w-full bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white" oninput="calcularTotalCotizacionLavado()">
+                </div>
+                <input type="number" placeholder="Precio ₡" class="cot-srv-precio w-1/4 bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white" oninput="calcularTotalCotizacionLavado()">
+                <button type="button" onclick="this.parentElement.remove(); calcularTotalCotizacionLavado();" class="text-red-500 hover:text-red-400 px-2"><i class="fas fa-trash"></i></button>
+            `;
+            cont.appendChild(div);
+
+            div.querySelector('.cot-select-srv').addEventListener('change', function() {
+                const opt = this.options[this.selectedIndex];
+                const precioUnitario = parseFloat(opt.getAttribute('data-precio')) || 0;
+                div.querySelector('.cot-srv-precio').value = precioUnitario;
+                calcularTotalCotizacionLavado();
+            });
+        }
+
+        function poblarSelectCitas() {
+            const select = document.getElementById('cita-servicio-select');
+            if (!select) return;
+            select.innerHTML = '<option value="">Selecciona el servicio que deseas...</option>';
+            servicios.forEach(s => {
+                select.innerHTML += `<option value="${s.nombre}">${s.nombre} (₡${s.precio.toLocaleString('es-CR')})</option>`;
+            });
+        }
+
+        function calcularTotalCotizacionLavado() {
+            let total = 0;
+            document.querySelectorAll('.cot-srv-row').forEach(row => {
+                const cant = parseFloat(row.querySelector('.cot-srv-cant').value) || 1;
+                const precio = parseFloat(row.querySelector('.cot-srv-precio').value) || 0;
+                total += (precio * cant);
+            });
+            document.getElementById('cot-lav-total-visual').textContent = '₡' + total.toLocaleString('es-CR');
+        }
+
+        function enviarCotizacionLavadoWhatsApp() {
+            const cliente = document.getElementById('cot-lav-cliente').value.trim() || 'Cliente General';
+            
+            let vehs = [];
+            document.querySelectorAll('.cot-veh-row').forEach(row => {
+                const mod = row.querySelector('.cot-veh-modelo').value.trim();
+                const pla = row.querySelector('.cot-veh-placa').value.trim();
+                if (mod || pla) vehs.push(`${mod} (${pla})`);
+            });
+            const vehiculosStr = vehs.length > 0 ? vehs.join(' • ') : 'Vehículo estándar';
+
+            let detallesArr = [];
+            let montoTotal = 0;
+            document.querySelectorAll('.cot-srv-row').forEach(row => {
+                const select = row.querySelector('.cot-select-srv');
+                const srvName = select.options[select.selectedIndex]?.text.split(' (')[0] || 'Servicio';
+                const cant = parseFloat(row.querySelector('.cot-srv-cant').value) || 1;
+                const precioUnitario = parseFloat(row.querySelector('.cot-srv-precio').value) || 0;
+                const subtotal = precioUnitario * cant;
+
+                if (subtotal > 0) {
+                    montoTotal += subtotal;
+                    detallesArr.push(`- (${cant}x) ${srvName}: ₡${subtotal.toLocaleString('es-CR')}`);
+                }
+            });
+
+            if (detallesArr.length === 0) {
+                alert('Por favor selecciona al menos un servicio para cotizar.');
+                return;
+            }
+
+            const notas = document.getElementById('cot-lav-notas').value.trim();
+
+            let txt = `Hola Las Mambas, solicito la siguiente cotización:\n\n*Cliente:* ${cliente}\n*Vehículos:* ${vehiculosStr}\n\n*Detalle de Servicios:*\n${detallesArr.join('\n')}`;
+            if (notas) {
+                txt += `\n\n*Notas:* ${notas}`;
+            }
+            txt += `\n\n*Total Estimado:* ₡${montoTotal.toLocaleString('es-CR')}`;
+
+            window.open(`https://wa.me/50688818720?text=${encodeURIComponent(txt)}`, '_blank');
+        }
+
+        async function calcularRutaAutomatica(e) {
+            e.preventDefault();
+            const origenTxt = document.getElementById('origen-input').value.trim();
+            const destinoTxt = document.getElementById('destino-input').value.trim();
+            const kmManual = document.getElementById('km-manual').value;
+            const estado = document.getElementById('estado-calculo');
+            const resBox = document.getElementById('resultado-mensajeria');
+
+            if (kmManual && parseFloat(kmManual) > 0) {
+                const km = parseFloat(kmManual);
+                const total = Math.round(km * 450);
+                resultadoUltimoEnvio = { origen: origenTxt, destino: destinoTxt, km, total };
+                document.getElementById('res-distancia').textContent = `${km} km (Manual)`;
+                document.getElementById('res-total').textContent = `₡${total.toLocaleString('es-CR')}`;
+                resBox.classList.remove('hidden');
+                return;
+            }
+
+            estado.classList.remove('hidden');
+            resBox.classList.add('hidden');
+
+            try {
+                const resOrig = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(origenTxt)}`);
+                const dataOrig = await resOrig.json();
+                const resDest = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(destinoTxt + ', Costa Rica')}`);
+                const dataDest = await resDest.json();
+
+                if (!dataOrig.length || !dataDest.length) throw new Error('No ubicado');
+
+                const lon1 = dataOrig[0].lon, lat1 = dataOrig[0].lat;
+                const lon2 = dataDest[0].lon, lat2 = dataDest[0].lat;
+
+                const resRuta = await fetch(`https://router.project-osrm.org/route/v1/driving/${lon1},${lat1};${lon2},${lat2}?overview=false`);
+                const dataRuta = await resRuta.json();
+
+                if (dataRuta.routes && dataRuta.routes.length > 0) {
+                    const metros = dataRuta.routes[0].distance;
+                    const km = parseFloat((metros / 1000).toFixed(1));
+                    const total = Math.round(km * 450);
+
+                    resultadoUltimoEnvio = { origen: origenTxt, destino: destinoTxt, km, total };
+
+                    document.getElementById('res-distancia').textContent = `${km} km`;
+                    document.getElementById('res-total').textContent = `₡${total.toLocaleString('es-CR')}`;
+
+                    estado.classList.add('hidden');
+                    resBox.classList.remove('hidden');
+                } else {
+                    throw new Error('Sin ruta');
+                }
+            } catch (err) {
+                estado.classList.add('hidden');
+                alert('No se pudo calcular automáticamente. Escribe la distancia manualmente.');
+            }
+        }
+
+        function pasarACotizacionEnvios() {
+            if (!resultadoUltimoEnvio) return;
+            switchSubTabMensajeria('cotizacion');
+            document.getElementById('cot-msg-ruta').value = `${resultadoUltimoEnvio.origen} ➔ ${resultadoUltimoEnvio.destino}`;
+            document.getElementById('cot-msg-monto').value = resultadoUltimoEnvio.total;
+        }
+
+        function enviarCotizacionEnviosWhatsApp() {
+            const cliente = document.getElementById('cot-msg-cliente').value.trim() || 'Cliente';
+            const ruta = document.getElementById('cot-msg-ruta').value.trim() || 'Ruta de envío';
+            const detalle = document.getElementById('cot-msg-detalle').value.trim() || 'Sin detalle';
+            const monto = parseFloat(document.getElementById('cot-msg-monto').value) || 0;
+
+            const txt = `Hola Las Mambas, solicito el siguiente envío:\n- *Cliente:* ${cliente}\n- *Ruta:* ${ruta}\n- *Detalle:* ${detalle}\n- *Monto:* ₡${monto.toLocaleString('es-CR')}`;
+            window.open(`https://wa.me/50688818720?text=${encodeURIComponent(txt)}`, '_blank');
+        }
+
+        function reservarCitaWA(e) {
+            e.preventDefault();
+            const nom = document.getElementById('cita-nombre').value;
+            const fec = document.getElementById('cita-fecha').value;
+            const hor = document.getElementById('cita-hora').value;
+            const srv = document.getElementById('cita-servicio-select').value || 'Servicio General';
+
+            const txt = `Hola Las Mambas, deseo agendar una cita:\n- *Cliente:* ${nom}\n- *Fecha:* ${fec}\n- *Hora:* ${hor}\n- *Servicio:* ${srv}`;
+            window.open(`https://wa.me/50688818720?text=${encodeURIComponent(txt)}`, '_blank');
+        }
+
+        function renderClientes() {
+            const body = document.getElementById('tabla-clientes-body');
+            if (!body) return;
+            body.innerHTML = '';
+            if (clientes.length === 0) {
+                body.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-gray-500">No hay clientes registrados.</td></tr>`;
+                return;
+            }
+            clientes.forEach(c => {
+                let vehsHtml = c.vehiculos.map(v => `<span class="inline-block bg-black/50 border border-mamba-border px-2 py-0.5 rounded text-[11px] mr-1 mb-1">${v.modelo} (${v.placa})</span>`).join('');
+                body.innerHTML += `
+                    <tr>
+                        <td class="p-4 font-semibold text-white">${c.nombre}</td>
+                        <td class="p-4">${c.telefono}</td>
+                        <td class="p-4">${vehsHtml}</td>
+                        <td class="p-4 text-center space-x-2">
+                            <button onclick="editarCliente(${c.id})" class="text-xs text-gray-400 hover:text-white"><i class="fas fa-edit"></i></button>
+                            <button onclick="eliminarCliente(${c.id})" class="text-xs text-red-500 hover:text-red-400"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function abrirModalCliente() {
+            if (!esAdminActivo) return;
+            document.getElementById('cli-id').value = '';
+            document.getElementById('cli-nombre').value = '';
+            document.getElementById('cli-telefono').value = '';
+            document.getElementById('vehiculos-container').innerHTML = '';
+            agregarCampoVehiculoModal();
+            document.getElementById('modal-cliente-titulo').textContent = 'Registrar Cliente';
+            document.getElementById('modal-cliente').classList.remove('hidden');
+        }
+
+        function agregarCampoVehiculoModal(modelo = '', placa = '') {
+            const cont = document.getElementById('vehiculos-container');
+            const div = document.createElement('div');
+            div.className = 'flex gap-2 items-center vehiculo-row';
+            div.innerHTML = `
+                <input type="text" placeholder="Modelo (Ej: Toyota)" value="${modelo}" class="veh-modelo w-1/2 bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white">
+                <input type="text" placeholder="Placa (Ej: ABC-123)" value="${placa}" class="veh-placa w-1/2 bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white">
+                <button type="button" onclick="this.parentElement.remove()" class="text-red-500 hover:text-red-400 px-2"><i class="fas fa-times"></i></button>
+            `;
+            cont.appendChild(div);
+        }
+
+        function cerrarModalCliente() {
+            document.getElementById('modal-cliente').classList.add('hidden');
+        }
+
+        function guardarCliente(e) {
+            e.preventDefault();
+            if (!esAdminActivo) return;
+            const id = document.getElementById('cli-id').value;
+            const nombre = document.getElementById('cli-nombre').value;
+            const telefono = document.getElementById('cli-telefono').value;
+
+            const vehiculos = [];
+            document.querySelectorAll('.vehiculo-row').forEach(row => {
+                const modelo = row.querySelector('.veh-modelo').value.trim();
+                const placa = row.querySelector('.veh-placa').value.trim();
+                if (modelo || placa) {
+                    vehiculos.push({ modelo: modelo || 'Vehículo', placa: placa || 'Sin placa' });
+                }
+            });
+
+            if (id) {
+                const c = clientes.find(x => x.id == id);
+                if (c) { c.nombre = nombre; c.telefono = telefono; c.vehiculos = vehiculos; }
+            } else {
+                clientes.push({ id: Date.now(), nombre, telefono, vehiculos });
+            }
+
+            localStorage.setItem('mambas_clientes', JSON.stringify(clientes));
+            cerrarModalCliente();
+            renderClientes();
+        }
+
+        function editarCliente(id) {
+            if (!esAdminActivo) return;
+            const c = clientes.find(x => x.id == id);
+            if (!c) return;
+            document.getElementById('cli-id').value = c.id;
+            document.getElementById('cli-nombre').value = c.nombre;
+            document.getElementById('cli-telefono').value = c.telefono;
+            document.getElementById('vehiculos-container').innerHTML = '';
+            c.vehiculos.forEach(v => agregarCampoVehiculoModal(v.modelo, v.placa));
+            document.getElementById('modal-cliente-titulo').textContent = 'Editar Cliente';
+            document.getElementById('modal-cliente').classList.remove('hidden');
+        }
+
+        function eliminarCliente(id) {
+            if (!esAdminActivo) return;
+            if (confirm('¿Eliminar este cliente?')) {
+                clientes = clientes.filter(x => x.id != id);
+                localStorage.setItem('mambas_clientes', JSON.stringify(clientes));
+                renderClientes();
+            }
+        }
+
+        function solicitarServicioWA(nombre, precio) {
+            const txt = `Hola Las Mambas, deseo solicitar el servicio de *${nombre}* (₡${precio.toLocaleString('es-CR')}).`;
+            window.open(`https://wa.me/50688818720?text=${encodeURIComponent(txt)}`, '_blank');
+        }
+
+        function enviarMensajeriaWhatsApp() {
+            if (!resultadoUltimoEnvio) return;
+            const txt = `Hola Las Mambas, solicito mensajería express:\n- Origen: ${resultadoUltimoEnvio.origen}\n- Destino: ${resultadoUltimoEnvio.destino}\n- Distancia: ${resultadoUltimoEnvio.km} km\n- Total: ₡${resultadoUltimoEnvio.total.toLocaleString('es-CR')}`;
+            window.open(`https://wa.me/50688818720?text=${txt}`, '_blank');
+        }
+    </script>
+</body>
+</html>
