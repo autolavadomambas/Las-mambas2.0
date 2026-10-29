@@ -1098,7 +1098,7 @@
         }
     </script>
 
-    <!-- CONEXIÓN Y SINCRONIZACIÓN EN TIEMPO REAL CON FIREBASE FIRESTORE -->
+        <!-- CONEXIÓN Y SINCRONIZACIÓN EN TIEMPO REAL CON FIREBASE FIRESTORE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
         import { 
@@ -1126,49 +1126,65 @@
         window.db = db;
         window.FirestoreDeps = { collection, doc, setDoc, deleteDoc, getDocs };
 
-        // Sincronizar Categorías en tiempo real con protección para no dejar vacío
-        onSnapshot(collection(db, "categorias"), (snapshot) => {
-            if (!snapshot.empty) {
-                window.categorias = [];
-                snapshot.forEach((docSnap) => {
-                    window.categorias.push({ id: docSnap.id, ...docSnap.data() });
-                });
-                if (typeof renderCategoriasYServicios === 'function') renderCategoriasYServicios();
-            } else {
-                categorias.forEach(async (cat) => {
-                    await setDoc(doc(db, "categorias", String(cat.id)), cat);
-                });
-            }
-        });
+        // Función para subir datos por defecto si Firestore está vacío
+        async function inicializarDatosEnNube() {
+            try {
+                const snapCat = await getDocs(collection(db, "categorias"));
+                if (snapCat.empty && typeof categorias !== 'undefined') {
+                    for (const cat of categorias) {
+                        await setDoc(doc(db, "categorias", String(cat.id)), cat);
+                    }
+                }
 
-        // Sincronizar Servicios en tiempo real con protección para no dejar vacío
-        onSnapshot(collection(db, "servicios"), (snapshot) => {
-            if (!snapshot.empty) {
-                window.servicios = [];
-                snapshot.forEach((docSnap) => {
-                    window.servicios.push({ id: docSnap.id, ...docSnap.data() });
-                });
-                if (typeof renderCategoriasYServicios === 'function') renderCategoriasYServicios();
-            } else {
-                servicios.forEach(async (srv) => {
-                    await setDoc(doc(db, "servicios", String(srv.id)), srv);
-                });
+                const snapSrv = await getDocs(collection(db, "servicios"));
+                if (snapSrv.empty && typeof servicios !== 'undefined') {
+                    for (const srv of servicios) {
+                        await setDoc(doc(db, "servicios", String(srv.id)), srv);
+                    }
+                }
+            } catch (err) {
+                console.error("Error al inicializar datos:", err);
             }
-        });
+        }
 
-        // Sincronizar Clientes en tiempo real
-        onSnapshot(collection(db, "clientes"), (snapshot) => {
-            window.clientes = [];
-            if (!snapshot.empty) {
-                snapshot.forEach((docSnap) => {
-                    window.clientes.push({ id: docSnap.id, ...docSnap.data() });
-                });
-            }
-            if (typeof renderClientes === 'function') renderClientes();
+        inicializarDatosEnNube().then(() => {
+            // Sincronizar Categorías en tiempo real
+            onSnapshot(collection(db, "categorias"), (snapshot) => {
+                if (!snapshot.empty) {
+                    window.categorias = [];
+                    snapshot.forEach((docSnap) => {
+                        window.categorias.push({ id: docSnap.id, ...docSnap.data() });
+                    });
+                    if (typeof renderCategoriasYServicios === 'function') renderCategoriasYServicios();
+                }
+            });
+
+            // Sincronizar Servicios en tiempo real
+            onSnapshot(collection(db, "servicios"), (snapshot) => {
+                if (!snapshot.empty) {
+                    window.servicios = [];
+                    snapshot.forEach((docSnap) => {
+                        window.servicios.push({ id: docSnap.id, ...docSnap.data() });
+                    });
+                    if (typeof renderCategoriasYServicios === 'function') renderCategoriasYServicios();
+                }
+            });
+
+            // Sincronizar Clientes en tiempo real
+            onSnapshot(collection(db, "clientes"), (snapshot) => {
+                window.clientes = [];
+                if (!snapshot.empty) {
+                    snapshot.forEach((docSnap) => {
+                        window.clientes.push({ id: docSnap.id, ...docSnap.data() });
+                    });
+                }
+                if (typeof renderClientes === 'function') renderClientes();
+            });
         });
 
         console.log("¡Las Mambas sincronizado correctamente con Firestore!");
     </script>
+
     
 </body>
 </html>
