@@ -150,7 +150,7 @@
                 <a href="https://wa.me/50688818720" id="header-wa-btn" target="_blank" class="mamba-red-gradient hover:bg-red-700 text-white font-bold py-2 px-5 rounded-full text-sm flex items-center gap-2 transition shadow-md">
                     <i class="fab fa-whatsapp text-lg"></i> WhatsApp
                 </a>
-                <button onclick="toggleAdminClientes()" id="btn-admin-toggle" class="bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs py-2 px-3 rounded-lg border border-mamba-border">
+                <button id="btn-admin-toggle" class="bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs py-2 px-3 rounded-lg border border-mamba-border">
                     <i class="fas fa-lock"></i> Admin
                 </button>
             </div>
@@ -159,10 +159,10 @@
 
     <div class="bg-black border-b border-mamba-border py-3">
         <div class="max-w-7xl mx-auto px-4 flex justify-center gap-4">
-            <button onclick="seleccionarModuloPrincipal('lavado')" id="btn-modulo-lavado" class="main-nav-btn active px-6 py-2.5 rounded-xl font-tech text-xs sm:text-sm font-bold tracking-wider transition border border-mamba-border flex items-center gap-2">
+            <button id="btn-modulo-lavado" class="main-nav-btn active px-6 py-2.5 rounded-xl font-tech text-xs sm:text-sm font-bold tracking-wider transition border border-mamba-border flex items-center gap-2">
                 <i class="fas fa-car"></i> AUTO LAVADO & DETAILING
             </button>
-            <button onclick="seleccionarModuloPrincipal('mensajeria')" id="btn-modulo-mensajeria" class="main-nav-btn px-6 py-2.5 rounded-xl font-tech text-xs sm:text-sm font-bold tracking-wider transition border border-mamba-border flex items-center gap-2 bg-gray-900 text-gray-400 hover:text-white">
+            <button id="btn-modulo-mensajeria" class="main-nav-btn px-6 py-2.5 rounded-xl font-tech text-xs sm:text-sm font-bold tracking-wider transition border border-mamba-border flex items-center gap-2 bg-gray-900 text-gray-400 hover:text-white">
                 <i class="fas fa-motorcycle"></i> MENSAJERÍA EXPRESS
             </button>
         </div>
@@ -170,16 +170,16 @@
 
     <div id="subnav-lavado" class="border-b border-mamba-border bg-black/40">
         <div class="max-w-7xl mx-auto px-4 flex flex-wrap justify-center sm:justify-start gap-4 sm:gap-8 text-xs sm:text-sm font-semibold text-gray-400">
-            <button onclick="switchSubTabLavado('servicios')" id="subtab-lav-servicios" class="sub-tab-btn active py-3 px-2 transition">
+            <button id="subtab-lav-servicios" class="sub-tab-btn active py-3 px-2 transition">
                 <i class="fas fa-list text-mamba-red mr-1"></i> Servicios
             </button>
-            <button onclick="switchSubTabLavado('cotizacion')" id="subtab-lav-cotizacion" class="sub-tab-btn py-3 px-2 transition">
+            <button id="subtab-lav-cotizacion" class="sub-tab-btn py-3 px-2 transition">
                 <i class="fas fa-calculator text-mamba-red mr-1"></i> Cotizador & Pedidos
             </button>
-            <button onclick="switchSubTabLavado('citas')" id="subtab-lav-citas" class="sub-tab-btn py-3 px-2 transition">
+            <button id="subtab-lav-citas" class="sub-tab-btn py-3 px-2 transition">
                 <i class="fas fa-calendar-alt text-mamba-red mr-1"></i> Citas
             </button>
-            <button onclick="switchSubTabLavado('clientes')" id="subtab-lav-clientes" class="sub-tab-btn py-3 px-2 transition hidden">
+            <button id="subtab-lav-clientes" class="sub-tab-btn py-3 px-2 transition hidden">
                 <i class="fas fa-users text-mamba-red mr-1"></i> Clientes
             </button>
         </div>
@@ -187,10 +187,10 @@
 
     <div id="subnav-mensajeria" class="border-b border-mamba-border bg-black/40 hidden">
         <div class="max-w-7xl mx-auto px-4 flex flex-wrap justify-center sm:justify-start gap-4 sm:gap-8 text-xs sm:text-sm font-semibold text-gray-400">
-            <button onclick="switchSubTabMensajeria('calculadora')" id="subtab-msg-calculadora" class="sub-tab-btn active py-3 px-2 transition">
+            <button id="subtab-msg-calculadora" class="sub-tab-btn active py-3 px-2 transition">
                 <i class="fas fa-calculator text-mamba-red mr-1"></i> Calculadora de Ruta
             </button>
-            <button onclick="switchSubTabMensajeria('cotizacion')" id="subtab-msg-cotizacion" class="sub-tab-btn py-3 px-2 transition">
+            <button id="subtab-msg-cotizacion" class="sub-tab-btn py-3 px-2 transition">
                 <i class="fas fa-file-invoice-dollar text-mamba-red mr-1"></i> Cotización Envíos
             </button>
         </div>
@@ -205,10 +205,10 @@
                         <p class="text-xs text-gray-400">Consulta los servicios de cuidado automotriz disponibles.</p>
                     </div>
                     <div class="flex gap-2">
-                        <button id="btn-agregar-categoria-admin" onclick="crearNuevaCategoriaAdmin()" class="hidden bg-gray-800 border border-mamba-border hover:bg-gray-700 text-white text-xs font-bold py-2.5 px-4 rounded-lg items-center gap-2 shadow-md">
+                        <button id="btn-agregar-categoria-admin" class="hidden bg-gray-800 border border-mamba-border hover:bg-gray-700 text-white text-xs font-bold py-2.5 px-4 rounded-lg items-center gap-2 shadow-md">
                             <i class="fas fa-folder-plus text-mamba-red"></i> Nueva Categoría
                         </button>
-                        <button id="btn-agregar-servicio-admin" onclick="abrirModalServicio()" class="hidden mamba-red-gradient text-white text-xs font-bold py-2.5 px-4 rounded-lg items-center gap-2 shadow-md">
+                        <button id="btn-agregar-servicio-admin" class="hidden mamba-red-gradient text-white text-xs font-bold py-2.5 px-4 rounded-lg items-center gap-2 shadow-md">
                             <i class="fas fa-plus"></i> Agregar Servicio
                         </button>
                     </div>
@@ -229,7 +229,7 @@
                     <div class="border-t border-mamba-border pt-3">
                         <div class="flex justify-between items-center mb-2">
                             <label class="text-xs font-bold text-gray-300 uppercase">Vehículos y Placas</label>
-                            <button type="button" onclick="agregarVehiculoCotizacion()" class="text-xs text-mamba-red font-bold hover:underline">
+                            <button type="button" id="btn-add-vehiculo-cot" class="text-xs text-mamba-red font-bold hover:underline">
                                 <i class="fas fa-plus mr-1"></i> Añadir otro vehículo
                             </button>
                         </div>
@@ -238,7 +238,7 @@
                     <div class="border-t border-mamba-border pt-3 space-y-3">
                         <div class="flex justify-between items-center">
                             <label class="text-xs font-bold text-gray-300 uppercase">Servicios a Incluir</label>
-                            <button type="button" onclick="agregarFilaServicioCotizacion()" class="text-xs text-mamba-red font-bold hover:underline">
+                            <button type="button" id="btn-add-fila-cot" class="text-xs text-mamba-red font-bold hover:underline">
                                 <i class="fas fa-plus mr-1"></i> Añadir servicio
                             </button>
                         </div>
@@ -253,7 +253,7 @@
                             <span class="text-xs text-gray-400 block uppercase">Total Estimado:</span>
                             <span id="cot-lav-total-visual" class="font-tech text-2xl font-black text-mamba-red">₡0</span>
                         </div>
-                        <button onclick="enviarCotizacionLavadoWhatsApp()" class="w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg">
+                        <button id="btn-enviar-cot-wa" class="w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg">
                             <i class="fab fa-whatsapp text-base"></i> Enviar Cotización a Las Mambas
                         </button>
                     </div>
@@ -266,7 +266,7 @@
                     <p class="text-xs text-gray-400">Reserva tu espacio para lavado o detailing en el taller.</p>
                 </div>
                 <div class="max-w-xl mx-auto mamba-card rounded-2xl p-6 space-y-4">
-                    <form onsubmit="reservarCitaWA(event)" class="space-y-4">
+                    <form id="form-cita" class="space-y-4">
                         <div>
                             <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Nombre Completo</label>
                             <input type="text" id="cita-nombre" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
@@ -300,7 +300,7 @@
                         <h2 class="text-2xl font-tech font-bold text-white">Directorio Privado de Clientes</h2>
                         <p class="text-xs text-gray-400">Administra clientes y sus múltiples vehículos registrados.</p>
                     </div>
-                    <button onclick="abrirModalCliente()" class="mamba-red-gradient text-white text-xs font-bold py-2.5 px-4 rounded-lg flex items-center gap-2 shadow-md">
+                    <button id="btn-agregar-cliente" class="mamba-red-gradient text-white text-xs font-bold py-2.5 px-4 rounded-lg flex items-center gap-2 shadow-md">
                         <i class="fas fa-user-plus"></i> Agregar Cliente
                     </button>
                 </div>
@@ -327,7 +327,7 @@
                     <p class="text-xs text-gray-400">Calcula la tarifa automática a ₡450 / km o ingresa la distancia manual.</p>
                 </div>
                 <div class="max-w-xl mx-auto mamba-card rounded-2xl p-6 space-y-5">
-                    <form onsubmit="calcularRutaAutomatica(event)" class="space-y-4">
+                    <form id="form-calc-ruta" class="space-y-4">
                         <div>
                             <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Punto de Origen</label>
                             <input type="text" id="origen-input" value="Heredia, Costa Rica" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-3 text-sm text-white">
@@ -367,10 +367,10 @@
                             <span id="res-total" class="font-tech text-3xl font-black text-mamba-red">₡0</span>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
-                            <button onclick="enviarMensajeriaWhatsApp()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-lg text-xs flex items-center justify-center gap-2">
+                            <button id="btn-solicitar-msg-wa" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-lg text-xs flex items-center justify-center gap-2">
                                 <i class="fab fa-whatsapp text-sm"></i> Solicitar por WhatsApp
                             </button>
-                            <button onclick="pasarACotizacionEnvios()" class="w-full bg-gray-800 hover:bg-gray-700 text-gray-200 border border-mamba-border font-bold py-2.5 rounded-lg text-xs flex items-center justify-center gap-2">
+                            <button id="btn-pasar-cot-envios" class="w-full bg-gray-800 hover:bg-gray-700 text-gray-200 border border-mamba-border font-bold py-2.5 rounded-lg text-xs flex items-center justify-center gap-2">
                                 <i class="fas fa-file-invoice-dollar text-mamba-red"></i> Cotizar este Envío
                             </button>
                         </div>
@@ -404,7 +404,7 @@
                             <input type="number" id="cot-msg-monto" readonly placeholder="Calculado automáticamente" class="w-full bg-black/80 border border-mamba-border rounded-lg p-2.5 text-xs text-mamba-red font-bold cursor-not-allowed">
                         </div>
                         <div class="flex items-end">
-                            <button onclick="enviarCotizacionEnviosWhatsApp()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-lg text-xs flex items-center justify-center gap-2">
+                            <button id="btn-enviar-envio-wa" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-lg text-xs flex items-center justify-center gap-2">
                                 <i class="fab fa-whatsapp"></i> Enviar Envío por WhatsApp
                             </button>
                         </div>
@@ -417,7 +417,7 @@
     <div id="modal-servicio" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="mamba-card w-full max-w-md rounded-2xl p-6 space-y-4">
             <h3 id="modal-servicio-titulo" class="text-lg font-tech font-bold text-white">Servicio de Lavado</h3>
-            <form onsubmit="guardarServicio(event)" class="space-y-3">
+            <form id="form-servicio" class="space-y-3">
                 <input type="hidden" id="srv-id">
                 <div>
                     <label class="block text-xs text-gray-400 mb-1">Categoría</label>
@@ -440,7 +440,7 @@
                     <input type="text" id="srv-badge" placeholder="Ej: Oferta de Lanzamiento, Complemento" class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
                 </div>
                 <div class="flex justify-end gap-2 pt-2 border-t border-mamba-border">
-                    <button type="button" onclick="cerrarModalServicio()" class="px-4 py-2 bg-gray-800 text-gray-300 text-xs rounded-lg">Cancelar</button>
+                    <button type="button" id="btn-cancelar-srv" class="px-4 py-2 bg-gray-800 text-gray-300 text-xs rounded-lg">Cancelar</button>
                     <button type="submit" class="px-4 py-2 mamba-red-gradient text-white text-xs font-bold rounded-lg">Guardar</button>
                 </div>
             </form>
@@ -450,7 +450,7 @@
     <div id="modal-cliente" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
         <div class="mamba-card w-full max-w-md rounded-2xl p-6 space-y-4 max-h-[90vh] overflow-y-auto">
             <h3 id="modal-cliente-titulo" class="text-lg font-tech font-bold text-white">Registrar Cliente</h3>
-            <form onsubmit="guardarCliente(event)" class="space-y-3">
+            <form id="form-cliente" class="space-y-3">
                 <input type="hidden" id="cli-id">
                 <div>
                     <label class="block text-xs text-gray-400 mb-1">Nombre Completo</label>
@@ -463,14 +463,14 @@
                 <div class="border-t border-mamba-border pt-3">
                     <div class="flex justify-between items-center mb-2">
                         <label class="text-xs font-bold text-gray-300 uppercase">Vehículos del Cliente</label>
-                        <button type="button" onclick="agregarCampoVehiculoModal()" class="text-xs text-mamba-red font-bold hover:underline">
+                        <button type="button" id="btn-add-vehiculo-modal" class="text-xs text-mamba-red font-bold hover:underline">
                             <i class="fas fa-plus mr-1"></i> Añadir otro vehículo
                         </button>
                     </div>
                     <div id="vehiculos-container" class="space-y-2"></div>
                 </div>
                 <div class="flex justify-end gap-2 pt-3 border-t border-mamba-border">
-                    <button type="button" onclick="cerrarModalCliente()" class="px-4 py-2 bg-gray-800 text-gray-300 text-xs rounded-lg">Cancelar</button>
+                    <button type="button" id="btn-cancelar-cli" class="px-4 py-2 bg-gray-800 text-gray-300 text-xs rounded-lg">Cancelar</button>
                     <button type="submit" class="px-4 py-2 mamba-red-gradient text-white text-xs font-bold rounded-lg">Guardar</button>
                 </div>
             </form>
@@ -506,11 +506,8 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        window.db = db;
-        window.FirestoreDeps = { collection, doc, setDoc, deleteDoc, getDocs };
-
-        // Datos por defecto blindados
-        window.categorias = [
+        // Variables globales
+        let categorias = [
             { id: "cat-1", icono: "🚿", titulo: "LAVADO EXTERIOR", subtext: "Incluye únicamente el lavado exterior, limpieza de aros y llantas, enjuague y secado. No incluye aspirado, encerado ni limpieza interior." },
             { id: "cat-2", icono: "🧹", titulo: "ASPIRADO Y LIMPIEZA INTERIOR", subtext: "Limpieza interior rápida y profunda de alfombras y asientos." },
             { id: "cat-3", icono: "🔥", titulo: "LAVADO COMPLETO", subtext: "Incluye lavado exterior, aspirado profundo, encerado y acondicionamiento de partes negras y llantas." },
@@ -520,7 +517,7 @@
             { id: "cat-7", icono: "🏠", titulo: "SERVICIO A DOMICILIO", subtext: "Recargo de domicilio según zona. Funciona como un adicional al servicio seleccionado." }
         ];
 
-        window.servicios = [
+        let servicios = [
             { id: "1", catId: "cat-1", nombre: "Solo lavado Sedán / Hatchback", desc: "Lavado exterior, aros, llantas, enjuague y secado.", precio: 4000, badge: "" },
             { id: "2", catId: "cat-1", nombre: "Solo lavado SUV", desc: "Lavado exterior, aros, llantas, enjuague y secado.", precio: 5000, badge: "" },
             { id: "3", catId: "cat-1", nombre: "Solo lavado Pick-up", desc: "Lavado exterior, aros, llantas, enjuague y secado.", precio: 6000, badge: "" },
@@ -542,23 +539,23 @@
             { id: "19", catId: "cat-7", nombre: "Servicio a Domicilio", desc: "Recargo de domicilio desde ₡3.000, según zona. (GRATIS en 3 km para paquetes Premium).", precio: 3000, badge: "" }
         ];
 
-        window.clientes = [];
-        window.esAdminActivo = false;
-        window.resultadoUltimoEnvio = null;
+        let clientes = [];
+        let esAdminActivo = false;
+        let resultadoUltimoEnvio = null;
 
         // Inicializar datos en la nube si está vacío
         async function inicializarDatosEnNube() {
             try {
                 const snapCat = await getDocs(collection(db, "categorias"));
                 if (snapCat.empty) {
-                    for (const cat of window.categorias) {
+                    for (const cat of categorias) {
                         await setDoc(doc(db, "categorias", String(cat.id)), cat);
                     }
                 }
 
                 const snapSrv = await getDocs(collection(db, "servicios"));
                 if (snapSrv.empty) {
-                    for (const srv of window.servicios) {
+                    for (const srv of servicios) {
                         await setDoc(doc(db, "servicios", String(srv.id)), srv);
                     }
                 }
@@ -567,57 +564,22 @@
             }
         }
 
-        inicializarDatosEnNube().then(() => {
-            // Sincronizar Categorías en tiempo real
-            onSnapshot(collection(db, "categorias"), (snapshot) => {
-                if (!snapshot.empty) {
-                    window.categorias = [];
-                    snapshot.forEach((docSnap) => {
-                        window.categorias.push({ id: docSnap.id, ...docSnap.data() });
-                    });
-                    if (typeof renderCategoriasYServicios === 'function') renderCategoriasYServicios();
-                }
-            });
-
-            // Sincronizar Servicios en tiempo real
-            onSnapshot(collection(db, "servicios"), (snapshot) => {
-                if (!snapshot.empty) {
-                    window.servicios = [];
-                    snapshot.forEach((docSnap) => {
-                        window.servicios.push({ id: docSnap.id, ...docSnap.data() });
-                    });
-                    if (typeof renderCategoriasYServicios === 'function') renderCategoriasYServicios();
-                }
-            });
-
-            // Sincronizar Clientes en tiempo real
-            onSnapshot(collection(db, "clientes"), (snapshot) => {
-                window.clientes = [];
-                if (!snapshot.empty) {
-                    snapshot.forEach((docSnap) => {
-                        window.clientes.push({ id: docSnap.id, ...docSnap.data() });
-                    });
-                }
-                if (typeof renderClientes === 'function') renderClientes();
-            });
-        });
-
-        // Funciones globales accesibles por la interfaz
-        window.renderCategoriasYServicios = function() {
+        // Renderizado principal
+        function renderCategoriasYServicios() {
             const cont = document.getElementById('contenedor-categorias');
             if (!cont) return;
             cont.innerHTML = '';
 
-            window.categorias.forEach(cat => {
-                const serviciosDeCat = window.servicios.filter(s => s.catId === cat.id);
+            categorias.forEach(cat => {
+                const serviciosDeCat = servicios.filter(s => s.catId === cat.id);
                 let htmlServicios = '';
 
                 serviciosDeCat.forEach(s => {
                     let badgeHtml = s.badge ? `<span class="launch-badge">${s.badge}</span>` : '';
-                    let adminSrvBtn = window.esAdminActivo ? `
+                    let adminSrvBtn = esAdminActivo ? `
                         <div class="flex gap-2">
-                            <button onclick="editarServicio('${s.id}')" class="text-xs text-gray-400 hover:text-white" title="Editar"><i class="fas fa-edit"></i></button>
-                            <button onclick="eliminarServicio('${s.id}')" class="text-xs text-red-500 hover:text-red-400" title="Eliminar"><i class="fas fa-trash"></i></button>
+                            <button data-action="editar-srv" data-id="${s.id}" class="text-xs text-gray-400 hover:text-white" title="Editar"><i class="fas fa-edit"></i></button>
+                            <button data-action="eliminar-srv" data-id="${s.id}" class="text-xs text-red-500 hover:text-red-400" title="Eliminar"><i class="fas fa-trash"></i></button>
                         </div>
                     ` : '';
 
@@ -633,7 +595,7 @@
                             </div>
                             <div class="border-t border-mamba-border pt-3 flex justify-between items-center">
                                 <span class="font-tech text-lg font-black text-mamba-red">₡${Number(s.precio).toLocaleString('es-CR')}</span>
-                                <button onclick="solicitarServicioWA('${s.nombre}', ${s.precio})" class="bg-green-600 hover:bg-green-700 text-white text-xs font-bold py-1.5 px-3 rounded-lg flex items-center gap-1">
+                                <button data-action="pedir-wa" data-nombre="${s.nombre}" data-precio="${s.precio}" class="bg-green-600 hover:bg-green-700 text-white text-xs font-bold py-1.5 px-3 rounded-lg flex items-center gap-1">
                                     <i class="fab fa-whatsapp"></i> Pedir
                                 </button>
                             </div>
@@ -641,13 +603,13 @@
                     `;
                 });
 
-                let adminCatBtn = window.esAdminActivo ? `
-                    <button onclick="event.stopPropagation(); eliminarCategoriaAdmin('${cat.id}')" class="text-xs text-red-500 hover:text-red-400 mr-2" title="Eliminar Categoría"><i class="fas fa-trash"></i></button>
+                let adminCatBtn = esAdminActivo ? `
+                    <button data-action="eliminar-cat" data-id="${cat.id}" class="text-xs text-red-500 hover:text-red-400 mr-2" title="Eliminar Categoría"><i class="fas fa-trash"></i></button>
                 ` : '';
 
                 cont.innerHTML += `
                     <div class="category-accordion" id="${cat.id}">
-                        <div class="category-header" onclick="toggleCategory('${cat.id}')">
+                        <div class="category-header" data-action="toggle-cat" data-id="${cat.id}">
                             <h3 class="category-title"><span class="icon">${cat.icono}</span> ${cat.titulo}</h3>
                             <div class="flex items-center gap-2">
                                 ${adminCatBtn}
@@ -666,24 +628,212 @@
 
             poblarSelectCategoriasModal();
             poblarSelectCitas();
-        };
+        }
 
-        window.toggleCategory = function(categoryId) {
-            const clickedAccordion = document.getElementById(categoryId);
-            if (!clickedAccordion) return;
-            const isActive = clickedAccordion.classList.contains('active');
-            
-            document.querySelectorAll('.category-accordion').forEach(acc => {
-                acc.classList.remove('active');
+        function poblarSelectCategoriasModal() {
+            const sel = document.getElementById('srv-categoria-select');
+            if (!sel) return;
+            sel.innerHTML = '';
+            categorias.forEach(c => {
+                sel.innerHTML += `<option value="${c.id}">${c.titulo}</option>`;
             });
-            
-            if (!isActive) {
-                clickedAccordion.classList.add('active');
+        }
+
+        function poblarSelectCitas() {
+            const select = document.getElementById('cita-servicio-select');
+            if (!select) return;
+            select.innerHTML = '<option value="">Selecciona el servicio que deseas...</option>';
+            servicios.forEach(s => {
+                select.innerHTML += `<option value="${s.nombre}">${s.nombre} (₡${Number(s.precio).toLocaleString('es-CR')})</option>`;
+            });
+        }
+
+        function renderClientes() {
+            const body = document.getElementById('tabla-clientes-body');
+            if (!body) return;
+            body.innerHTML = '';
+            if (clientes.length === 0) {
+                body.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-gray-500">No hay clientes registrados.</td></tr>`;
+                return;
             }
+            clientes.forEach(c => {
+                let vehsHtml = c.vehiculos.map(v => `<span class="inline-block bg-black/50 border border-mamba-border px-2 py-0.5 rounded text-[11px] mr-1 mb-1">${v.modelo} (${v.placa})</span>`).join('');
+                body.innerHTML += `
+                    <tr>
+                        <td class="p-4 font-semibold text-white">${c.nombre}</td>
+                        <td class="p-4">${c.telefono}</td>
+                        <td class="p-4">${vehsHtml}</td>
+                        <td class="p-4 text-center space-x-2">
+                            <button data-action="editar-cli" data-id="${c.id}" class="text-xs text-gray-400 hover:text-white"><i class="fas fa-edit"></i></button>
+                            <button data-action="eliminar-cli" data-id="${c.id}" class="text-xs text-red-500 hover:text-red-400"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        // Delegación de eventos general para asegurar que TODOS los botones funcionen
+        document.addEventListener('click', async (e) => {
+            const target = e.target.closest('[data-action]');
+            if (!target) return;
+            const action = target.getAttribute('data-action');
+            const id = target.getAttribute('data-id');
+
+            if (action === 'toggle-cat') {
+                const clickedAccordion = document.getElementById(id);
+                if (!clickedAccordion) return;
+                const isActive = clickedAccordion.classList.contains('active');
+                document.querySelectorAll('.category-accordion').forEach(acc => acc.classList.remove('active'));
+                if (!isActive) clickedAccordion.classList.add('active');
+            } else if (action === 'pedir-wa') {
+                const nombre = target.getAttribute('data-nombre');
+                const precio = target.getAttribute('data-precio');
+                const txt = `Hola Las Mambas, deseo solicitar el servicio de *${nombre}* (₡${Number(precio).toLocaleString('es-CR')}).`;
+                window.open(`https://wa.me/50688818720?text=${encodeURIComponent(txt)}`, '_blank');
+            } else if (action === 'editar-srv') {
+                if (!esAdminActivo) return;
+                const s = servicios.find(x => x.id == id);
+                if (!s) return;
+                document.getElementById('srv-id').value = s.id;
+                document.getElementById('srv-categoria-select').value = s.catId;
+                document.getElementById('srv-nombre').value = s.nombre;
+                document.getElementById('srv-desc').value = s.desc;
+                document.getElementById('srv-precio').value = s.precio;
+                document.getElementById('srv-badge').value = s.badge || '';
+                document.getElementById('modal-servicio-titulo').textContent = 'Editar Servicio';
+                document.getElementById('modal-servicio').classList.remove('hidden');
+            } else if (action === 'eliminar-srv') {
+                if (!esAdminActivo) return;
+                if (confirm('¿Borrar este servicio?')) {
+                    try {
+                        await deleteDoc(doc(db, "servicios", String(id)));
+                    } catch (err) {
+                        console.error("Error al borrar en Firestore:", err);
+                    }
+                    servicios = servicios.filter(x => x.id != id);
+                    renderCategoriasYServicios();
+                }
+            } else if (action === 'eliminar-cat') {
+                if (!esAdminActivo) return;
+                if (confirm("¿Estás seguro de borrar esta categoría y todos sus servicios asociados?")) {
+                    try {
+                        await deleteDoc(doc(db, "categorias", String(id)));
+                        const serviciosAEliminar = servicios.filter(s => s.catId === id);
+                        for (const s of serviciosAEliminar) {
+                            await deleteDoc(doc(db, "servicios", String(s.id)));
+                        }
+                    } catch (err) {
+                        console.error("Error al borrar categoría:", err);
+                    }
+                }
+            } else if (action === 'editar-cli') {
+                if (!esAdminActivo) return;
+                const c = clientes.find(x => x.id == id);
+                if (!c) return;
+                document.getElementById('cli-id').value = c.id;
+                document.getElementById('cli-nombre').value = c.nombre;
+                document.getElementById('cli-telefono').value = c.telefono;
+                document.getElementById('vehiculos-container').innerHTML = '';
+                c.vehiculos.forEach(v => agregarCampoVehiculoModal(v.modelo, v.placa));
+                document.getElementById('modal-cliente-titulo').textContent = 'Editar Cliente';
+                document.getElementById('modal-cliente').classList.remove('hidden');
+            } else if (action === 'eliminar-cli') {
+                if (!esAdminActivo) return;
+                if (confirm('¿Eliminar este cliente?')) {
+                    try {
+                        await deleteDoc(doc(db, "clientes", String(id)));
+                    } catch (err) {
+                        console.error("Error al eliminar cliente:", err);
+                    }
+                    renderClientes();
+                }
+            }
+        });
+
+        // Enlaces de navegación superior
+        document.getElementById('btn-modulo-lavado').addEventListener('click', () => {
+            document.getElementById('btn-modulo-lavado').className = "main-nav-btn active px-6 py-2.5 rounded-xl font-tech text-xs sm:text-sm font-bold tracking-wider transition border border-mamba-border flex items-center gap-2";
+            document.getElementById('btn-modulo-mensajeria').className = "main-nav-btn px-6 py-2.5 rounded-xl font-tech text-xs sm:text-sm font-bold tracking-wider transition border border-mamba-border flex items-center gap-2 bg-gray-900 text-gray-400 hover:text-white";
+            document.getElementById('subnav-lavado').classList.remove('hidden');
+            document.getElementById('subnav-mensajeria').classList.add('hidden');
+            document.getElementById('seccion-modulo-lavado').classList.remove('hidden');
+            document.getElementById('seccion-modulo-mensajeria').classList.add('hidden');
+        });
+
+        document.getElementById('btn-modulo-mensajeria').addEventListener('click', () => {
+            document.getElementById('btn-modulo-mensajeria').className = "main-nav-btn active px-6 py-2.5 rounded-xl font-tech text-xs sm:text-sm font-bold tracking-wider transition border border-mamba-border flex items-center gap-2";
+            document.getElementById('btn-modulo-lavado').className = "main-nav-btn px-6 py-2.5 rounded-xl font-tech text-xs sm:text-sm font-bold tracking-wider transition border border-mamba-border flex items-center gap-2 bg-gray-900 text-gray-400 hover:text-white";
+            document.getElementById('subnav-mensajeria').classList.remove('hidden');
+            document.getElementById('subnav-lavado').classList.add('hidden');
+            document.getElementById('seccion-modulo-mensajeria').classList.remove('hidden');
+            document.getElementById('seccion-modulo-lavado').classList.add('hidden');
+        });
+
+        const switchTabLav = (tab) => {
+            ['servicios', 'cotizacion', 'citas', 'clientes'].forEach(t => {
+                document.getElementById(`sec-lav-${t}`).classList.add('hidden');
+                document.getElementById(`subtab-lav-${t}`).classList.remove('active');
+            });
+            document.getElementById(`sec-lav-${tab}`).classList.remove('hidden');
+            document.getElementById(`subtab-lav-${tab}`).classList.add('active');
+            if (tab === 'clientes') renderClientes();
         };
 
-        window.crearNuevaCategoriaAdmin = async function() {
-            if (!window.esAdminActivo) return;
+        document.getElementById('subtab-lav-servicios').addEventListener('click', () => switchTabLav('servicios'));
+        document.getElementById('subtab-lav-cotizacion').addEventListener('click', () => switchTabLav('cotizacion'));
+        document.getElementById('subtab-lav-citas').addEventListener('click', () => switchTabLav('citas'));
+        document.getElementById('subtab-lav-clientes').addEventListener('click', () => switchTabLav('clientes'));
+
+        const switchTabMsg = (tab) => {
+            ['calculadora', 'cotizacion'].forEach(t => {
+                document.getElementById(`sec-msg-${t}`).classList.add('hidden');
+                document.getElementById(`subtab-msg-${t}`).classList.remove('active');
+            });
+            document.getElementById(`sec-msg-${tab}`).classList.remove('hidden');
+            document.getElementById(`subtab-msg-${tab}`).classList.add('active');
+        };
+
+        document.getElementById('subtab-msg-calculadora').addEventListener('click', () => switchTabMsg('calculadora'));
+        document.getElementById('subtab-msg-cotizacion').addEventListener('click', () => switchTabMsg('cotizacion'));
+
+        // Toggle Admin
+        document.getElementById('btn-admin-toggle').addEventListener('click', () => {
+            const subtabClientes = document.getElementById('subtab-lav-clientes');
+            const btnAgregarSrv = document.getElementById('btn-agregar-servicio-admin');
+            const btnAgregarCat = document.getElementById('btn-agregar-categoria-admin');
+
+            if (subtabClientes.classList.contains('hidden')) {
+                const pin = prompt("Ingresa la clave de administrador:");
+                if (pin && pin.toLowerCase() === "justin248".toLowerCase()) {
+                    esAdminActivo = true;
+                    subtabClientes.classList.remove('hidden');
+                    btnAgregarSrv.classList.remove('hidden');
+                    btnAgregarSrv.classList.add('flex');
+                    btnAgregarCat.classList.remove('hidden');
+                    btnAgregarCat.classList.add('flex');
+                    document.getElementById('btn-modulo-lavado').click();
+                    switchTabLav('servicios');
+                    renderCategoriasYServicios();
+                    alert("Modo administrador activado.");
+                } else {
+                    alert("Clave incorrecta.");
+                }
+            } else {
+                esAdminActivo = false;
+                subtabClientes.classList.add('hidden');
+                btnAgregarSrv.classList.add('hidden');
+                btnAgregarSrv.classList.remove('flex');
+                btnAgregarCat.classList.add('hidden');
+                btnAgregarCat.classList.remove('flex');
+                switchTabLav('servicios');
+                renderCategoriasYServicios();
+                alert("Modo administrador oculto.");
+            }
+        });
+
+        // Botones de administrador principales
+        document.getElementById('btn-agregar-categoria-admin').addEventListener('click', async () => {
+            if (!esAdminActivo) return;
             const titulo = prompt("Nombre de la nueva categoría:");
             if (!titulo) return;
             const icono = prompt("Ícono emoji para la categoría (Ej: 🧼, 🚗, 🛡️):") || "🚗";
@@ -698,30 +848,10 @@
 
             await setDoc(doc(db, "categorias", String(newCat.id)), newCat);
             alert("Categoría agregada exitosamente.");
-        };
+        });
 
-        window.eliminarCategoriaAdmin = async function(catId) {
-            if (!window.esAdminActivo) return;
-            if (confirm("¿Estás seguro de borrar esta categoría y todos sus servicios asociados?")) {
-                await deleteDoc(doc(db, "categorias", String(catId)));
-                const serviciosAEliminar = window.servicios.filter(s => s.catId === catId);
-                for (const s of serviciosAEliminar) {
-                    await deleteDoc(doc(db, "servicios", String(s.id)));
-                }
-            }
-        };
-
-        window.poblarSelectCategoriasModal = function() {
-            const sel = document.getElementById('srv-categoria-select');
-            if (!sel) return;
-            sel.innerHTML = '';
-            window.categorias.forEach(c => {
-                sel.innerHTML += `<option value="${c.id}">${c.titulo}</option>`;
-            });
-        };
-
-        window.abrirModalServicio = function() {
-            if (!window.esAdminActivo) return;
+        document.getElementById('btn-agregar-servicio-admin').addEventListener('click', () => {
+            if (!esAdminActivo) return;
             document.getElementById('srv-id').value = '';
             document.getElementById('srv-nombre').value = '';
             document.getElementById('srv-desc').value = '';
@@ -729,15 +859,16 @@
             document.getElementById('srv-badge').value = '';
             document.getElementById('modal-servicio-titulo').textContent = 'Agregar Servicio';
             document.getElementById('modal-servicio').classList.remove('hidden');
-        };
+        });
 
-        window.cerrarModalServicio = function() {
+        document.getElementById('btn-cancelar-srv').addEventListener('click', () => {
             document.getElementById('modal-servicio').classList.add('hidden');
-        };
+        });
 
-        window.guardarServicio = async function(e) {
+        // Guardar Servicio
+        document.getElementById('form-servicio').addEventListener('submit', async (e) => {
             e.preventDefault();
-            if (!window.esAdminActivo) return;
+            if (!esAdminActivo) return;
             const id = document.getElementById('srv-id').value;
             const catId = document.getElementById('srv-categoria-select').value;
             const nombre = document.getElementById('srv-nombre').value;
@@ -754,144 +885,39 @@
                 console.error("Error al guardar en Firestore:", err);
             }
 
-            const index = window.servicios.findIndex(x => x.id == servicioIdFinal);
+            const index = servicios.findIndex(x => x.id == servicioIdFinal);
             if (index >= 0) {
-                window.servicios[index] = servicioObj;
+                servicios[index] = servicioObj;
             } else {
-                window.servicios.push(servicioObj);
+                servicios.push(servicioObj);
             }
 
-            cerrarModalServicio();
-            window.renderCategoriasYServicios();
-        };
+            document.getElementById('modal-servicio').classList.add('hidden');
+            renderCategoriasYServicios();
+        });
 
-        window.editarServicio = function(id) {
-            if (!window.esAdminActivo) return;
-            const s = window.servicios.find(x => x.id == id);
-            if (!s) return;
-            document.getElementById('srv-id').value = s.id;
-            document.getElementById('srv-categoria-select').value = s.catId;
-            document.getElementById('srv-nombre').value = s.nombre;
-            document.getElementById('srv-desc').value = s.desc;
-            document.getElementById('srv-precio').value = s.precio;
-            document.getElementById('srv-badge').value = s.badge || '';
-            document.getElementById('modal-servicio-titulo').textContent = 'Editar Servicio';
-            document.getElementById('modal-servicio').classList.remove('hidden');
-        };
-
-        window.eliminarServicio = async function(id) {
-            if (!window.esAdminActivo) return;
-            if (confirm('¿Borrar este servicio?')) {
-                try {
-                    await deleteDoc(doc(db, "servicios", String(id)));
-                } catch (err) {
-                    console.error("Error al borrar en Firestore:", err);
-                }
-                window.servicios = window.servicios.filter(x => x.id != id);
-                window.renderCategoriasYServicios();
-            }
-        };
-
-        window.seleccionarModuloPrincipal = function(mod) {
-            const btnLav = document.getElementById('btn-modulo-lavado');
-            const btnMsg = document.getElementById('btn-modulo-mensajeria');
-            const subLav = document.getElementById('subnav-lavado');
-            const subMsg = document.getElementById('subnav-mensajeria');
-            const secLav = document.getElementById('seccion-modulo-lavado');
-            const secMsg = document.getElementById('seccion-modulo-mensajeria');
-
-            if (mod === 'lavado') {
-                btnLav.className = "main-nav-btn active px-6 py-2.5 rounded-xl font-tech text-xs sm:text-sm font-bold tracking-wider transition border border-mamba-border flex items-center gap-2";
-                btnMsg.className = "main-nav-btn px-6 py-2.5 rounded-xl font-tech text-xs sm:text-sm font-bold tracking-wider transition border border-mamba-border flex items-center gap-2 bg-gray-900 text-gray-400 hover:text-white";
-                subLav.classList.remove('hidden');
-                subMsg.classList.add('hidden');
-                secLav.classList.remove('hidden');
-                secMsg.classList.add('hidden');
-            } else {
-                btnMsg.className = "main-nav-btn active px-6 py-2.5 rounded-xl font-tech text-xs sm:text-sm font-bold tracking-wider transition border border-mamba-border flex items-center gap-2";
-                btnLav.className = "main-nav-btn px-6 py-2.5 rounded-xl font-tech text-xs sm:text-sm font-bold tracking-wider transition border border-mamba-border flex items-center gap-2 bg-gray-900 text-gray-400 hover:text-white";
-                subMsg.classList.remove('hidden');
-                subLav.classList.add('hidden');
-                secMsg.classList.remove('hidden');
-                secLav.classList.add('hidden');
-            }
-        };
-
-        window.switchSubTabLavado = function(tab) {
-            ['servicios', 'cotizacion', 'citas', 'clientes'].forEach(t => {
-                const el = document.getElementById(`sec-lav-${t}`);
-                if (el) el.classList.add('hidden');
-                const btn = document.getElementById(`subtab-lav-${t}`);
-                if (btn) btn.classList.remove('active');
-            });
-            document.getElementById(`sec-lav-${tab}`).classList.remove('hidden');
-            document.getElementById(`subtab-lav-${tab}`).classList.add('active');
-            if (tab === 'clientes') window.renderClientes();
-        };
-
-        window.switchSubTabMensajeria = function(tab) {
-            ['calculadora', 'cotizacion'].forEach(t => {
-                const el = document.getElementById(`sec-msg-${t}`);
-                if (el) el.classList.add('hidden');
-                const btn = document.getElementById(`subtab-msg-${t}`);
-                if (btn) btn.classList.remove('active');
-            });
-            document.getElementById(`sec-msg-${tab}`).classList.remove('hidden');
-            document.getElementById(`subtab-msg-${tab}`).classList.add('active');
-        };
-
-        window.toggleAdminClientes = function() {
-            const subtabClientes = document.getElementById('subtab-lav-clientes');
-            const btnAgregarSrv = document.getElementById('btn-agregar-servicio-admin');
-            const btnAgregarCat = document.getElementById('btn-agregar-categoria-admin');
-
-            if (subtabClientes.classList.contains('hidden')) {
-                const pin = prompt("Ingresa la clave de administrador:");
-                if (pin && pin.toLowerCase() === "justin248".toLowerCase()) {
-                    window.esAdminActivo = true;
-                    subtabClientes.classList.remove('hidden');
-                    btnAgregarSrv.classList.remove('hidden');
-                    btnAgregarSrv.classList.add('flex');
-                    btnAgregarCat.classList.remove('hidden');
-                    btnAgregarCat.classList.add('flex');
-                    window.seleccionarModuloPrincipal('lavado');
-                    window.switchSubTabLavado('servicios');
-                    window.renderCategoriasYServicios();
-                    alert("Modo administrador activado.");
-                } else {
-                    alert("Clave incorrecta.");
-                }
-            } else {
-                window.esAdminActivo = false;
-                subtabClientes.classList.add('hidden');
-                btnAgregarSrv.classList.add('hidden');
-                btnAgregarSrv.classList.remove('flex');
-                btnAgregarCat.classList.add('hidden');
-                btnAgregarCat.classList.remove('flex');
-                window.switchSubTabLavado('servicios');
-                window.renderCategoriasYServicios();
-                alert("Modo administrador oculto.");
-            }
-        };
-
-        window.agregarVehiculoCotizacion = function(modelo = '', placa = '') {
+        // Funciones de Cotizadores y Clientes
+        function agregarVehiculoCotizacion(modelo = '', placa = '') {
             const cont = document.getElementById('cot-vehiculos-container');
             const div = document.createElement('div');
             div.className = 'flex gap-2 items-center cot-veh-row';
             div.innerHTML = `
                 <input type="text" placeholder="Modelo (Ej: Sedán / Pick-up)" value="${modelo}" class="cot-veh-modelo w-1/2 bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white">
                 <input type="text" placeholder="Placa (Ej: ABC-123)" value="${placa}" class="cot-veh-placa w-1/2 bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white">
-                <button type="button" onclick="this.parentElement.remove()" class="text-red-500 hover:text-red-400 px-2"><i class="fas fa-times"></i></button>
+                <button type="button" class="text-red-500 hover:text-red-400 px-2 btn-del-veh"><i class="fas fa-times"></i></button>
             `;
+            div.querySelector('.btn-del-veh').addEventListener('click', () => div.remove());
             cont.appendChild(div);
-        };
+        }
 
-        window.agregarFilaServicioCotizacion = function() {
+        document.getElementById('btn-add-vehiculo-cot').addEventListener('click', () => agregarVehiculoCotizacion());
+
+        function agregarFilaServicioCotizacion() {
             const cont = document.getElementById('cot-servicios-container');
             const div = document.createElement('div');
             div.className = 'flex gap-2 items-center cot-srv-row bg-black/40 p-2 rounded-lg border border-mamba-border';
             
-            let opcionesSrv = window.servicios.map(s => `<option value="${s.id}" data-precio="${s.precio}">${s.nombre} (₡${Number(s.precio).toLocaleString('es-CR')})</option>`).join('');
+            let opcionesSrv = servicios.map(s => `<option value="${s.id}" data-precio="${s.precio}">${s.nombre} (₡${Number(s.precio).toLocaleString('es-CR')})</option>`).join('');
 
             div.innerHTML = `
                 <select class="cot-select-srv w-1/2 bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white">
@@ -900,43 +926,42 @@
                 </select>
                 <div class="w-1/4 flex items-center gap-1">
                     <span class="text-[10px] text-gray-400">Cant:</span>
-                    <input type="number" min="1" value="1" class="cot-srv-cant w-full bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white" oninput="calcularTotalCotizacionLavado()">
+                    <input type="number" min="1" value="1" class="cot-srv-cant w-full bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white">
                 </div>
-                <input type="number" placeholder="Precio ₡" class="cot-srv-precio w-1/4 bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white" oninput="calcularTotalCotizacionLavado()">
-                <button type="button" onclick="this.parentElement.remove(); calcularTotalCotizacionLavado();" class="text-red-500 hover:text-red-400 px-2"><i class="fas fa-trash"></i></button>
+                <input type="number" placeholder="Precio ₡" class="cot-srv-precio w-1/4 bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white">
+                <button type="button" class="text-red-500 hover:text-red-400 px-2 btn-del-fila"><i class="fas fa-trash"></i></button>
             `;
             cont.appendChild(div);
+
+            const calcular = () => {
+                let total = 0;
+                document.querySelectorAll('.cot-srv-row').forEach(row => {
+                    const cant = parseFloat(row.querySelector('.cot-srv-cant').value) || 1;
+                    const precio = parseFloat(row.querySelector('.cot-srv-precio').value) || 0;
+                    total += (precio * cant);
+                });
+                document.getElementById('cot-lav-total-visual').textContent = '₡' + total.toLocaleString('es-CR');
+            };
 
             div.querySelector('.cot-select-srv').addEventListener('change', function() {
                 const opt = this.options[this.selectedIndex];
                 const precioUnitario = parseFloat(opt.getAttribute('data-precio')) || 0;
                 div.querySelector('.cot-srv-precio').value = precioUnitario;
-                window.calcularTotalCotizacionLavado();
+                calcular();
             });
-        };
 
-        window.poblarSelectCitas = function() {
-            const select = document.getElementById('cita-servicio-select');
-            if (!select) return;
-            select.innerHTML = '<option value="">Selecciona el servicio que deseas...</option>';
-            window.servicios.forEach(s => {
-                select.innerHTML += `<option value="${s.nombre}">${s.nombre} (₡${Number(s.precio).toLocaleString('es-CR')})</option>`;
+            div.querySelector('.cot-srv-cant').addEventListener('input', calcular);
+            div.querySelector('.cot-srv-precio').addEventListener('input', calcular);
+            div.querySelector('.btn-del-fila').addEventListener('click', () => {
+                div.remove();
+                calcular();
             });
-        };
+        }
 
-        window.calcularTotalCotizacionLavado = function() {
-            let total = 0;
-            document.querySelectorAll('.cot-srv-row').forEach(row => {
-                const cant = parseFloat(row.querySelector('.cot-srv-cant').value) || 1;
-                const precio = parseFloat(row.querySelector('.cot-srv-precio').value) || 0;
-                total += (precio * cant);
-            });
-            document.getElementById('cot-lav-total-visual').textContent = '₡' + total.toLocaleString('es-CR');
-        };
+        document.getElementById('btn-add-fila-cot').addEventListener('click', () => agregarFilaServicioCotizacion());
 
-        window.enviarCotizacionLavadoWhatsApp = function() {
+        document.getElementById('btn-enviar-cot-wa').addEventListener('click', () => {
             const cliente = document.getElementById('cot-lav-cliente').value.trim() || 'Cliente General';
-            
             let vehs = [];
             document.querySelectorAll('.cot-veh-row').forEach(row => {
                 const mod = row.querySelector('.cot-veh-modelo').value.trim();
@@ -967,15 +992,25 @@
 
             const notas = document.getElementById('cot-lav-notas').value.trim();
             let txt = `Hola Las Mambas, solicito la siguiente cotización:\n\n*Cliente:* ${cliente}\n*Vehículos:* ${vehiculosStr}\n\n*Detalle de Servicios:*\n${detallesArr.join('\n')}`;
-            if (notas) {
-                txt += `\n\n*Notas:* ${notas}`;
-            }
+            if (notas) txt += `\n\n*Notas:* ${notas}`;
             txt += `\n\n*Total Estimado:* ₡${montoTotal.toLocaleString('es-CR')}`;
 
             window.open(`https://wa.me/50688818720?text=${encodeURIComponent(txt)}`, '_blank');
-        };
+        });
 
-        window.calcularRutaAutomatica = async function(e) {
+        document.getElementById('form-cita').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const nom = document.getElementById('cita-nombre').value;
+            const fec = document.getElementById('cita-fecha').value;
+            const hor = document.getElementById('cita-hora').value;
+            const srv = document.getElementById('cita-servicio-select').value || 'Servicio General';
+
+            const txt = `Hola Las Mambas, deseo agendar una cita:\n- *Cliente:* ${nom}\n- *Fecha:* ${fec}\n- *Hora:* ${hor}\n- *Servicio:* ${srv}`;
+            window.open(`https://wa.me/50688818720?text=${encodeURIComponent(txt)}`, '_blank');
+        });
+
+        // Calculadora de Ruta
+        document.getElementById('form-calc-ruta').addEventListener('submit', async (e) => {
             e.preventDefault();
             const origenTxt = document.getElementById('origen-input').value.trim();
             const destinoTxt = document.getElementById('destino-input').value.trim();
@@ -986,7 +1021,7 @@
             if (kmManual && parseFloat(kmManual) > 0) {
                 const km = parseFloat(kmManual);
                 const total = Math.round(km * 450);
-                window.resultadoUltimoEnvio = { origen: origenTxt, destino: destinoTxt, km, total };
+                resultadoUltimoEnvio = { origen: origenTxt, destino: destinoTxt, km, total };
                 document.getElementById('res-distancia').textContent = `${km} km (Manual)`;
                 document.getElementById('res-total').textContent = `₡${total.toLocaleString('es-CR')}`;
                 resBox.classList.remove('hidden');
@@ -1015,11 +1050,9 @@
                     const km = parseFloat((metros / 1000).toFixed(1));
                     const total = Math.round(km * 450);
 
-                    window.resultadoUltimoEnvio = { origen: origenTxt, destino: destinoTxt, km, total };
-
+                    resultadoUltimoEnvio = { origen: origenTxt, destino: destinoTxt, km, total };
                     document.getElementById('res-distancia').textContent = `${km} km`;
                     document.getElementById('res-total').textContent = `₡${total.toLocaleString('es-CR')}`;
-
                     estado.classList.add('hidden');
                     resBox.classList.remove('hidden');
                 } else {
@@ -1029,16 +1062,22 @@
                 estado.classList.add('hidden');
                 alert('No se pudo calcular automáticamente. Escribe la distancia manualmente.');
             }
-        };
+        });
 
-        window.pasarACotizacionEnvios = function() {
-            if (!window.resultadoUltimoEnvio) return;
-            window.switchSubTabMensajeria('cotizacion');
-            document.getElementById('cot-msg-ruta').value = `${window.resultadoUltimoEnvio.origen} ➔ ${window.resultadoUltimoEnvio.destino}`;
-            document.getElementById('cot-msg-monto').value = window.resultadoUltimoEnvio.total;
-        };
+        document.getElementById('btn-solicitar-msg-wa').addEventListener('click', () => {
+            if (!resultadoUltimoEnvio) return;
+            const txt = `Hola Las Mambas, solicito mensajeria express:\n- Origen: ${resultadoUltimoEnvio.origen}\n- Destino: ${resultadoUltimoEnvio.destino}\n- Distancia: ${resultadoUltimoEnvio.km} km\n- Total: ₡${resultadoUltimoEnvio.total.toLocaleString('es-CR')}`;
+            window.open(`https://wa.me/50688818720?text=${encodeURIComponent(txt)}`, '_blank');
+        });
 
-        window.enviarCotizacionEnviosWhatsApp = function() {
+        document.getElementById('btn-pasar-cot-envios').addEventListener('click', () => {
+            if (!resultadoUltimoEnvio) return;
+            switchTabMsg('cotizacion');
+            document.getElementById('cot-msg-ruta').value = `${resultadoUltimoEnvio.origen} ➔ ${resultadoUltimoEnvio.destino}`;
+            document.getElementById('cot-msg-monto').value = resultadoUltimoEnvio.total;
+        });
+
+        document.getElementById('btn-enviar-envio-wa').addEventListener('click', () => {
             const cliente = document.getElementById('cot-msg-cliente').value.trim() || 'Cliente';
             const ruta = document.getElementById('cot-msg-ruta').value.trim() || 'Ruta de envío';
             const detalle = document.getElementById('cot-msg-detalle').value.trim() || 'Sin detalle';
@@ -1046,73 +1085,42 @@
 
             const txt = `Hola Las Mambas, solicito el siguiente envío:\n- *Cliente:* ${cliente}\n- *Ruta:* ${ruta}\n- *Detalle:* ${detalle}\n- *Monto:* ₡${monto.toLocaleString('es-CR')}`;
             window.open(`https://wa.me/50688818720?text=${encodeURIComponent(txt)}`, '_blank');
-        };
+        });
 
-        window.reservarCitaWA = function(e) {
-            e.preventDefault();
-            const nom = document.getElementById('cita-nombre').value;
-            const fec = document.getElementById('cita-fecha').value;
-            const hor = document.getElementById('cita-hora').value;
-            const srv = document.getElementById('cita-servicio-select').value || 'Servicio General';
-
-            const txt = `Hola Las Mambas, deseo agendar una cita:\n- *Cliente:* ${nom}\n- *Fecha:* ${fec}\n- *Hora:* ${hor}\n- *Servicio:* ${srv}`;
-            window.open(`https://wa.me/50688818720?text=${encodeURIComponent(txt)}`, '_blank');
-        };
-
-        window.renderClientes = function() {
-            const body = document.getElementById('tabla-clientes-body');
-            if (!body) return;
-            body.innerHTML = '';
-            if (window.clientes.length === 0) {
-                body.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-gray-500">No hay clientes registrados.</td></tr>`;
-                return;
-            }
-            window.clientes.forEach(c => {
-                let vehsHtml = c.vehiculos.map(v => `<span class="inline-block bg-black/50 border border-mamba-border px-2 py-0.5 rounded text-[11px] mr-1 mb-1">${v.modelo} (${v.placa})</span>`).join('');
-                body.innerHTML += `
-                    <tr>
-                        <td class="p-4 font-semibold text-white">${c.nombre}</td>
-                        <td class="p-4">${c.telefono}</td>
-                        <td class="p-4">${vehsHtml}</td>
-                        <td class="p-4 text-center space-x-2">
-                            <button onclick="editarCliente('${c.id}')" class="text-xs text-gray-400 hover:text-white"><i class="fas fa-edit"></i></button>
-                            <button onclick="eliminarCliente('${c.id}')" class="text-xs text-red-500 hover:text-red-400"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
-                `;
-            });
-        };
-
-        window.abrirModalCliente = function() {
-            if (!window.esAdminActivo) return;
-            document.getElementById('cli-id').value = '';
-            document.getElementById('cli-nombre').value = '';
-            document.getElementById('cli-telefono').value = '';
-            document.getElementById('vehiculos-container').innerHTML = '';
-            window.agregarCampoVehiculoModal();
-            document.getElementById('modal-cliente-titulo').textContent = 'Registrar Cliente';
-            document.getElementById('modal-cliente').classList.remove('hidden');
-        };
-
-        window.agregarCampoVehiculoModal = function(modelo = '', placa = '') {
+        // Clientes Modal
+        function agregarCampoVehiculoModal(modelo = '', placa = '') {
             const cont = document.getElementById('vehiculos-container');
             const div = document.createElement('div');
             div.className = 'flex gap-2 items-center vehiculo-row';
             div.innerHTML = `
                 <input type="text" placeholder="Modelo (Ej: Toyota)" value="${modelo}" class="veh-modelo w-1/2 bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white">
                 <input type="text" placeholder="Placa (Ej: ABC-123)" value="${placa}" class="veh-placa w-1/2 bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white">
-                <button type="button" onclick="this.parentElement.remove()" class="text-red-500 hover:text-red-400 px-2"><i class="fas fa-times"></i></button>
+                <button type="button" class="text-red-500 hover:text-red-400 px-2 btn-del-veh-mod"><i class="fas fa-times"></i></button>
             `;
+            div.querySelector('.btn-del-veh-mod').addEventListener('click', () => div.remove());
             cont.appendChild(div);
-        };
+        }
 
-        window.cerrarModalCliente = function() {
+        document.getElementById('btn-add-vehiculo-modal').addEventListener('click', () => agregarCampoVehiculoModal());
+
+        document.getElementById('btn-agregar-cliente').addEventListener('click', () => {
+            if (!esAdminActivo) return;
+            document.getElementById('cli-id').value = '';
+            document.getElementById('cli-nombre').value = '';
+            document.getElementById('cli-telefono').value = '';
+            document.getElementById('vehiculos-container').innerHTML = '';
+            agregarCampoVehiculoModal();
+            document.getElementById('modal-cliente-titulo').textContent = 'Registrar Cliente';
+            document.getElementById('modal-cliente').classList.remove('hidden');
+        });
+
+        document.getElementById('btn-cancelar-cli').addEventListener('click', () => {
             document.getElementById('modal-cliente').classList.add('hidden');
-        };
+        });
 
-        window.guardarCliente = async function(e) {
+        document.getElementById('form-cliente').addEventListener('submit', async (e) => {
             e.preventDefault();
-            if (!window.esAdminActivo) return;
+            if (!esAdminActivo) return;
             const id = document.getElementById('cli-id').value;
             const nombre = document.getElementById('cli-nombre').value;
             const telefono = document.getElementById('cli-telefono').value;
@@ -1134,53 +1142,49 @@
                 console.error("Error al guardar cliente:", err);
             }
 
-            window.cerrarModalCliente();
-            window.renderClientes();
-        };
+            document.getElementById('modal-cliente').classList.add('hidden');
+            renderClientes();
+        });
 
-        window.editarCliente = function(id) {
-            if (!window.esAdminActivo) return;
-            const c = window.clientes.find(x => x.id == id);
-            if (!c) return;
-            document.getElementById('cli-id').value = c.id;
-            document.getElementById('cli-nombre').value = c.nombre;
-            document.getElementById('cli-telefono').value = c.telefono;
-            document.getElementById('vehiculos-container').innerHTML = '';
-            c.vehiculos.forEach(v => window.agregarCampoVehiculoModal(v.modelo, v.placa));
-            document.getElementById('modal-cliente-titulo').textContent = 'Editar Cliente';
-            document.getElementById('modal-cliente').classList.remove('hidden');
-        };
-
-        window.eliminarCliente = async function(id) {
-            if (!window.esAdminActivo) return;
-            if (confirm('¿Eliminar este cliente?')) {
-                try {
-                    await deleteDoc(doc(db, "clientes", String(id)));
-                } catch (err) {
-                    console.error("Error al eliminar cliente:", err);
+        // Inicialización de la escucha en tiempo real de Firebase
+        inicializarDatosEnNube().then(() => {
+            onSnapshot(collection(db, "categorias"), (snapshot) => {
+                if (!snapshot.empty) {
+                    categorias = [];
+                    snapshot.forEach((docSnap) => {
+                        categorias.push({ id: docSnap.id, ...docSnap.data() });
+                    });
+                    renderCategoriasYServicios();
                 }
-                window.renderClientes();
-            }
-        };
+            });
 
-        window.solicitarServicioWA = function(nombre, precio) {
-            const txt = `Hola Las Mambas, deseo solicitar el servicio de *${nombre}* (₡${Number(precio).toLocaleString('es-CR')}).`;
-            window.open(`https://wa.me/50688818720?text=${encodeURIComponent(txt)}`, '_blank');
-        };
+            onSnapshot(collection(db, "servicios"), (snapshot) => {
+                if (!snapshot.empty) {
+                    servicios = [];
+                    snapshot.forEach((docSnap) => {
+                        servicios.push({ id: docSnap.id, ...docSnap.data() });
+                    });
+                    renderCategoriasYServicios();
+                }
+            });
 
-        window.enviarMensajeriaWhatsApp = function() {
-            if (!window.resultadoUltimoEnvio) return;
-            const txt = `Hola Las Mambas, solicito mensajeria express:\n- Origen: ${window.resultadoUltimoEnvio.origen}\n- Destino: ${window.resultadoUltimoEnvio.destino}\n- Distancia: ${window.resultadoUltimoEnvio.km} km\n- Total: ₡${window.resultadoUltimoEnvio.total.toLocaleString('es-CR')}`;
-            window.open(`https://wa.me/50688818720?text=${txt}`, '_blank');
-        };
+            onSnapshot(collection(db, "clientes"), (snapshot) => {
+                clientes = [];
+                if (!snapshot.empty) {
+                    snapshot.forEach((docSnap) => {
+                        clientes.push({ id: docSnap.id, ...docSnap.data() });
+                    });
+                }
+                renderClientes();
+            });
+        });
 
-        // Arranque inicial de la interfaz en local antes de que cargue la nube
-        window.agregarVehiculoCotizacion();
-        window.agregarFilaServicioCotizacion();
-        window.renderCategoriasYServicios();
-        window.poblarSelectCitas();
+        // Arranque local inicial de la interfaz
+        agregarVehiculoCotizacion();
+        agregarFilaServicioCotizacion();
+        renderCategoriasYServicios();
 
-        console.log("¡Las Mambas sincronizado correctamente con Firestore en bloque unificado!");
+        console.log("¡Las Mambas sincronizado correctamente con eventos nativos seguros!");
     </script>
 </body>
 </html>
