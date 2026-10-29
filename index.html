@@ -664,7 +664,7 @@
             document.getElementById('modal-servicio').classList.add('hidden');
         }
 
-        async function guardarServicio(e) {
+                async function guardarServicio(e) {
             e.preventDefault();
             if (!esAdminActivo) return;
             const id = document.getElementById('srv-id').value;
@@ -674,41 +674,45 @@
             const precio = parseFloat(document.getElementById('srv-precio').value);
             const badge = document.getElementById('srv-badge').value;
 
-            let servicioObj;
-            if (id) {
-                servicioObj = { id: String(id), catId, nombre, desc, precio, badge };
-            } else {
-                servicioObj = { id: String(Date.now()), catId, nombre, desc, precio, badge };
+            const servicioIdFinal = id ? String(id) : String(Date.now());
+            const servicioObj = { id: servicioIdFinal, catId, nombre, desc, precio, badge };
+
+            if (window.db && window.FirestoreDeps) {
+                try {
+                    await window.FirestoreDeps.setDoc(
+                        window.FirestoreDeps.doc(window.db, "servicios", servicioIdFinal), 
+                        servicioObj
+                    );
+                } catch (err) {
+                    console.error("Error al guardar en Firestore:", err);
+                }
             }
 
-            if (window.db && window.FirestoreDeps && servicioObj) {
-                await window.FirestoreDeps.setDoc(window.FirestoreDeps.doc(window.db, "servicios", servicioObj.id), servicioObj);
+            const index = window.servicios.findIndex(x => x.id == servicioIdFinal);
+            if (index >= 0) {
+                window.servicios[index] = servicioObj;
+            } else {
+                window.servicios.push(servicioObj);
             }
 
             cerrarModalServicio();
             renderCategoriasYServicios();
         }
 
-        function editarServicio(id) {
-            if (!esAdminActivo) return;
-            const s = servicios.find(x => x.id == id);
-            if (!s) return;
-            document.getElementById('srv-id').value = s.id;
-            document.getElementById('srv-categoria-select').value = s.catId;
-            document.getElementById('srv-nombre').value = s.nombre;
-            document.getElementById('srv-desc').value = s.desc;
-            document.getElementById('srv-precio').value = s.precio;
-            document.getElementById('srv-badge').value = s.badge || '';
-            document.getElementById('modal-servicio-titulo').textContent = 'Editar Servicio';
-            document.getElementById('modal-servicio').classList.remove('hidden');
-        }
-
         async function eliminarServicio(id) {
             if (!esAdminActivo) return;
             if (confirm('¿Borrar este servicio?')) {
                 if (window.db && window.FirestoreDeps) {
-                    await window.FirestoreDeps.deleteDoc(window.FirestoreDeps.doc(window.db, "servicios", String(id)));
+                    try {
+                        await window.FirestoreDeps.deleteDoc(
+                            window.FirestoreDeps.doc(window.db, "servicios", String(id))
+                        );
+                    } catch (err) {
+                        console.error("Error al borrar en Firestore:", err);
+                    }
                 }
+                
+                window.servicios = window.servicios.filter(x => x.id != id);
                 renderCategoriasYServicios();
             }
         }
