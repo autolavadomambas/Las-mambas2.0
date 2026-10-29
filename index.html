@@ -483,9 +483,39 @@
 
     <!-- LÓGICA DE LA APLICACIÓN -->
     <script>
-        // Arreglos vacíos iniciales (se llenan automáticamente desde Firestore)
-        let categorias = [];
-        let servicios = [];
+        // Datos por defecto blindados para que la pantalla NUNCA se quede vacía
+        let categorias = [
+            { id: "cat-1", icono: "🚿", titulo: "LAVADO EXTERIOR", subtext: "Incluye únicamente el lavado exterior, limpieza de aros y llantas, enjuague y secado. No incluye aspirado, encerado ni limpieza interior." },
+            { id: "cat-2", icono: "🧹", titulo: "ASPIRADO Y LIMPIEZA INTERIOR", subtext: "Limpieza interior rápida y profunda de alfombras y asientos." },
+            { id: "cat-3", icono: "🔥", titulo: "LAVADO COMPLETO", subtext: "Incluye lavado exterior, aspirado profundo, encerado y acondicionamiento de partes negras y llantas." },
+            { id: "cat-4", icono: "⭐", titulo: "PAQUETES PREMIUM", subtext: "Incluye Lavado exterior completo + Aspirado profundo + Encerado Meguiar's + Acondicionamiento de plásticos y llantas + Sellado Express con efecto hidrofóbico + Tratamiento de rayones superficiales + Tratamiento de focos opacos.<br><strong class='text-yellow-500'>⚠️ Advertencia:</strong> Los resultados dependen del estado de la pintura y los focos. No incluye eliminación de rayones profundos." },
+            { id: "cat-5", icono: "✨", titulo: "DETAILING Y TRATAMIENTOS", subtext: "Servicios especializados. Dependiendo del estado de la superficie, se valora el trabajo o se requiere cotización previa." },
+            { id: "cat-6", icono: "🏍️", titulo: "LAVADO DE MOTOS", subtext: "Lavado especializado para motocicletas." },
+            { id: "cat-7", icono: "🏠", titulo: "SERVICIO A DOMICILIO", subtext: "Recargo de domicilio según zona. Funciona como un adicional al servicio seleccionado." }
+        ];
+
+        let servicios = [
+            { id: "1", catId: "cat-1", nombre: "Solo lavado Sedán / Hatchback", desc: "Lavado exterior, aros, llantas, enjuague y secado.", precio: 4000, badge: "" },
+            { id: "2", catId: "cat-1", nombre: "Solo lavado SUV", desc: "Lavado exterior, aros, llantas, enjuague y secado.", precio: 5000, badge: "" },
+            { id: "3", catId: "cat-1", nombre: "Solo lavado Pick-up", desc: "Lavado exterior, aros, llantas, enjuague y secado.", precio: 6000, badge: "" },
+            { id: "4", catId: "cat-1", nombre: "Solo lavado Pick-up Full Size", desc: "Lavado exterior, aros, llantas, enjuague y secado.", precio: 7000, badge: "" },
+            { id: "5", catId: "cat-2", nombre: "Aspirado Sedán / Hatchback", desc: "Limpieza interior rápida y profunda de alfombras y asientos.", precio: 4000, badge: "" },
+            { id: "6", catId: "cat-2", nombre: "Aspirado SUV / Pick-up", desc: "Limpieza interior rápida y profunda de alfombras y asientos.", precio: 5000, badge: "" },
+            { id: "7", catId: "cat-2", nombre: "Aspirado Pick-up Full Size", desc: "Limpieza interior rápida y profunda de alfombras y asientos.", precio: 6000, badge: "" },
+            { id: "8", catId: "cat-3", nombre: "Servicio Completo Sedán / Hatchback", desc: "Lavado completo + Aspirado profundo + Encerado + Acondicionador de partes negras + llantas.", precio: 7000, badge: "Oferta de Lanzamiento" },
+            { id: "9", catId: "cat-3", nombre: "Servicio Completo SUV", desc: "Lavado completo + Aspirado profundo + Encerado + Acondicionador de partes negras + llantas.", precio: 9000, badge: "Oferta de Lanzamiento" },
+            { id: "10", catId: "cat-3", nombre: "Servicio Completo Pick-up", desc: "Lavado completo + Aspirado profundo + Encerado + Acondicionador de partes negras + llantas.", precio: 10000, badge: "Oferta de Lanzamiento" },
+            { id: "11", catId: "cat-4", nombre: "Servicio Premium Sedán / Hatchback", desc: "Lavado completo + Aspirado profundo + Corrección ligera de rayones + Restauración de focos + Acondicionamiento de cuero/dash + Partes negras & Llantas + Sellado Express Hidrofóbico.", precio: 12000, badge: "" },
+            { id: "12", catId: "cat-4", nombre: "Servicio Premium SUV", desc: "Lavado completo + Aspirado profundo + Corrección ligera de rayones + Restauración de focos + Acondicionamiento de cuero/dash + Partes negras & Llantas + Sellado Express Hidrofóbico.", precio: 15000, badge: "" },
+            { id: "13", catId: "cat-4", nombre: "Servicio Premium Pick-up", desc: "Lavado completo + Aspirado profundo + Corrección ligera de rayones + Restauración de focos + Acondicionamiento de cuero/dash + Partes negras & Llantas + Sellado Express Hidrofóbico.", precio: 16000, badge: "" },
+            { id: "14", catId: "cat-4", nombre: "Servicio Premium Pick-up Full Size", desc: "Lavado completo + Aspirado profundo + Corrección ligera de rayones + Restauración de focos + Acondicionamiento de cuero/dash + Partes negras & Llantas + Sellado Express Hidrofóbico.", precio: 18000, badge: "" },
+            { id: "15", catId: "cat-5", nombre: "Restauración y Mantenimiento de Focos", desc: "Tratamiento para eliminar opacidad y devolver claridad.", precio: 5000, badge: "Complemento" },
+            { id: "16", catId: "cat-5", nombre: "Remoción de Rayones Superficiales", desc: "Tratamiento focalizado por zona pequeña para marcas leves en la pintura.", precio: 3000, badge: "Complemento" },
+            { id: "17", catId: "cat-5", nombre: "Sellado Express de Brillo Hidrofóbico", desc: "Aplicación de sellador sintético Meguiar's. Aporta brillo espejo y una capa hidrofóbica que repele agua y suciedad.", precio: 4000, badge: "Complemento" },
+            { id: "18", catId: "cat-6", nombre: "Lavado Premium Moto", desc: "Lavado completo, desengrasado de cadena/aros, aspirado de compartimientos y acondicionador de plásticos y llantas.", precio: 4000, badge: "" },
+            { id: "19", catId: "cat-7", nombre: "Servicio a Domicilio", desc: "Recargo de domicilio desde ₡3.000, según zona. (GRATIS en 3 km para paquetes Premium).", precio: 3000, badge: "" }
+        ];
+
         let clientes = [];
 
         let resultadoUltimoEnvio = null;
@@ -494,6 +524,7 @@
         window.addEventListener('DOMContentLoaded', () => {
             agregarVehiculoCotizacion();
             agregarFilaServicioCotizacion();
+            renderCategoriasYServicios();
             poblarSelectCitas();
         });
 
@@ -510,8 +541,8 @@
                     let badgeHtml = s.badge ? `<span class="launch-badge">${s.badge}</span>` : '';
                     let adminSrvBtn = esAdminActivo ? `
                         <div class="flex gap-2">
-                            <button onclick="editarServicio(${s.id})" class="text-xs text-gray-400 hover:text-white" title="Editar"><i class="fas fa-edit"></i></button>
-                            <button onclick="eliminarServicio(${s.id})" class="text-xs text-red-500 hover:text-red-400" title="Eliminar"><i class="fas fa-trash"></i></button>
+                            <button onclick="editarServicio('${s.id}')" class="text-xs text-gray-400 hover:text-white" title="Editar"><i class="fas fa-edit"></i></button>
+                            <button onclick="eliminarServicio('${s.id}')" class="text-xs text-red-500 hover:text-red-400" title="Eliminar"><i class="fas fa-trash"></i></button>
                         </div>
                     ` : '';
 
@@ -645,10 +676,7 @@
 
             let servicioObj;
             if (id) {
-                const s = servicios.find(x => x.id == id);
-                if (s) { 
-                    servicioObj = { id: String(s.id), catId, nombre, desc, precio, badge };
-                }
+                servicioObj = { id: String(id), catId, nombre, desc, precio, badge };
             } else {
                 servicioObj = { id: String(Date.now()), catId, nombre, desc, precio, badge };
             }
@@ -658,6 +686,7 @@
             }
 
             cerrarModalServicio();
+            renderCategoriasYServicios();
         }
 
         function editarServicio(id) {
@@ -680,6 +709,7 @@
                 if (window.db && window.FirestoreDeps) {
                     await window.FirestoreDeps.deleteDoc(window.FirestoreDeps.doc(window.db, "servicios", String(id)));
                 }
+                renderCategoriasYServicios();
             }
         }
 
@@ -967,8 +997,8 @@
                         <td class="p-4">${c.telefono}</td>
                         <td class="p-4">${vehsHtml}</td>
                         <td class="p-4 text-center space-x-2">
-                            <button onclick="editarCliente(${c.id})" class="text-xs text-gray-400 hover:text-white"><i class="fas fa-edit"></i></button>
-                            <button onclick="eliminarCliente(${c.id})" class="text-xs text-red-500 hover:text-red-400"><i class="fas fa-trash"></i></button>
+                            <button onclick="editarCliente('${c.id}')" class="text-xs text-gray-400 hover:text-white"><i class="fas fa-edit"></i></button>
+                            <button onclick="eliminarCliente('${c.id}')" class="text-xs text-red-500 hover:text-red-400"><i class="fas fa-trash"></i></button>
                         </td>
                     </tr>
                 `;
@@ -1030,6 +1060,7 @@
             }
 
             cerrarModalCliente();
+            renderClientes();
         }
 
         function editarCliente(id) {
@@ -1051,6 +1082,7 @@
                 if (window.db && window.FirestoreDeps) {
                     await window.FirestoreDeps.deleteDoc(window.FirestoreDeps.doc(window.db, "clientes", String(id)));
                 }
+                renderClientes();
             }
         }
 
@@ -1094,67 +1126,34 @@
         window.db = db;
         window.FirestoreDeps = { collection, doc, setDoc, deleteDoc, getDocs };
 
-        // Datos iniciales por defecto en caso de que Firestore esté totalmente vacío
-        const categoriasDefault = [
-            { id: "cat-1", icono: "🚿", titulo: "LAVADO EXTERIOR", subtext: "Incluye únicamente el lavado exterior, limpieza de aros y llantas, enjuague y secado. No incluye aspirado, encerado ni limpieza interior." },
-            { id: "cat-2", icono: "🧹", titulo: "ASPIRADO Y LIMPIEZA INTERIOR", subtext: "Limpieza interior rápida y profunda de alfombras y asientos." },
-            { id: "cat-3", icono: "🔥", titulo: "LAVADO COMPLETO", subtext: "Incluye lavado exterior, aspirado profundo, encerado y acondicionamiento de partes negras y llantas." },
-            { id: "cat-4", icono: "⭐", titulo: "PAQUETES PREMIUM", subtext: "Incluye Lavado exterior completo + Aspirado profundo + Encerado Meguiar's + Acondicionamiento de plásticos y llantas + Sellado Express con efecto hidrofóbico + Tratamiento de rayones superficiales + Tratamiento de focos opacos.<br><strong class='text-yellow-500'>⚠️ Advertencia:</strong> Los resultados dependen del estado de la pintura y los focos. No incluye eliminación de rayones profundos." },
-            { id: "cat-5", icono: "✨", titulo: "DETAILING Y TRATAMIENTOS", subtext: "Servicios especializados. Dependiendo del estado de la superficie, se valora el trabajo o se requiere cotización previa." },
-            { id: "cat-6", icono: "🏍️", titulo: "LAVADO DE MOTOS", subtext: "Lavado especializado para motocicletas." },
-            { id: "cat-7", icono: "🏠", titulo: "SERVICIO A DOMICILIO", subtext: "Recargo de domicilio según zona. Funciona como un adicional al servicio seleccionado." }
-        ];
-
-        const serviciosDefault = [
-            { id: "1", catId: "cat-1", nombre: "Solo lavado Sedán / Hatchback", desc: "Lavado exterior, aros, llantas, enjuague y secado.", precio: 4000, badge: "" },
-            { id: "2", catId: "cat-1", nombre: "Solo lavado SUV", desc: "Lavado exterior, aros, llantas, enjuague y secado.", precio: 5000, badge: "" },
-            { id: "3", catId: "cat-1", nombre: "Solo lavado Pick-up", desc: "Lavado exterior, aros, llantas, enjuague y secado.", precio: 6000, badge: "" },
-            { id: "4", catId: "cat-1", nombre: "Solo lavado Pick-up Full Size", desc: "Lavado exterior, aros, llantas, enjuague y secado.", precio: 7000, badge: "" },
-            { id: "5", catId: "cat-2", nombre: "Aspirado Sedán / Hatchback", desc: "Limpieza interior rápida y profunda de alfombras y asientos.", precio: 4000, badge: "" },
-            { id: "6", catId: "cat-2", nombre: "Aspirado SUV / Pick-up", desc: "Limpieza interior rápida y profunda de alfombras y asientos.", precio: 5000, badge: "" },
-            { id: "7", catId: "cat-2", nombre: "Aspirado Pick-up Full Size", desc: "Limpieza interior rápida y profunda de alfombras y asientos.", precio: 6000, badge: "" },
-            { id: "8", catId: "cat-3", nombre: "Servicio Completo Sedán / Hatchback", desc: "Lavado completo + Aspirado profundo + Encerado + Acondicionador de partes negras + llantas.", precio: 7000, badge: "Oferta de Lanzamiento" },
-            { id: "9", catId: "cat-3", nombre: "Servicio Completo SUV", desc: "Lavado completo + Aspirado profundo + Encerado + Acondicionador de partes negras + llantas.", precio: 9000, badge: "Oferta de Lanzamiento" },
-            { id: "10", catId: "cat-3", nombre: "Servicio Completo Pick-up", desc: "Lavado completo + Aspirado profundo + Encerado + Acondicionador de partes negras + llantas.", precio: 10000, badge: "Oferta de Lanzamiento" },
-            { id: "11", catId: "cat-4", nombre: "Servicio Premium Sedán / Hatchback", desc: "Lavado completo + Aspirado profundo + Corrección ligera de rayones + Restauración de focos + Acondicionamiento de cuero/dash + Partes negras & Llantas + Sellado Express Hidrofóbico.", precio: 12000, badge: "" },
-            { id: "12", catId: "cat-4", nombre: "Servicio Premium SUV", desc: "Lavado completo + Aspirado profundo + Corrección ligera de rayones + Restauración de focos + Acondicionamiento de cuero/dash + Partes negras & Llantas + Sellado Express Hidrofóbico.", precio: 15000, badge: "" },
-            { id: "13", catId: "cat-4", nombre: "Servicio Premium Pick-up", desc: "Lavado completo + Aspirado profundo + Corrección ligera de rayones + Restauración de focos + Acondicionamiento de cuero/dash + Partes negras & Llantas + Sellado Express Hidrofóbico.", precio: 16000, badge: "" },
-            { id: "14", catId: "cat-4", nombre: "Servicio Premium Pick-up Full Size", desc: "Lavado completo + Aspirado profundo + Corrección ligera de rayones + Restauración de focos + Acondicionamiento de cuero/dash + Partes negras & Llantas + Sellado Express Hidrofóbico.", precio: 18000, badge: "" },
-            { id: "15", catId: "cat-5", nombre: "Restauración y Mantenimiento de Focos", desc: "Tratamiento para eliminar opacidad y devolver claridad.", precio: 5000, badge: "Complemento" },
-            { id: "16", catId: "cat-5", nombre: "Remoción de Rayones Superficiales", desc: "Tratamiento focalizado por zona pequeña para marcas leves en la pintura.", precio: 3000, badge: "Complemento" },
-            { id: "17", catId: "cat-5", nombre: "Sellado Express de Brillo Hidrofóbico", desc: "Aplicación de sellador sintético Meguiar's. Aporta brillo espejo y una capa hidrofóbica que repele agua y suciedad.", precio: 4000, badge: "Complemento" },
-            { id: "18", catId: "cat-6", nombre: "Lavado Premium Moto", desc: "Lavado completo, desengrasado de cadena/aros, aspirado de compartimientos y acondicionador de plásticos y llantas.", precio: 4000, badge: "" },
-            { id: "19", catId: "cat-7", nombre: "Servicio a Domicilio", desc: "Recargo de domicilio desde ₡3.000, según zona. (GRATIS en 3 km para paquetes Premium).", precio: 3000, badge: "" }
-        ];
-
-        // Sincronizar Categorías en tiempo real
+        // Sincronizar Categorías en tiempo real con protección para no dejar vacío
         onSnapshot(collection(db, "categorias"), (snapshot) => {
-            window.categorias = [];
             if (!snapshot.empty) {
+                window.categorias = [];
                 snapshot.forEach((docSnap) => {
                     window.categorias.push({ id: docSnap.id, ...docSnap.data() });
                 });
+                if (typeof renderCategoriasYServicios === 'function') renderCategoriasYServicios();
             } else {
-                categoriasDefault.forEach(async (cat) => {
-                    await setDoc(doc(db, "categorias", cat.id), cat);
+                categorias.forEach(async (cat) => {
+                    await setDoc(doc(db, "categorias", String(cat.id)), cat);
                 });
             }
-            if (typeof renderCategoriasYServicios === 'function') renderCategoriasYServicios();
         });
 
-        // Sincronizar Servicios en tiempo real
+        // Sincronizar Servicios en tiempo real con protección para no dejar vacío
         onSnapshot(collection(db, "servicios"), (snapshot) => {
-            window.servicios = [];
             if (!snapshot.empty) {
+                window.servicios = [];
                 snapshot.forEach((docSnap) => {
                     window.servicios.push({ id: docSnap.id, ...docSnap.data() });
                 });
+                if (typeof renderCategoriasYServicios === 'function') renderCategoriasYServicios();
             } else {
-                serviciosDefault.forEach(async (srv) => {
+                servicios.forEach(async (srv) => {
                     await setDoc(doc(db, "servicios", String(srv.id)), srv);
                 });
             }
-            if (typeof renderCategoriasYServicios === 'function') renderCategoriasYServicios();
         });
 
         // Sincronizar Clientes en tiempo real
