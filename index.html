@@ -163,7 +163,6 @@
         </div>
     </header>
 
-    <!-- BARRA DE NAVEGACIÓN DE MÓDULOS -->
     <div class="bg-black border-b border-mamba-border py-3">
         <div class="max-w-7xl mx-auto px-4 flex justify-center gap-4">
             <button id="btn-modulo-lavado" class="main-nav-btn active px-6 py-2.5 rounded-xl font-tech text-xs sm:text-sm font-bold tracking-wider transition border border-mamba-border flex items-center gap-2">
@@ -175,7 +174,7 @@
         </div>
     </div>
 
-    <!-- SELLO / BANNER DE CONFIANZA MEGUIAR'S -->
+    <!-- BANNER OFICIAL MEGUIAR'S -->
     <div class="bg-gradient-to-r from-black via-zinc-900 to-black border-b border-mamba-border py-2.5 px-4 text-center">
         <div class="max-w-7xl mx-auto flex items-center justify-center gap-2 text-xs sm:text-sm font-tech text-gray-300">
             <span class="text-yellow-500 font-bold tracking-wider uppercase"><i class="fas fa-shield-alt text-mamba-red mr-1"></i> Productos Oficiales & Cuidado Profesional</span>
@@ -275,10 +274,11 @@
                 </div>
             </div>
 
+            <!-- SECCIÓN DE CITAS ACTUALIZADA CON MÚLTIPLES SERVICIOS -->
             <div id="sec-lav-citas" class="hidden space-y-6">
                 <div class="text-center max-w-xl mx-auto">
                     <h2 class="text-2xl font-tech font-bold text-white mb-1">Agendamiento de Citas</h2>
-                    <p class="text-xs text-gray-400">Reserva tu espacio para lavado o detailing en el taller.</p>
+                    <p class="text-xs text-gray-400">Reserva tu espacio para uno o varios servicios en el taller.</p>
                 </div>
                 <div class="max-w-xl mx-auto mamba-card rounded-2xl p-6 space-y-4">
                     <form id="form-cita" class="space-y-4">
@@ -296,12 +296,17 @@
                                 <input type="time" id="cita-hora" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
                             </div>
                         </div>
-                        <div>
-                            <label class="block text-xs font-bold text-gray-300 uppercase mb-1">Servicio Deseado</label>
-                            <select id="cita-servicio-select" required class="w-full bg-black/60 border border-mamba-border rounded-lg p-2.5 text-xs text-white">
-                                <option value="">Selecciona el servicio que deseas...</option>
-                            </select>
+                        
+                        <div class="border-t border-mamba-border pt-3 space-y-3">
+                            <div class="flex justify-between items-center">
+                                <label class="text-xs font-bold text-gray-300 uppercase">Servicios o Vehículos a Agendar</label>
+                                <button type="button" id="btn-add-fila-cita" class="text-xs text-mamba-red font-bold hover:underline">
+                                    <i class="fas fa-plus mr-1"></i> Añadir otro servicio
+                                </button>
+                            </div>
+                            <div id="cita-servicios-container" class="space-y-2"></div>
                         </div>
+
                         <button type="submit" class="w-full mamba-red-gradient text-white font-bold py-3 rounded-lg text-xs flex items-center justify-center gap-2">
                             <i class="fab fa-whatsapp text-sm"></i> Agendar Cita por WhatsApp
                         </button>
@@ -637,8 +642,8 @@
             });
 
             poblarSelectCategoriasModal();
-            poblarSelectCitas();
             actualizarSelectsCotizadorGlobal();
+            actualizarSelectsCitasGlobal();
         }
 
         function poblarSelectCategoriasModal() {
@@ -650,23 +655,25 @@
             });
         }
 
-        function poblarSelectCitas() {
-            const select = document.getElementById('cita-servicio-select');
-            if (!select) return;
-            select.innerHTML = '<option value="">Selecciona el servicio que deseas...</option>';
-            categorias.forEach(cat => {
-                const srvs = servicios.filter(s => s.catId === cat.id);
-                if (srvs.length > 0) {
-                    let optGroup = document.createElement('optgroup');
-                    optGroup.label = `${cat.icono} ${cat.titulo}`;
-                    srvs.forEach(s => {
-                        let opt = document.createElement('option');
-                        opt.value = s.nombre;
-                        opt.textContent = `${s.nombre} (₡${Number(s.precio).toLocaleString('es-CR')})`;
-                        optGroup.appendChild(opt);
-                    });
-                    select.appendChild(optGroup);
-                }
+        function actualizarSelectsCitasGlobal() {
+            document.querySelectorAll('.cita-select-srv').forEach(select => {
+                const valorActual = select.value;
+                select.innerHTML = '<option value="">Selecciona servicio...</option>';
+                categorias.forEach(cat => {
+                    const srvs = servicios.filter(s => s.catId === cat.id);
+                    if (srvs.length > 0) {
+                        let optGroup = document.createElement('optgroup');
+                        optGroup.label = `${cat.icono} ${cat.titulo}`;
+                        srvs.forEach(s => {
+                            let opt = document.createElement('option');
+                            opt.value = s.nombre;
+                            opt.textContent = `${s.nombre} (₡${Number(s.precio).toLocaleString('es-CR')})`;
+                            optGroup.appendChild(opt);
+                        });
+                        select.appendChild(optGroup);
+                    }
+                });
+                select.value = valorActual;
             });
         }
 
@@ -941,7 +948,7 @@
             renderCategoriasYServicios();
         });
 
-        // Funciones de Cotizadores y Clientes
+        // Funciones de Cotizadores y Citas Múltiples
         function agregarVehiculoCotizacion(modelo = '', placa = '') {
             const cont = document.getElementById('cot-vehiculos-container');
             const div = document.createElement('div');
@@ -1003,6 +1010,32 @@
 
         document.getElementById('btn-add-fila-cot').addEventListener('click', () => agregarFilaServicioCotizacion());
 
+        // Fila múltiple para Citas
+        function agregarFilaCita() {
+            const cont = document.getElementById('cita-servicios-container');
+            const div = document.createElement('div');
+            div.className = 'flex gap-2 items-center cita-srv-row bg-black/40 p-2 rounded-lg border border-mamba-border';
+            
+            div.innerHTML = `
+                <select class="cita-select-srv w-3/4 bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white">
+                    <option value="">Selecciona servicio...</option>
+                </select>
+                <div class="w-1/4 flex items-center gap-1">
+                    <span class="text-[10px] text-gray-400">Cant:</span>
+                    <input type="number" min="1" value="1" class="cita-srv-cant w-full bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white">
+                </div>
+                <button type="button" class="text-red-500 hover:text-red-400 px-2 btn-del-cita-fila"><i class="fas fa-trash"></i></button>
+            `;
+            cont.appendChild(div);
+            actualizarSelectsCitasGlobal();
+
+            div.querySelector('.btn-del-cita-fila').addEventListener('click', () => {
+                div.remove();
+            });
+        }
+
+        document.getElementById('btn-add-fila-cita').addEventListener('click', () => agregarFilaCita());
+
         document.getElementById('btn-enviar-cot-wa').addEventListener('click', () => {
             const cliente = document.getElementById('cot-lav-cliente').value.trim() || 'Cliente General';
             let vehs = [];
@@ -1043,12 +1076,26 @@
 
         document.getElementById('form-cita').addEventListener('submit', (e) => {
             e.preventDefault();
-            const nom = document.getElementById('cita-nombre').value;
+            const nom = document.getElementById('cita-nombre').value.trim() || 'Cliente';
             const fec = document.getElementById('cita-fecha').value;
             const hor = document.getElementById('cita-hora').value;
-            const srv = document.getElementById('cita-servicio-select').value || 'Servicio General';
 
-            const txt = `Hola Las Mambas, deseo agendar una cita:\n- *Cliente:* ${nom}\n- *Fecha:* ${fec}\n- *Hora:* ${hor}\n- *Servicio:* ${srv}`;
+            let serviciosCitaArr = [];
+            document.querySelectorAll('.cita-srv-row').forEach(row => {
+                const select = row.querySelector('.cita-select-srv');
+                const srvName = select.value;
+                const cant = parseFloat(row.querySelector('.cita-srv-cant').value) || 1;
+                if (srvName) {
+                    serviciosCitaArr.push(`- (${cant}x) ${srvName}`);
+                }
+            });
+
+            if (serviciosCitaArr.length === 0) {
+                alert('Por favor selecciona al menos un servicio para agendar la cita.');
+                return;
+            }
+
+            const txt = `Hola Las Mambas, deseo agendar una cita:\n\n*Cliente:* ${nom}\n*Fecha:* ${fec}\n*Hora:* ${hor}\n\n*Servicios Solicitados:*\n${serviciosCitaArr.join('\n')}`;
             window.open(`https://wa.me/50688818720?text=${encodeURIComponent(txt)}`, '_blank');
         });
 
@@ -1225,9 +1272,10 @@
         // Arranque local inicial de la interfaz
         agregarVehiculoCotizacion();
         agregarFilaServicioCotizacion();
+        agregarFilaCita(); // Fila inicial por defecto en citas
         renderCategoriasYServicios();
 
-        console.log("¡Las Mambas sincronizado con sello Meguiar's y menús limpios!");
+        console.log("¡Las Mambas sincronizado con citas múltiples y selectores ordenados!");
     </script>
 </body>
 </html>
