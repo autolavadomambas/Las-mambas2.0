@@ -146,7 +146,7 @@
                 </div>
             </div>
             
-                        <div class="flex items-center gap-2 flex-wrap justify-end">
+            <div class="flex items-center gap-2 flex-wrap justify-end">
                 <a href="https://wa.me/50688818720" id="header-wa-btn" target="_blank" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-3 rounded-full text-xs flex items-center gap-1.5 transition shadow-md" title="WhatsApp">
                     <i class="fab fa-whatsapp text-base"></i> <span class="hidden sm:inline">WhatsApp</span>
                 </a>
@@ -160,7 +160,6 @@
                     <i class="fas fa-lock"></i>
                 </button>
             </div>
-
         </div>
     </header>
 
@@ -518,7 +517,6 @@
             { id: "cat-1", icono: "🚿", titulo: "LAVADO EXTERIOR", subtext: "Incluye únicamente el lavado exterior, limpieza de aros y llantas, enjuague y secado. No incluye aspirado, encerado ni limpieza interior." },
             { id: "cat-2", icono: "🧹", titulo: "ASPIRADO Y LIMPIEZA INTERIOR", subtext: "Limpieza interior rápida y profunda de alfombras y asientos." },
             { id: "cat-3", icono: "🔥", titulo: "LAVADO COMPLETO", subtext: "Incluye lavado exterior, aspirado profundo, encerado y acondicionamiento de partes negras y llantas." },
-            { id: "cat-4", icono: "⭐", titulo: "PAQUETES PREMIUM", subtext: "Incluye Lavado exterior completo + Aspirado profundo + Encerado Meguiar's + Acondicionamiento de plásticos y llantas + Sellado Express con efecto hidrofóbico + Tratamiento de rayones superficiales + Tratamiento de focos opacos.<br><strong class='text-yellow-500'>⚠️ Advertencia:</strong> Los resultados dependen del estado de la pintura y los focos. No incluye eliminación de rayones profundos." },
             { id: "cat-5", icono: "✨", titulo: "DETAILING Y TRATAMIENTOS", subtext: "Servicios especializados. Dependiendo del estado de la superficie, se valora el trabajo o se requiere cotización previa." },
             { id: "cat-6", icono: "🏍️", titulo: "LAVADO DE MOTOS", subtext: "Lavado especializado para motocicletas." },
             { id: "cat-7", icono: "🏠", titulo: "SERVICIO A DOMICILIO", subtext: "Recargo de domicilio según zona. Funciona como un adicional al servicio seleccionado." }
@@ -535,10 +533,6 @@
             { id: "8", catId: "cat-3", nombre: "Servicio Completo Sedán / Hatchback", desc: "Lavado completo + Aspirado profundo + Encerado + Acondicionador de partes negras + llantas.", precio: 7000, badge: "Oferta de Lanzamiento" },
             { id: "9", catId: "cat-3", nombre: "Servicio Completo SUV", desc: "Lavado completo + Aspirado profundo + Encerado + Acondicionador de partes negras + llantas.", precio: 9000, badge: "Oferta de Lanzamiento" },
             { id: "10", catId: "cat-3", nombre: "Servicio Completo Pick-up", desc: "Lavado completo + Aspirado profundo + Encerado + Acondicionador de partes negras + llantas.", precio: 10000, badge: "Oferta de Lanzamiento" },
-            { id: "11", catId: "cat-4", nombre: "Servicio Premium Sedán / Hatchback", desc: "Lavado completo + Aspirado profundo + Corrección ligera de rayones + Restauración de focos + Acondicionamiento de cuero/dash + Partes negras & Llantas + Sellado Express Hidrofóbico.", precio: 12000, badge: "" },
-            { id: "12", catId: "cat-4", nombre: "Servicio Premium SUV", desc: "Lavado completo + Aspirado profundo + Corrección ligera de rayones + Restauración de focos + Acondicionamiento de cuero/dash + Partes negras & Llantas + Sellado Express Hidrofóbico.", precio: 15000, badge: "" },
-            { id: "13", catId: "cat-4", nombre: "Servicio Premium Pick-up", desc: "Lavado completo + Aspirado profundo + Corrección ligera de rayones + Restauración de focos + Acondicionamiento de cuero/dash + Partes negras & Llantas + Sellado Express Hidrofóbico.", precio: 16000, badge: "" },
-            { id: "14", catId: "cat-4", nombre: "Servicio Premium Pick-up Full Size", desc: "Lavado completo + Aspirado profundo + Corrección ligera de rayones + Restauración de focos + Acondicionamiento de cuero/dash + Partes negras & Llantas + Sellado Express Hidrofóbico.", precio: 18000, badge: "" },
             { id: "15", catId: "cat-5", nombre: "Restauración y Mantenimiento de Focos", desc: "Tratamiento para eliminar opacidad y devolver claridad.", precio: 5000, badge: "Complemento" },
             { id: "16", catId: "cat-5", nombre: "Remoción de Rayones Superficiales", desc: "Tratamiento focalizado por zona pequeña para marcas leves en la pintura.", precio: 3000, badge: "Complemento" },
             { id: "17", catId: "cat-5", nombre: "Sellado Express de Brillo Hidrofóbico", desc: "Aplicación de sellador sintético Meguiar's. Aporta brillo espejo y una capa hidrofóbica que repele agua y suciedad.", precio: 4000, badge: "Complemento" },
@@ -635,6 +629,7 @@
 
             poblarSelectCategoriasModal();
             poblarSelectCitas();
+            actualizarSelectsCotizadorGlobal();
         }
 
         function poblarSelectCategoriasModal() {
@@ -650,8 +645,42 @@
             const select = document.getElementById('cita-servicio-select');
             if (!select) return;
             select.innerHTML = '<option value="">Selecciona el servicio que deseas...</option>';
-            servicios.forEach(s => {
-                select.innerHTML += `<option value="${s.nombre}">${s.nombre} (₡${Number(s.precio).toLocaleString('es-CR')})</option>`;
+            categorias.forEach(cat => {
+                const srvs = servicios.filter(s => s.catId === cat.id);
+                if (srvs.length > 0) {
+                    let optGroup = document.createElement('optgroup');
+                    optGroup.label = `${cat.icono} ${cat.titulo}`;
+                    srvs.forEach(s => {
+                        let opt = document.createElement('option');
+                        opt.value = s.nombre;
+                        opt.textContent = `${s.nombre} (₡${Number(s.precio).toLocaleString('es-CR')})`;
+                        optGroup.appendChild(opt);
+                    });
+                    select.appendChild(optGroup);
+                }
+            });
+        }
+
+        function actualizarSelectsCotizadorGlobal() {
+            document.querySelectorAll('.cot-select-srv').forEach(select => {
+                const valorActual = select.value;
+                select.innerHTML = '<option value="">Selecciona servicio...</option>';
+                categorias.forEach(cat => {
+                    const srvs = servicios.filter(s => s.catId === cat.id);
+                    if (srvs.length > 0) {
+                        let optGroup = document.createElement('optgroup');
+                        optGroup.label = `${cat.icono} ${cat.titulo}`;
+                        srvs.forEach(s => {
+                            let opt = document.createElement('option');
+                            opt.value = s.id;
+                            opt.setAttribute('data-precio', s.precio);
+                            opt.textContent = `${s.nombre} (₡${Number(s.precio).toLocaleString('es-CR')})`;
+                            optGroup.appendChild(opt);
+                        });
+                        select.appendChild(optGroup);
+                    }
+                });
+                select.value = valorActual;
             });
         }
 
@@ -679,7 +708,7 @@
             });
         }
 
-        // Delegación de eventos general para asegurar que TODOS los botones funcionen
+        // Delegación de eventos general
         document.addEventListener('click', async (e) => {
             const target = e.target.closest('[data-action]');
             if (!target) return;
@@ -924,12 +953,9 @@
             const div = document.createElement('div');
             div.className = 'flex gap-2 items-center cot-srv-row bg-black/40 p-2 rounded-lg border border-mamba-border';
             
-            let opcionesSrv = servicios.map(s => `<option value="${s.id}" data-precio="${s.precio}">${s.nombre} (₡${Number(s.precio).toLocaleString('es-CR')})</option>`).join('');
-
             div.innerHTML = `
                 <select class="cot-select-srv w-1/2 bg-black/60 border border-mamba-border rounded-lg p-2 text-xs text-white">
                     <option value="">Selecciona servicio...</option>
-                    ${opcionesSrv}
                 </select>
                 <div class="w-1/4 flex items-center gap-1">
                     <span class="text-[10px] text-gray-400">Cant:</span>
@@ -939,6 +965,7 @@
                 <button type="button" class="text-red-500 hover:text-red-400 px-2 btn-del-fila"><i class="fas fa-trash"></i></button>
             `;
             cont.appendChild(div);
+            actualizarSelectsCotizadorGlobal();
 
             const calcular = () => {
                 let total = 0;
@@ -1191,7 +1218,7 @@
         agregarFilaServicioCotizacion();
         renderCategoriasYServicios();
 
-        console.log("¡Las Mambas sincronizado correctamente con eventos nativos seguros!");
+        console.log("¡Las Mambas sincronizado correctamente y menús de cotización ordenados!");
     </script>
 </body>
 </html>
